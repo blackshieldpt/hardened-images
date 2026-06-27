@@ -153,13 +153,16 @@ jobs:
           push-to-registry: true
 
       - name: Verify signature + attestations
-        # Post-publish self-check (the image is already signed at this point). Cap
-        # it and don't fail the job on a transient public-Rekor stall — real
-        # verification happens at consume time (see README).
+        # Post-publish self-check (already signed by now). Hard-bound with a shell
+        # timeout: GitHub's step-level timeout-minutes does NOT reliably kill a
+        # cosign call stuck on a slow public-Rekor lookup, so wrap it in `timeout`.
+        # Never blocks the build — real verification happens at consume time.
         if: ${{ github.event_name != 'pull_request' }}
-        timeout-minutes: 8
         continue-on-error: true
-        run: make verify IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
+        run: |
+          timeout --kill-after=30s 240s \
+            make verify IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }} \
+            || echo "::warning::post-publish verify timed out or failed (image is already signed)"
 
       - name: Upload SBOM to Dependency-Track
         if: ${{ github.event_name != 'pull_request' && steps.cfg.outputs.dtrack == 'true' }}
