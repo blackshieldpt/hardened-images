@@ -5,8 +5,8 @@
 package:
   name: redpanda-hardened
   version: 26.1.9
-  epoch: 0
-  description: "Redpanda streaming data platform (upstream deb repackaged)"
+  epoch: 1
+  description: "Redpanda streaming data platform (broker repackaged, rpk from source)"
   copyright:
     - license: BUSL-1.1
   options:
@@ -16,7 +16,6 @@ package:
 vars:
   token: nzc4ZYQK3WRGd9sy
   deb_sha256: 4acb940cdf93fcfd3e9e3d40c8d18ccc784a97d2caa649f96710388a09bbdc51
-  rpk_sha256: f310c4479a1cd4a82dc6e3442931ca167735c3f0d0535c05b6dab94b2317765f
 
 environment:
   contents:
@@ -29,6 +28,8 @@ environment:
       - ca-certificates-bundle
       - curl
       - binutils
+      - go
+      - git
 
 pipeline:
   - runs: |
@@ -42,12 +43,25 @@ pipeline:
       cp -a opt/redpanda "${{targets.destdir}}/opt/redpanda"
       mkdir -p "${{targets.destdir}}/usr/bin"
       ln -s /opt/redpanda/bin/redpanda "${{targets.destdir}}/usr/bin/redpanda"
-  - runs: |
-      curl -fsSL --retry 5 --retry-all-errors \
-        "https://github.com/redpanda-data/redpanda/releases/download/v${{package.version}}/rpk-linux-amd64.zip" \
-        -o rpk.zip
-      echo "${{vars.rpk_sha256}}  rpk.zip" | sha256sum -c -
-      busybox unzip -o rpk.zip rpk
+  - name: Build rpk from source with patched Go deps
+    runs: |
+      # The C++ broker is repackaged from the deb above; rpk is the Go CLI that
+      # carried the GO-2026 x/crypto/x/net criticals, so rebuild just it from
+      # source (sparse checkout of src/go/rpk) with the deps bumped.
+      git init rpk-src && cd rpk-src
+      git remote add origin https://github.com/redpanda-data/redpanda.git
+      git sparse-checkout init --cone
+      git sparse-checkout set src/go/rpk
+      git fetch --depth 1 origin v${{package.version}}
+      git checkout FETCH_HEAD
+      cd src/go/rpk
+      go get golang.org/x/crypto@v0.52.0 golang.org/x/net@v0.55.0
+      go mod tidy
+      VER=github.com/redpanda-data/redpanda/src/go/rpk/pkg/cli/version
+      CONT=github.com/redpanda-data/redpanda/src/go/rpk/pkg/cli/container/containerutil
+      CGO_ENABLED=0 go build \
+        -ldflags "-s -w -X ${VER}.version=v${{package.version}} -X ${VER}.rev=988a61b -X ${CONT}.tag=v${{package.version}}" \
+        -o rpk ./cmd/rpk
       install -Dm0755 rpk "${{targets.destdir}}/usr/bin/rpk"
   - runs: |
       install -Dm0755 entrypoint.sh "${{targets.destdir}}/usr/local/bin/entrypoint.sh"

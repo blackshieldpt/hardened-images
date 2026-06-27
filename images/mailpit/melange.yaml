@@ -1,15 +1,15 @@
-# Repackages the upstream mailpit static release binary as an apk.
-# mailpit is a static Go binary, so no shared-library extraction is needed.
+# Builds mailpit from source (instead of repackaging the upstream release binary),
+# so the bundled Go dependencies are current — golang.org/x/crypto and
+# golang.org/x/net are bumped past the GO-2026 criticals shipped in the v1.30.0
+# release binary. Pure-Go (CGO disabled); the Vue UI is built with esbuild via npm
+# and embedded (server/embed.go: //go:embed ui -> server/ui/dist).
 package:
   name: mailpit-hardened
   version: 1.30.0
-  epoch: 0
-  description: "Mailpit SMTP testing server (upstream static release binary)"
+  epoch: 1
+  description: "Mailpit SMTP testing server (built from source, patched deps)"
   copyright:
     - license: MIT
-
-vars:
-  sha256: 33c00f7633da7fc2f9c4ee490c7162fbb3586e97cfce6b2a66203168adb74b11
 
 environment:
   contents:
@@ -20,16 +20,30 @@ environment:
     packages:
       - busybox
       - ca-certificates-bundle
-      - curl
+      - go
+      - nodejs
+      - npm
+      - git
 
 pipeline:
-  - runs: |
-      curl -fsSL --retry 5 --retry-all-errors \
-        "https://github.com/axllent/mailpit/releases/download/v${{package.version}}/mailpit-linux-amd64.tar.gz" \
-        -o mailpit.tar.gz
-      echo "${{vars.sha256}}  mailpit.tar.gz" | sha256sum -c -
-      tar xzf mailpit.tar.gz
-      install -Dm0755 mailpit "${{targets.destdir}}/usr/bin/mailpit"
+  - uses: git-checkout
+    with:
+      repository: https://github.com/axllent/mailpit
+      tag: v${{package.version}}
+      expected-commit: af8756a32cf7ecf06bef109c1348b783f1a239ee
+  - name: Build the embedded web UI
+    runs: |
+      npm ci
+      npm run package
+  - name: Bump vulnerable Go dependencies
+    runs: |
+      go get golang.org/x/crypto@v0.52.0 golang.org/x/net@v0.55.0
+      go mod tidy
+  - name: Compile static binary
+    runs: |
+      CGO_ENABLED=0 go build \
+        -ldflags "-s -w -X github.com/axllent/mailpit/config.Version=v${{package.version}}" \
+        -o "${{targets.destdir}}/usr/bin/mailpit" .
   - runs: |
       "${{targets.destdir}}/usr/bin/mailpit" version
 
