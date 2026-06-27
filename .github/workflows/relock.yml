@@ -1,0 +1,65 @@
+name: relock
+
+# Daily: re-resolve every image's apko lockfile and, when a Wolfi package update
+# is available, commit the updated lockfile. The commit is pushed with a deploy
+# key (not GITHUB_TOKEN), so it triggers the `build` workflow, which publishes the
+# patched image. Net effect: patches land automatically, yet every published
+# image stays reproducible from its (now-updated) commit.
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read   # the push uses the deploy key, not GITHUB_TOKEN
+
+concurrency:
+  group: relock
+  cancel-in-progress: false
+
+jobs:
+  relock:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require deploy key
+        id: guard
+        env:
+          KEY: ${{ secrets.RELOCK_DEPLOY_KEY }}
+        run: |
+          if [ -n "$KEY" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else
+            echo "RELOCK_DEPLOY_KEY not configured — skipping (see README)."; echo "ok=false" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/checkout@v4
+        if: steps.guard.outputs.ok == 'true'
+        with:
+          # Write-enabled deploy key so the push triggers the build workflow.
+          ssh-key: ${{ secrets.RELOCK_DEPLOY_KEY }}
+
+      - name: Install lock tools
+        if: steps.guard.outputs.ok == 'true'
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq bubblewrap jq
+          for tool in apko melange; do
+            case $tool in apko) ver=1.2.19;; melange) ver=0.54.0;; esac
+            curl -sSL "https://github.com/chainguard-dev/${tool}/releases/download/v${ver}/${tool}_${ver}_linux_amd64.tar.gz" \
+              | sudo tar xz -C /usr/local/bin --strip-components=1 "${tool}_${ver}_linux_amd64/${tool}"
+          done
+
+      - name: Re-resolve lockfiles
+        if: steps.guard.outputs.ok == 'true'
+        run: make lock-all
+
+      - name: Commit & push if changed
+        if: steps.guard.outputs.ok == 'true'
+        run: |
+          git add images/
+          if git diff --cached --quiet; then
+            echo "No lockfile changes — nothing to patch."
+            exit 0
+          fi
+          git config user.name "hardened-images relock"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: relock — pick up upstream package updates"
+          git push
+          echo "Pushed lockfile update; the build workflow will publish the patched image(s)."

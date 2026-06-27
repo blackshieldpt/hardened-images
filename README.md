@@ -72,6 +72,26 @@ Builds use the **committed** `images/<name>/apko/<name>.lock.json`. To update
 dependencies (e.g. pick up Wolfi CVE patches), run `make lock IMAGE=<name>` and
 commit the changed lockfile — the bump is then visible in review and provenance.
 
+## Automated patching
+
+The `relock` workflow runs daily: it re-resolves every lockfile and, when a Wolfi
+package update is available, commits the change. That commit triggers the `build`
+workflow, which republishes the patched image. So **patches land automatically**,
+while every published image stays reproducible from its (now-updated) commit and
+each bump is an auditable diff.
+
+One-time setup — a write-enabled deploy key so the relock commit can trigger the
+build (a `GITHUB_TOKEN` push cannot):
+
+```sh
+ssh-keygen -t ed25519 -f relock_key -N "" -C hardened-images-relock
+gh repo deploy-key add relock_key.pub -R blackshieldpt/hardened-images --title relock --allow-write
+gh secret set RELOCK_DEPLOY_KEY -R blackshieldpt/hardened-images < relock_key
+rm -f relock_key relock_key.pub
+```
+
+Until `RELOCK_DEPLOY_KEY` is set, the relock job no-ops.
+
 Pushing, signing, and attestation happen in CI (`.github/workflows/build.yml`),
 which holds the OIDC identity — there are no signing secrets to run locally.
 
