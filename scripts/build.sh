@@ -67,13 +67,20 @@ rm -f "$TARBALL"
 REPORT_DIR="${ROOT_DIR}/reports/${IMAGE}"
 mkdir -p "$REPORT_DIR"
 COMMITTED_LOCK="images/${IMAGE}/apko/${IMAGE}${SUF}.lock.json"
-if [ -f "$COMMITTED_LOCK" ]; then
+if [ -f "$COMMITTED_LOCK" ] && [ ! -f "$MELANGE_CONFIG" ]; then
     LOCKFILE="$COMMITTED_LOCK"
     echo "==> Using committed lockfile ${COMMITTED_LOCK}"
 else
     LOCKFILE="${REPORT_DIR}/apko${SUF}.lock.json"
-    echo "WARNING: no committed lockfile for ${IMAGE}${SUF} — resolving fresh (not reproducible)."
-    echo "         Run 'make lock IMAGE=${IMAGE}' and commit ${COMMITTED_LOCK}."
+    if [ -f "$MELANGE_CONFIG" ]; then
+        # The melange-built package isn't reproducible across runners (each build
+        # uses an ephemeral signing key), so its control hash won't match a
+        # committed lock. Melange images resolve fresh each build by design.
+        echo "==> Resolving package set fresh (melange image)"
+    else
+        echo "WARNING: no committed lockfile for ${IMAGE}${SUF} — resolving fresh (not reproducible)."
+        echo "         Run 'make lock IMAGE=${IMAGE}' and commit ${COMMITTED_LOCK}."
+    fi
     apko lock "$APKO_SRC" --arch "$ARCH" --output "$LOCKFILE" "${APKO_EXTRA[@]}"
 fi
 

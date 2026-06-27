@@ -6,6 +6,13 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Fixed
+- Melange-repackaged images no longer attempt committed apko lockfiles: their
+  package is signed with an ephemeral per-build key, so a committed lock's
+  control hash never matches on rebuild (`control hash mismatch`). They now
+  resolve fresh each build; committed lockfiles remain for apk-native images,
+  and `relock` / `make lock` skip melange images.
+
 ## [0.1.0] - 2026-06-27
 
 ### Added

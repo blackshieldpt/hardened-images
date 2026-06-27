@@ -22,6 +22,14 @@ APKO_CONFIG="images/${IMAGE}/apko/${IMAGE}.yaml"
 MELANGE_CONFIG="images/${IMAGE}/melange.yaml"
 [ -f "$APKO_CONFIG" ] || { echo "ERROR: missing apko config $APKO_CONFIG"; exit 1; }
 
+# Melange-repackaged images aren't committed-lock pinned: the melange package is
+# signed with an ephemeral per-build key, so its control hash differs between
+# runners and a committed lock would never match. They resolve fresh at build.
+if [ -f "$MELANGE_CONFIG" ]; then
+    echo "==> ${IMAGE}: melange image — not committed-lock pinned (resolves fresh at build). Skipping."
+    exit 0
+fi
+
 # Repackaged-source images need their melange packages built so apko can resolve
 # them while locking.
 APKO_EXTRA=()
