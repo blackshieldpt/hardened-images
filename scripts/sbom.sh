@@ -29,7 +29,9 @@ fi
 
 echo "==> Generating SBOM for ${FULL_TAG}"
 
-syft "${FULL_TAG}" -o cyclonedx-json > "${REPORT_DIR}/sbom-cyclonedx${SUF}.json"
+# Pin the CycloneDX spec version (not the syft version): newer syft defaults to
+# 1.7, which some consumers (e.g. Dependency-Track) reject. 1.6 is widely accepted.
+syft "${FULL_TAG}" -o "cyclonedx-json@${CYCLONEDX_VERSION:-1.6}" > "${REPORT_DIR}/sbom-cyclonedx${SUF}.json"
 echo "    CycloneDX: ${REPORT_DIR}/sbom-cyclonedx${SUF}.json"
 
 syft "${FULL_TAG}" -o spdx-json > "${REPORT_DIR}/sbom-spdx${SUF}.json"
