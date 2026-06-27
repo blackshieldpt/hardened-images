@@ -19,7 +19,7 @@ Each build pushes three tags:
 |-----|----------|-----|
 | `:<version>` (e.g. `nginx:1.30`) | mutable | latest patch of that version line |
 | `:latest` | mutable | latest build |
-| `:<version>-<commit>` (e.g. `nginx:1.30-8d87eaa97e9c`) | **immutable** | pin / roll back to one exact build |
+| `:<version>-<commit>` (e.g. `nginx:1.30-<commit>`) | **immutable** | pin / roll back to one exact build |
 
 Pin production to the immutable tag (or the digest). The floating tags move on
 every rebuild and daily relock patch.
@@ -49,14 +49,14 @@ daily relock). For production, pin to an **immutable** reference — the digest,
 the `:<version>-<commit>` tag:
 
 ```sh
-docker pull ghcr.io/blackshieldpt/nginx:1.30-8d87eaa97e9c   # immutable tag
+docker pull ghcr.io/blackshieldpt/nginx:1.30-<commit>   # immutable tag
 docker pull ghcr.io/blackshieldpt/nginx@sha256:<digest>     # or by digest
 ```
 
 Verify the keyless signature and attestations (works against any tag or digest):
 
 ```sh
-IMAGE=ghcr.io/blackshieldpt/nginx:1.30-8d87eaa97e9c
+IMAGE=ghcr.io/blackshieldpt/nginx:1.30-<commit>
 IDENTITY='https://github.com/blackshieldpt/hardened-images/.github/workflows/.*'
 ISSUER='https://token.actions.githubusercontent.com'
 
@@ -116,7 +116,10 @@ which holds the OIDC identity — there are no signing secrets to run locally.
 
 1. Add `images/<name>/apko/<name>.yaml` (and `images/<name>/melange.yaml` if you
    repackage upstream source) plus `images/<name>/test.sh`.
-2. Set its tag (`VERSION_<name>`) in `config.env`.
+2. Set its tag: `VERSION_<name>` in `config.env` for apk-native images (and the
+   melange images that pin there); or `package.version` in
+   `images/<name>/melange.yaml` for repackaged-source images that declare an
+   `update.github` block (clickhouse, manticore, mailpit, redpanda).
 3. Run `make lock IMAGE=<name>` and commit `images/<name>/apko/<name>.lock.json`.
 4. Add `<name>` to the `IMAGES` list in the `Makefile` and the workflow matrix.
 

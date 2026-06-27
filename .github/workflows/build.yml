@@ -147,7 +147,12 @@ jobs:
           push-to-registry: true
 
       - name: Verify signature + attestations
+        # Post-publish self-check (the image is already signed at this point). Cap
+        # it and don't fail the job on a transient public-Rekor stall — real
+        # verification happens at consume time (see README).
         if: ${{ github.event_name != 'pull_request' }}
+        timeout-minutes: 8
+        continue-on-error: true
         run: make verify IMAGE=${{ matrix.image }}
 
       - name: Upload SBOM to Dependency-Track
