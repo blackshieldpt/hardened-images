@@ -1,0 +1,23 @@
+# Ships the KRaft server.properties + entrypoint for the Wolfi kafka-3.9 package.
+# Read from images/kafka via --source-dir. No update block: version comes from config.env.
+package:
+  name: kafka-config
+  version: "1.0.0"
+  epoch: 0
+  description: "Hardened Kafka KRaft config + entrypoint"
+  copyright:
+    - license: Apache-2.0
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+
+pipeline:
+  - runs: |
+      install -Dm0644 server.properties "${{targets.destdir}}/etc/kafka/server.properties"
+      install -Dm0755 entrypoint.sh "${{targets.destdir}}/usr/bin/kafka-entrypoint.sh"

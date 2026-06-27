@@ -1,0 +1,61 @@
+# Repackages the hermetic Redpanda broker (/opt/redpanda) from the upstream deb,
+# plus rpk from the upstream GitHub release, plus the hardened entrypoint + config.
+# The broker bundles its own loader/libs under /opt/redpanda/lib, so no Wolfi libs
+# are needed for it. entrypoint.sh/redpanda.yaml are read from images/redpanda via --source-dir.
+package:
+  name: redpanda-hardened
+  version: 26.1.9
+  epoch: 0
+  description: "Redpanda streaming data platform (upstream deb repackaged)"
+  copyright:
+    - license: BUSL-1.1
+  options:
+    no-provides: true
+    no-depends: true
+
+vars:
+  token: nzc4ZYQK3WRGd9sy
+  deb_sha256: 4acb940cdf93fcfd3e9e3d40c8d18ccc784a97d2caa649f96710388a09bbdc51
+  rpk_sha256: f310c4479a1cd4a82dc6e3442931ca167735c3f0d0535c05b6dab94b2317765f
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+      - ca-certificates-bundle
+      - curl
+      - binutils
+
+pipeline:
+  - runs: |
+      curl -fsSL --retry 5 --retry-all-errors \
+        "https://dl.redpanda.com/${{vars.token}}/redpanda/deb/ubuntu/pool/any-version/main/r/re/redpanda_${{package.version}}-1/redpanda_${{package.version}}-1_amd64.deb" \
+        -o redpanda.deb
+      echo "${{vars.deb_sha256}}  redpanda.deb" | sha256sum -c -
+      ar x redpanda.deb
+      tar xf data.tar.*
+      mkdir -p "${{targets.destdir}}/opt"
+      cp -a opt/redpanda "${{targets.destdir}}/opt/redpanda"
+      mkdir -p "${{targets.destdir}}/usr/bin"
+      ln -s /opt/redpanda/bin/redpanda "${{targets.destdir}}/usr/bin/redpanda"
+  - runs: |
+      curl -fsSL --retry 5 --retry-all-errors \
+        "https://github.com/redpanda-data/redpanda/releases/download/v${{package.version}}/rpk-linux-amd64.zip" \
+        -o rpk.zip
+      echo "${{vars.rpk_sha256}}  rpk.zip" | sha256sum -c -
+      busybox unzip -o rpk.zip rpk
+      install -Dm0755 rpk "${{targets.destdir}}/usr/bin/rpk"
+  - runs: |
+      install -Dm0755 entrypoint.sh "${{targets.destdir}}/usr/local/bin/entrypoint.sh"
+      install -Dm0644 redpanda.yaml "${{targets.destdir}}/etc/redpanda/redpanda.yaml"
+
+update:
+  enabled: true
+  github:
+    identifier: redpanda-data/redpanda
+    use-tag: true
+    strip-prefix: "v"

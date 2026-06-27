@@ -1,0 +1,63 @@
+# Repackages the upstream ClickHouse common-static binary as an apk.
+# The binary is self-contained except for glibc (provided by Wolfi).
+# Version-matched config.xml/users.xml are fetched from the upstream git tag;
+# the hardened overlay (config.d/hardened.xml) is read from images/clickhouse via --source-dir.
+package:
+  name: clickhouse-hardened
+  version: 26.1.12.23
+  epoch: 0
+  description: "ClickHouse server (upstream static binary repackaged)"
+  copyright:
+    - license: Apache-2.0
+
+vars:
+  sha256: fff0244dba2ce067b61bd5fd71e198047164e181493100c0c8c8c307026d7f6d
+  config_sha256: b5f9a3754b3e80dba2599609ea061bdbaae563dddc2c6e7b19854ad2a9d2084c
+  users_sha256: 1059ce402d328bff83706f9ab91646fab9f7cb67f3a1bab8abc146011012c7bc
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+      - ca-certificates-bundle
+      - curl
+      - binutils
+
+pipeline:
+  - runs: |
+      curl -fsSL --retry 5 --retry-all-errors \
+        "https://packages.clickhouse.com/tgz/stable/clickhouse-common-static-${{package.version}}-amd64.tgz" \
+        -o ch.tgz
+      echo "${{vars.sha256}}  ch.tgz" | sha256sum -c -
+      tar xzf ch.tgz
+      install -Dm0755 "clickhouse-common-static-${{package.version}}/usr/bin/clickhouse" \
+        "${{targets.destdir}}/usr/bin/clickhouse"
+      strip --strip-all "${{targets.destdir}}/usr/bin/clickhouse"
+      ln -s clickhouse "${{targets.destdir}}/usr/bin/clickhouse-server"
+      ln -s clickhouse "${{targets.destdir}}/usr/bin/clickhouse-client"
+      ln -s clickhouse "${{targets.destdir}}/usr/bin/clickhouse-local"
+  - runs: |
+      tag="v${{package.version}}-stable"
+      base="https://raw.githubusercontent.com/ClickHouse/ClickHouse/${tag}/programs/server"
+      curl -fsSL --retry 5 --retry-all-errors "${base}/config.xml" -o config.xml
+      echo "${{vars.config_sha256}}  config.xml" | sha256sum -c -
+      curl -fsSL --retry 5 --retry-all-errors "${base}/users.xml" -o users.xml
+      echo "${{vars.users_sha256}}  users.xml" | sha256sum -c -
+      install -Dm0644 config.xml "${{targets.destdir}}/etc/clickhouse-server/config.xml"
+      install -Dm0644 users.xml "${{targets.destdir}}/etc/clickhouse-server/users.xml"
+      install -Dm0644 config.d/hardened.xml "${{targets.destdir}}/etc/clickhouse-server/config.d/hardened.xml"
+  - runs: |
+      "${{targets.destdir}}/usr/bin/clickhouse" local --query "SELECT 1"
+
+update:
+  enabled: true
+  github:
+    identifier: ClickHouse/ClickHouse
+    use-tag: true
+    tag-filter: "v26.1."
+    strip-prefix: "v"
+    strip-suffix: "-stable"

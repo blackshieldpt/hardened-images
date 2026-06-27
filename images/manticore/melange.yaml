@@ -1,0 +1,57 @@
+# Repackages searchd/indexer + runtime data from the upstream Manticore bundle .deb.
+# Only zlib/libstdc++/libgcc/glibc are needed at runtime (provided by Wolfi).
+# manticore.conf is read from images/manticore via --source-dir.
+package:
+  name: manticore-hardened
+  version: 25.0.0
+  epoch: 0
+  description: "Manticore Search daemon (upstream bundle deb repackaged)"
+  copyright:
+    - license: GPL-3.0-or-later
+
+vars:
+  deb: "manticore_25.0.0-26032712-ce3c27828_amd64.deb"
+  sha256: c51b054aa4d6c2c26a371277baf26bac4b049e5db424189509eda39efd2b8d1d
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+      - ca-certificates-bundle
+      - curl
+      - binutils
+      - libstdc++
+      - libgcc
+      - zlib
+
+pipeline:
+  - runs: |
+      curl -fsSL --retry 5 --retry-all-errors \
+        "https://repo.manticoresearch.com/repository/manticoresearch_jammy/dists/jammy/main/binary-amd64/${{vars.deb}}" \
+        -o manticore.deb
+      echo "${{vars.sha256}}  manticore.deb" | sha256sum -c -
+      ar x manticore.deb
+      tar xzf data.tar.gz
+  - runs: |
+      install -Dm0755 usr/bin/searchd "${{targets.destdir}}/usr/bin/searchd"
+      install -Dm0755 usr/bin/indexer "${{targets.destdir}}/usr/bin/indexer"
+      strip --strip-unneeded "${{targets.destdir}}/usr/bin/searchd" "${{targets.destdir}}/usr/bin/indexer"
+      mkdir -p "${{targets.destdir}}/usr/share"
+      cp -a usr/share/manticore "${{targets.destdir}}/usr/share/manticore"
+  - runs: |
+      install -Dm0644 manticore.conf "${{targets.destdir}}/etc/manticoresearch/manticore.conf"
+  - runs: |
+      "${{targets.destdir}}/usr/bin/searchd" --help >/dev/null 2>&1 || true
+      "${{targets.destdir}}/usr/bin/indexer" --help >/dev/null
+
+update:
+  enabled: true
+  github:
+    identifier: manticoresoftware/manticoresearch
+    use-tag: true
+    tag-filter: "release-"
+    strip-prefix: "release-"

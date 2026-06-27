@@ -1,0 +1,42 @@
+# Repackages the upstream mailpit static release binary as an apk.
+# mailpit is a static Go binary, so no shared-library extraction is needed.
+package:
+  name: mailpit-hardened
+  version: 1.30.0
+  epoch: 0
+  description: "Mailpit SMTP testing server (upstream static release binary)"
+  copyright:
+    - license: MIT
+
+vars:
+  sha256: 33c00f7633da7fc2f9c4ee490c7162fbb3586e97cfce6b2a66203168adb74b11
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+      - ca-certificates-bundle
+      - curl
+
+pipeline:
+  - runs: |
+      curl -fsSL --retry 5 --retry-all-errors \
+        "https://github.com/axllent/mailpit/releases/download/v${{package.version}}/mailpit-linux-amd64.tar.gz" \
+        -o mailpit.tar.gz
+      echo "${{vars.sha256}}  mailpit.tar.gz" | sha256sum -c -
+      tar xzf mailpit.tar.gz
+      install -Dm0755 mailpit "${{targets.destdir}}/usr/bin/mailpit"
+  - runs: |
+      "${{targets.destdir}}/usr/bin/mailpit" version
+
+update:
+  enabled: true
+  github:
+    identifier: axllent/mailpit
+    use-tag: true
+    tag-filter: "v"
+    strip-prefix: "v"

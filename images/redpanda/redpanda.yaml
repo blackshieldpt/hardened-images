@@ -1,0 +1,42 @@
+redpanda:
+  data_directory: /var/lib/redpanda/data
+  developer_mode: false
+  superusers:
+    - SUPERUSER_PLACEHOLDER
+  kafka_api:
+    - address: 0.0.0.0
+      port: 9092
+      authentication_method: sasl
+  advertised_kafka_api:
+    - address: 127.0.0.1
+      port: 9092
+  admin:
+    - address: 0.0.0.0
+      port: 9644
+  rpc_server:
+    address: 0.0.0.0
+    port: 33145
+  advertised_rpc_api:
+    address: 127.0.0.1
+    port: 33145
+  enable_sasl: true
+
+schema_registry:
+  schema_registry_api:
+    - address: 0.0.0.0
+      port: 8081
+      authentication_method: http_basic
+
+pandaproxy:
+  pandaproxy_api:
+    - address: 0.0.0.0
+      port: 8082
+      authentication_method: http_basic
+
+rpk:
+  kafka_api:
+    brokers:
+      - localhost:9092
+  admin_api:
+    addresses:
+      - localhost:9644

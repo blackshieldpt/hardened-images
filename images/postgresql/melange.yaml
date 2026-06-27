@@ -1,0 +1,25 @@
+# Ships the hardened PostgreSQL entrypoint (POSTGRES_PASSWORD + /docker-entrypoint-initdb.d)
+# as an apk so apko can install it. entrypoint.sh is read from this dir via --source-dir.
+package:
+  name: postgresql-entrypoint
+  version: "1.0.0"
+  epoch: 0
+  description: "Hardened PostgreSQL docker entrypoint"
+  copyright:
+    - license: PostgreSQL
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+
+pipeline:
+  - runs: |
+      install -Dm0755 entrypoint.sh "${{targets.destdir}}/usr/local/bin/entrypoint.sh"
+  - runs: |
+      test -x "${{targets.destdir}}/usr/local/bin/entrypoint.sh"
+      head -1 "${{targets.destdir}}/usr/local/bin/entrypoint.sh"

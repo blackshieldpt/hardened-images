@@ -2,7 +2,7 @@ include config.env
 -include .env
 export
 
-IMAGES := nginx
+IMAGES := nginx node go python postgresql valkey clickhouse nats manticore mailpit redpanda kafka zookeeper etcd
 
 .PHONY: help build test sbom scan push sign verify publish upload-sbom lock \
         build-all test-all scan-all lock-all check-tools

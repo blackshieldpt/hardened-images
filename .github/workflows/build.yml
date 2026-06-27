@@ -27,7 +27,21 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: [nginx]
+        image:
+          - nginx
+          - node
+          - go
+          - python
+          - postgresql
+          - valkey
+          - clickhouse
+          - nats
+          - manticore
+          - mailpit
+          - redpanda
+          - kafka
+          - zookeeper
+          - etcd
     steps:
       - uses: actions/checkout@v4
 

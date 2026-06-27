@@ -1,0 +1,72 @@
+# Hardened Manticore (apko) — upstream bundle repackaged via melange, shell-less, non-root.
+contents:
+  repositories:
+    - https://packages.wolfi.dev/os
+  keyring:
+    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+  packages:
+    - wolfi-baselayout
+    - manticore-hardened
+    - glibc
+    - libstdc++
+    - libgcc
+    - zlib
+    - ca-certificates-bundle
+
+accounts:
+  groups:
+    - groupname: manticore
+      gid: 65532
+  users:
+    - username: manticore
+      uid: 65532
+      gid: 65532
+  run-as: 65532
+
+entrypoint:
+  command: /usr/bin/searchd
+cmd: --nodetach --config /etc/manticoresearch/manticore.conf
+
+environment:
+  PATH: /usr/bin:/bin
+
+paths:
+  - path: /var/lib/manticore
+    type: directory
+    uid: 65532
+    gid: 65532
+    permissions: 0o755
+  - path: /var/lib/manticore/data
+    type: directory
+    uid: 65532
+    gid: 65532
+    permissions: 0o755
+  - path: /var/lib/manticore/data/binlog
+    type: directory
+    uid: 65532
+    gid: 65532
+    permissions: 0o755
+  - path: /var/lib/manticore/log
+    type: directory
+    uid: 65532
+    gid: 65532
+    permissions: 0o755
+  - path: /var/run/manticore
+    type: directory
+    uid: 65532
+    gid: 65532
+    permissions: 0o755
+  - path: /tmp
+    type: directory
+    uid: 65532
+    gid: 65532
+    permissions: 0o1777
+
+annotations:
+  org.opencontainers.image.title: manticore
+  org.opencontainers.image.description: Hardened shell-less Manticore Search on Wolfi
+  org.opencontainers.image.vendor: Blackshield
+  org.opencontainers.image.licenses: GPL-3.0-or-later
+
+archs:
+  - x86_64
