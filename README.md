@@ -67,7 +67,10 @@ cosign verify "$IMAGE" \
 cosign verify-attestation "$IMAGE" --type cyclonedx \
   --certificate-identity-regexp "$IDENTITY" --certificate-oidc-issuer "$ISSUER"
 
-# SLSA L3 build provenance (GitHub attestation):
+cosign verify-attestation "$IMAGE" --type slsaprovenance1 \
+  --certificate-identity-regexp "$IDENTITY" --certificate-oidc-issuer "$ISSUER"
+
+# SLSA L3 build provenance (the GitHub attestation, in addition to the cosign one above):
 gh attestation verify "oci://$IMAGE" --owner blackshieldpt
 ```
 
@@ -85,9 +88,15 @@ make sbom   IMAGE=nginx
 make lock   IMAGE=nginx   # re-resolve + update images/nginx/apko/nginx.lock.json
 ```
 
-Builds use the **committed** `images/<name>/apko/<name>.lock.json`. To update
-dependencies (e.g. pick up Wolfi CVE patches), run `make lock IMAGE=<name>` and
-commit the changed lockfile — the bump is then visible in review and provenance.
+Builds use the **committed** `images/<name>/apko/<name>.lock.json` when present
+(apk-native images today; melange images resolve fresh, with a warning, until the
+relock workflow commits theirs). To update dependencies (e.g. pick up Wolfi CVE
+patches), run `make lock IMAGE=<name>` and commit the changed lockfile — the bump
+is then visible in review and provenance.
+
+Pushing, signing, and attestation happen only in CI
+(`.github/workflows/build.yml`), which holds the OIDC identity — there are no
+signing secrets to run locally.
 
 ## Automated patching
 
@@ -108,9 +117,6 @@ rm -f relock_key relock_key.pub
 ```
 
 Until `RELOCK_DEPLOY_KEY` is set, the relock job no-ops.
-
-Pushing, signing, and attestation happen in CI (`.github/workflows/build.yml`),
-which holds the OIDC identity — there are no signing secrets to run locally.
 
 ## Adding an image
 
