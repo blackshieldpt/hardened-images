@@ -4,8 +4,8 @@ export
 
 IMAGES := nginx
 
-.PHONY: help build test sbom scan push sign verify publish upload-sbom \
-        build-all test-all scan-all check-tools
+.PHONY: help build test sbom scan push sign verify publish upload-sbom lock \
+        build-all test-all scan-all lock-all check-tools
 
 help:
 	@echo "Targets (IMAGE=<name>):"
@@ -24,6 +24,14 @@ check-tools:
 build:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
 	@./scripts/build.sh $(IMAGE)
+
+# Regenerate + pin the committed apko lockfile (deliberate dependency update).
+lock:
+	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
+	@./scripts/lock.sh $(IMAGE)
+
+lock-all:
+	@for img in $(IMAGES); do ./scripts/lock.sh $$img || exit 1; done
 
 test:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }

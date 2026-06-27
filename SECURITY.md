@@ -24,5 +24,9 @@ See the README for verification commands.
 Builds are gated by Grype + Trivy at `SEVERITY_THRESHOLD` (`config.env`). A known
 finding is allowed past the gate only with a justified **OpenVEX** waiver in
 [`vex/`](vex/) — the scanner is never silently disabled. Waivers are reviewed and
-removed once the upstream package is fixed. Apk-native images pick up Wolfi CVE
-fixes on the next (weekly or manual) rebuild.
+removed once the upstream package is fixed.
+
+Images build from a committed apko lockfile, so the package set changes only via
+an explicit `make lock` commit. The weekly job re-scans the pinned set against
+current vulnerability data and fails the gate if a pinned package becomes
+vulnerable; the fix is to `make lock` (picking up the Wolfi patch) and commit.

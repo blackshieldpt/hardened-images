@@ -5,7 +5,9 @@ on:
   push:
     branches: [main]
   schedule:
-    # Weekly rebuild to pick up Wolfi CVE patches.
+    # Weekly: rebuild the pinned (committed-lockfile) set and re-scan it against
+    # current vulnerability data. The gate fails if a pinned package is now
+    # vulnerable — update with `make lock IMAGE=<name>` and commit.
     - cron: "30 5 * * 1"
   workflow_dispatch:
 

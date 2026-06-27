@@ -55,13 +55,23 @@ fi
 echo "==> Assembling ${FULL_TAG} with apko"
 rm -f "$TARBALL"
 
-# Pin the exact package set (versions + checksums) into a lockfile, then build
-# from it. Makes the build reproducible and the resolved inputs auditable; the
-# lockfile also feeds the provenance attestation (resolvedDependencies).
+# Build from the committed lockfile so the same commit reproduces the same image
+# (apko + a fixed lockfile + SOURCE_DATE_EPOCH is byte-reproducible). Update the
+# lockfile deliberately with `make lock IMAGE=<name>`. If no committed lockfile
+# exists (e.g. a brand-new image), resolve fresh and warn — that build is not
+# reproducible until the lockfile is committed.
 REPORT_DIR="${ROOT_DIR}/reports/${IMAGE}"
 mkdir -p "$REPORT_DIR"
-LOCKFILE="${REPORT_DIR}/apko${SUF}.lock.json"
-apko lock "$APKO_SRC" --arch "$ARCH" --output "$LOCKFILE" "${APKO_EXTRA[@]}"
+COMMITTED_LOCK="images/${IMAGE}/apko/${IMAGE}${SUF}.lock.json"
+if [ -f "$COMMITTED_LOCK" ]; then
+    LOCKFILE="$COMMITTED_LOCK"
+    echo "==> Using committed lockfile ${COMMITTED_LOCK}"
+else
+    LOCKFILE="${REPORT_DIR}/apko${SUF}.lock.json"
+    echo "WARNING: no committed lockfile for ${IMAGE}${SUF} — resolving fresh (not reproducible)."
+    echo "         Run 'make lock IMAGE=${IMAGE}' and commit ${COMMITTED_LOCK}."
+    apko lock "$APKO_SRC" --arch "$ARCH" --output "$LOCKFILE" "${APKO_EXTRA[@]}"
+fi
 
 BUILD_STARTED="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 apko build "$APKO_SRC" "$FULL_TAG" "$TARBALL" --arch "$ARCH" --lockfile "$LOCKFILE" "${APKO_EXTRA[@]}"
