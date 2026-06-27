@@ -9,11 +9,20 @@ entirely on GitHub Actions.
 
 ## Images
 
-Published to **`ghcr.io/blackshieldpt/<image>`**.
+Published to **`ghcr.io/blackshieldpt/<image>`** — 14 images: nginx, node, go,
+python, postgresql, valkey, clickhouse, nats, manticore, mailpit, redpanda,
+kafka, zookeeper, etcd.
 
-| Image | Tag |
-|-------|-----|
-| nginx | `ghcr.io/blackshieldpt/nginx:1.30` |
+Each build pushes three tags:
+
+| Tag | Mutable? | Use |
+|-----|----------|-----|
+| `:<version>` (e.g. `nginx:1.30`) | mutable | latest patch of that version line |
+| `:latest` | mutable | latest build |
+| `:<version>-<commit>` (e.g. `nginx:1.30-8d87eaa97e9c`) | **immutable** | pin / roll back to one exact build |
+
+Pin production to the immutable tag (or the digest). The floating tags move on
+every rebuild and daily relock patch.
 
 ## What each image guarantees
 

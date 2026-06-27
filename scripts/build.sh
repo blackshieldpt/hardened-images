@@ -26,6 +26,10 @@ MELANGE_CONFIG="images/${IMAGE}/melange.yaml"
 
 FULL_TAG="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:${VERSION}${SUF}"
 LATEST_TAG="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:latest${SUF}"
+# Immutable per-build tag (source commit). Floating :${VERSION} and :latest move
+# on every rebuild/relock; this one always pins to exactly this build.
+SHORT_SHA="$(git -C "$ROOT_DIR" rev-parse --short=12 HEAD 2>/dev/null || echo unknown)"
+SHA_TAG="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:${VERSION}${SUF}-${SHORT_SHA}"
 TARBALL="${IMAGE}${SUF}.tar"
 
 APKO_EXTRA=()
@@ -81,6 +85,7 @@ loaded="$(docker load < "$TARBALL" | sed -n 's/^Loaded image: //p' | head -1)"
 [ -n "$loaded" ] || { echo "ERROR: docker load produced no image"; exit 1; }
 docker tag "$loaded" "$FULL_TAG"
 docker tag "$loaded" "$LATEST_TAG"
+docker tag "$loaded" "$SHA_TAG"
 [ "$loaded" != "$FULL_TAG" ] && docker rmi "$loaded" >/dev/null 2>&1 || true
 
 rm -f "$TARBALL" sbom-*.json
