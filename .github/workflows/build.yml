@@ -48,6 +48,9 @@ jobs:
           - kafka
           - zookeeper
           - etcd
+        variant: [prod, dev]
+    env:
+      SUF: ${{ matrix.variant == 'dev' && '-dev' || '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -74,22 +77,25 @@ jobs:
       - run: make check-tools
 
       - name: Build
-        run: make build IMAGE=${{ matrix.image }}
+        run: make build IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
 
       - name: Smoke test
-        run: make test IMAGE=${{ matrix.image }}
+        run: make test IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
 
-      - name: Scan (gate)
-        run: make scan IMAGE=${{ matrix.image }}
+      # Prod is gated; the dev variant ships a shell + toolchain (inherently more
+      # CVEs), so its scan is advisory — findings recorded, build not blocked.
+      - name: Scan
+        continue-on-error: ${{ matrix.variant == 'dev' }}
+        run: make scan IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
 
       - name: SBOM
-        run: make sbom IMAGE=${{ matrix.image }}
+        run: make sbom IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
 
       - name: Upload SBOM artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: sbom-${{ matrix.image }}
-          path: reports/${{ matrix.image }}/sbom-*.json
+          name: sbom-${{ matrix.image }}-${{ matrix.variant }}
+          path: reports/${{ matrix.image }}/sbom-*${{ env.SUF }}.json
           if-no-files-found: error
 
       # ---- Publish: push + sign + attest, only off PRs ----
@@ -124,17 +130,17 @@ jobs:
         env:
           MIRROR_REGISTRY: ${{ secrets.MIRROR_REGISTRY }}
           MIRROR_PREFIX: ${{ secrets.MIRROR_PREFIX }}
-        run: make push IMAGE=${{ matrix.image }}
+        run: make push IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
 
       - name: Keyless sign + attest SBOM/provenance (cosign)
         if: ${{ github.event_name != 'pull_request' }}
-        run: make sign IMAGE=${{ matrix.image }}
+        run: make sign IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
 
       - name: Resolve pushed digest
         id: img
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          ref="$(cat reports/${{ matrix.image }}/digest.txt)"
+          ref="$(cat reports/${{ matrix.image }}/digest${SUF}.txt)"
           echo "name=${ref%@*}"   >> "$GITHUB_OUTPUT"
           echo "digest=${ref#*@}" >> "$GITHUB_OUTPUT"
 
@@ -153,11 +159,11 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         timeout-minutes: 8
         continue-on-error: true
-        run: make verify IMAGE=${{ matrix.image }}
+        run: make verify IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
 
       - name: Upload SBOM to Dependency-Track
         if: ${{ github.event_name != 'pull_request' && steps.cfg.outputs.dtrack == 'true' }}
         env:
           DTRACK_URL: ${{ secrets.DTRACK_URL }}
           DTRACK_API_KEY: ${{ secrets.DTRACK_API_KEY }}
-        run: make upload-sbom IMAGE=${{ matrix.image }}
+        run: make upload-sbom IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}

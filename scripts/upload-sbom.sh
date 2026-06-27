@@ -8,15 +8,17 @@ source "$ROOT_DIR/config.env"
 [ -f "$ROOT_DIR/.env" ] && source "$ROOT_DIR/.env"
 source "$ROOT_DIR/scripts/common.sh"
 
-IMAGE="${1:?Usage: upload-sbom.sh <image-name>}"
+IMAGE="${1:?Usage: upload-sbom.sh <image-name> [prod|dev]}"
+VARIANT="${2:-prod}"
+SUF="$(variant_suffix "$VARIANT")"
 
 DTRACK_URL="${DTRACK_URL:?DTRACK_URL must be set (e.g. https://dtrack.example.com)}"
 DTRACK_API_KEY="${DTRACK_API_KEY:?DTRACK_API_KEY must be set}"
 
 VERSION="$(resolve_version "$IMAGE")"
 
-PROJECT_NAME="${IMAGE_PREFIX}/${IMAGE}"
-SBOM_FILE="${ROOT_DIR}/reports/${IMAGE}/sbom-cyclonedx.json"
+PROJECT_NAME="${IMAGE_PREFIX}/${IMAGE}${SUF}"
+SBOM_FILE="${ROOT_DIR}/reports/${IMAGE}/sbom-cyclonedx${SUF}.json"
 
 if [ ! -f "$SBOM_FILE" ]; then
     echo "ERROR: SBOM not found at ${SBOM_FILE}"

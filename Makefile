@@ -4,14 +4,18 @@ export
 
 IMAGES := nginx node go python postgresql valkey clickhouse nats manticore mailpit redpanda kafka zookeeper etcd
 
+# Variant: empty/prod = hardened distroless image; dev = same image + shell and
+# toolchain. Pass VARIANT=dev to any per-image target.
+VARIANT ?=
+
 .PHONY: help build test sbom scan push sign verify publish upload-sbom lock \
         build-all test-all scan-all lock-all check-tools
 
 help:
-	@echo "Targets (IMAGE=<name>):"
-	@echo "  build   test   sbom   scan   push   sign   verify"
+	@echo "Targets (IMAGE=<name> [VARIANT=dev]):"
+	@echo "  build   test   sbom   scan   push   sign   verify   lock"
 	@echo "  publish                 build + test + scan + sbom (CI pushes/signs separately)"
-	@echo "  build-all test-all scan-all"
+	@echo "  build-all test-all scan-all lock-all"
 	@echo "  check-tools"
 	@echo ""
 	@echo "Images: $(IMAGES)"
@@ -23,52 +27,52 @@ check-tools:
 
 build:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
-	@./scripts/build.sh $(IMAGE)
+	@./scripts/build.sh $(IMAGE) $(VARIANT)
 
 # Regenerate + pin the committed apko lockfile (deliberate dependency update).
 lock:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
-	@./scripts/lock.sh $(IMAGE)
+	@./scripts/lock.sh $(IMAGE) $(VARIANT)
 
 lock-all:
 	@for img in $(IMAGES); do ./scripts/lock.sh $$img || exit 1; done
 
 test:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
-	@./scripts/test.sh $(IMAGE)
+	@./scripts/test.sh $(IMAGE) $(VARIANT)
 
 sbom:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
-	@./scripts/sbom.sh $(IMAGE)
+	@./scripts/sbom.sh $(IMAGE) $(VARIANT)
 
 scan:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
-	@./scripts/scan.sh $(IMAGE)
+	@./scripts/scan.sh $(IMAGE) $(VARIANT)
 
 push:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
-	@./scripts/push.sh $(IMAGE)
+	@./scripts/push.sh $(IMAGE) $(VARIANT)
 
 sign:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
-	@./scripts/sign.sh $(IMAGE)
+	@./scripts/sign.sh $(IMAGE) $(VARIANT)
 
 verify:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
-	@./scripts/verify.sh $(IMAGE)
+	@./scripts/verify.sh $(IMAGE) $(VARIANT)
 
 # Upload the CycloneDX SBOM to Dependency-Track (needs DTRACK_URL/DTRACK_API_KEY).
 upload-sbom:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
-	@./scripts/upload-sbom.sh $(IMAGE)
+	@./scripts/upload-sbom.sh $(IMAGE) $(VARIANT)
 
 # Local "everything but publish": build, smoke test, scan gate, SBOM.
 publish:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
-	@./scripts/build.sh $(IMAGE)
-	@./scripts/test.sh $(IMAGE)
-	@./scripts/scan.sh $(IMAGE)
-	@./scripts/sbom.sh $(IMAGE)
+	@./scripts/build.sh $(IMAGE) $(VARIANT)
+	@./scripts/test.sh $(IMAGE) $(VARIANT)
+	@./scripts/scan.sh $(IMAGE) $(VARIANT)
+	@./scripts/sbom.sh $(IMAGE) $(VARIANT)
 
 build-all:
 	@for img in $(IMAGES); do ./scripts/build.sh $$img || exit 1; done

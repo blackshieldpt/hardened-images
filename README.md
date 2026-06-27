@@ -74,6 +74,20 @@ cosign verify-attestation "$IMAGE" --type slsaprovenance1 \
 gh attestation verify "oci://$IMAGE" --owner blackshieldpt
 ```
 
+## Dev variants
+
+Every image also ships a `-dev` variant — the same hardened build **plus a shell
+(`/bin/sh`, bash), `apk`, and a small toolchain** — for debugging. Tags:
+`:<version>-dev`, `:latest-dev`, `:<version>-dev-<commit>`.
+
+Dev variants are keyless-signed, SBOM'd, and attested like prod, but their scan
+is **advisory, not gated** (a shell + compiler inevitably carries CVEs) and they
+are not committed-lock pinned. **Don't run `-dev` images in production** — use
+them only to exec in and debug; the un-suffixed tags are the hardened artifact.
+
+Build one locally with `make build IMAGE=<name> VARIANT=dev` (likewise `test`,
+`scan`, etc.).
+
 ## Building locally
 
 Requires `docker apko melange bubblewrap cosign syft grype trivy jq` (see
