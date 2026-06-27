@@ -1,0 +1,8 @@
+.env
+reports/
+packages/
+*.tar
+sbom-*.json
+melange.rsa
+melange.rsa.pub
+*.key

@@ -1,0 +1,23 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/blackshieldpt/hardened-images/vex/EXAMPLE-0001",
+  "author": "Blackshield Security <security@blackshield.pt>",
+  "timestamp": "2026-06-27T00:00:00Z",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": { "name": "CVE-0000-00000" },
+      "products": [
+        {
+          "@id": "pkg:oci/EXAMPLE?repository_url=ghcr.io/blackshieldpt/EXAMPLE",
+          "subcomponents": [
+            { "@id": "pkg:apk/wolfi/EXAMPLE-PACKAGE" }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "EXAMPLE: the affected function is never reached in this configuration. Replace this file with a real waiver; see vex/README.md."
+    }
+  ]
+}
