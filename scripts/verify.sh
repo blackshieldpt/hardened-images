@@ -37,6 +37,15 @@ else
     echo "==> Verifying with OIDC identity"
 fi
 
+# Full verification (default) checks the Rekor transparency log, which time-binds
+# the short-lived keyless cert. VERIFY_IGNORE_TLOG=1 skips that query — used only
+# for the in-pipeline self-check right after signing (no Rekor dependency, no
+# stalls); consumers should always verify with the tlog (see README).
+if [ "${VERIFY_IGNORE_TLOG:-}" = "1" ]; then
+    VERIFY_ARGS+=(--insecure-ignore-tlog)
+    echo "==> (skipping transparency-log check — self-check mode)"
+fi
+
 echo "==> Verifying signature for ${REF}"
 cosign verify "${VERIFY_ARGS[@]}" "${REF}"
 
