@@ -47,6 +47,9 @@ jobs:
 
       - name: Install build tools
         run: |
+          # Ubuntu 24.04 runners block unprivileged user namespaces (AppArmor),
+          # which melange's bubblewrap sandbox needs. Re-enable it.
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
           sudo apt-get update -qq && sudo apt-get install -y -qq bubblewrap jq
           for tool in apko melange; do
             case $tool in apko) ver=1.2.19;; melange) ver=0.54.0;; esac
