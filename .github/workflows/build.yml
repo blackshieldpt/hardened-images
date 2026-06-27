@@ -2,8 +2,14 @@ name: build
 
 on:
   pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
   push:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
   schedule:
     # Weekly: rebuild the pinned (committed-lockfile) set and re-scan it against
     # current vulnerability data. The gate fails if a pinned package is now
