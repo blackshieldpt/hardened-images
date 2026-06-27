@@ -60,14 +60,23 @@ jobs:
       - name: SBOM
         run: make sbom IMAGE=${{ matrix.image }}
 
+      - name: Upload SBOM artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-${{ matrix.image }}
+          path: reports/${{ matrix.image }}/sbom-*.json
+          if-no-files-found: error
+
       # ---- Publish: push + sign + attest, only off PRs ----
-      - name: Detect mirror config
+      - name: Detect optional integrations
         id: cfg
         if: ${{ github.event_name != 'pull_request' }}
         env:
           MIRROR_REGISTRY: ${{ secrets.MIRROR_REGISTRY }}
+          DTRACK_URL: ${{ secrets.DTRACK_URL }}
         run: |
           [ -n "$MIRROR_REGISTRY" ] && echo "mirror=true" >> "$GITHUB_OUTPUT" || echo "mirror=false" >> "$GITHUB_OUTPUT"
+          [ -n "$DTRACK_URL" ] && echo "dtrack=true" >> "$GITHUB_OUTPUT" || echo "dtrack=false" >> "$GITHUB_OUTPUT"
 
       - name: Log in to GHCR
         if: ${{ github.event_name != 'pull_request' }}
@@ -115,3 +124,10 @@ jobs:
       - name: Verify signature + attestations
         if: ${{ github.event_name != 'pull_request' }}
         run: make verify IMAGE=${{ matrix.image }}
+
+      - name: Upload SBOM to Dependency-Track
+        if: ${{ github.event_name != 'pull_request' && steps.cfg.outputs.dtrack == 'true' }}
+        env:
+          DTRACK_URL: ${{ secrets.DTRACK_URL }}
+          DTRACK_API_KEY: ${{ secrets.DTRACK_API_KEY }}
+        run: make upload-sbom IMAGE=${{ matrix.image }}

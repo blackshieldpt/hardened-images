@@ -4,7 +4,7 @@ export
 
 IMAGES := nginx
 
-.PHONY: help build test sbom scan push sign verify publish \
+.PHONY: help build test sbom scan push sign verify publish upload-sbom \
         build-all test-all scan-all check-tools
 
 help:
@@ -48,6 +48,11 @@ sign:
 verify:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
 	@./scripts/verify.sh $(IMAGE)
+
+# Upload the CycloneDX SBOM to Dependency-Track (needs DTRACK_URL/DTRACK_API_KEY).
+upload-sbom:
+	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }
+	@./scripts/upload-sbom.sh $(IMAGE)
 
 # Local "everything but publish": build, smoke test, scan gate, SBOM.
 publish:

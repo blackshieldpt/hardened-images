@@ -18,7 +18,8 @@ Published to **`ghcr.io/blackshieldpt/<image>`**.
 ## What each image guarantees
 
 - **Distroless & non-root** — no `/bin/sh`, no apk, runs as UID 65532.
-- **SBOM** — CycloneDX + SPDX, attached as a cosign attestation.
+- **SBOM** — CycloneDX + SPDX, attached as a cosign attestation, uploaded as a
+  downloadable workflow artifact, and (optionally) pushed to Dependency-Track.
 - **Scanned** — Grype + Trivy gate the build at `SEVERITY_THRESHOLD`; exceptions
   are documented OpenVEX waivers, never a disabled scanner (see [`vex/`](vex/)).
 - **Signed (keyless)** — cosign/Fulcio signature bound to this repo's workflow
