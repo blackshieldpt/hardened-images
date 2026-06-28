@@ -48,22 +48,26 @@ fi
 
 # Bound each cosign call so a hung registry/Rekor fetch can't stall the run.
 # timeout signals cosign directly (a leaf process), so SIGKILL actually reaches
-# it and no surviving grandchild keeps the CI step's output pipe open. Skipped
-# when timeout is unavailable (e.g. a bare macOS dev box without coreutils).
+# it. Skipped when timeout is unavailable (e.g. a bare macOS dev box).
 TIMEOUT=()
 if command -v timeout >/dev/null 2>&1; then
     TIMEOUT=(timeout --kill-after=10s "${VERIFY_TIMEOUT:-120}s")
 fi
 
+# Discard cosign's stdout. verify-attestation dumps the entire attestation
+# payload there; with the whole build matrix verifying at once that payload
+# backpressures the CI log pipe and a step can stall for tens of minutes
+# blocking on write(). The verdict is the exit code; the human-readable summary
+# goes to stderr, which we keep.
 echo "==> Verifying signature for ${REF}"
-"${TIMEOUT[@]}" cosign verify "${VERIFY_ARGS[@]}" "${REF}"
+"${TIMEOUT[@]}" cosign verify "${VERIFY_ARGS[@]}" "${REF}" >/dev/null
 
 echo ""
 echo "==> Verifying SBOM attestation"
-"${TIMEOUT[@]}" cosign verify-attestation "${VERIFY_ARGS[@]}" --type cyclonedx "${REF}"
+"${TIMEOUT[@]}" cosign verify-attestation "${VERIFY_ARGS[@]}" --type cyclonedx "${REF}" >/dev/null
 
 echo ""
 echo "==> Verifying SLSA provenance attestation"
-"${TIMEOUT[@]}" cosign verify-attestation "${VERIFY_ARGS[@]}" --type slsaprovenance1 "${REF}"
+"${TIMEOUT[@]}" cosign verify-attestation "${VERIFY_ARGS[@]}" --type slsaprovenance1 "${REF}" >/dev/null
 
 echo "==> Verification passed for ${IMAGE}${SUF}"
