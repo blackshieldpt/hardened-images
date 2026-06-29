@@ -41,6 +41,7 @@ jobs:
           - python
           - postgresql
           - valkey
+          - minio
           - clickhouse
           - nats
           - manticore

@@ -9,6 +9,8 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 ### Added
 - `node24` image: hardened, shell-less Node.js 24 (Wolfi `nodejs-24`), published
   alongside the existing `node` (22) image so both major lines stay available.
+- `minio` image: hardened, shell-less MinIO S3-compatible object storage (Wolfi
+  `minio` + `mc` client), apk-native and lock-pinned.
 
 ### Fixed
 - Melange-repackaged images no longer attempt committed apko lockfiles: their

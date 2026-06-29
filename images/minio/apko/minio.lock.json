@@ -1,0 +1,102 @@
+{
+  "version": "v1",
+  "config": {
+    "name": "images/minio/apko/minio.yaml",
+    "checksum": "sha256-3w6yp0bPaImwCpwBsLguanqqGSBL1J70HIOpvWw5B/s="
+  },
+  "contents": {
+    "keyring": [
+      {
+        "name": "packages.wolfi.dev/os/wolfi-signing.rsa.pub",
+        "url": "https://packages.wolfi.dev/os/wolfi-signing.rsa.pub"
+      }
+    ],
+    "build_repositories": [],
+    "runtime_repositories": [],
+    "repositories": [
+      {
+        "name": "packages.wolfi.dev/os/x86_64",
+        "url": "https://packages.wolfi.dev/os/x86_64/APKINDEX.tar.gz",
+        "architecture": "x86_64"
+      }
+    ],
+    "packages": [
+      {
+        "name": "wolfi-baselayout",
+        "url": "https://packages.wolfi.dev/os/x86_64/wolfi-baselayout-20230201-r29.apk",
+        "version": "20230201-r29",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-1932",
+          "checksum": "sha1-mxVgkD4+r1cSUSeWo6ClkgNR1IA="
+        },
+        "data": {
+          "range": "bytes=1933-13952",
+          "checksum": "sha256-5jOBVeXTWJEbL+Cnxj5Nu4klEL4SEB7IDMzT96rbkkA="
+        },
+        "checksum": "Q1mxVgkD4+r1cSUSeWo6ClkgNR1IA="
+      },
+      {
+        "name": "ca-certificates-bundle",
+        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20260413-r0.apk",
+        "version": "20260413-r0",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-7872",
+          "checksum": "sha1-KyCdEL20IKE+B7DKW97GLXu2QLM="
+        },
+        "data": {
+          "range": "bytes=7873-137518",
+          "checksum": "sha256-foyxNKCWc3UQM3Kq5on+Gt/2d+HlzCUl+1lqiaviWE8="
+        },
+        "checksum": "Q1KyCdEL20IKE+B7DKW97GLXu2QLM="
+      },
+      {
+        "name": "mc",
+        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r15.apk",
+        "version": "0.20250813.083541-r15",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-10059",
+          "checksum": "sha1-SyffnBLmFfDe53woadbVDSHKXgQ="
+        },
+        "data": {
+          "range": "bytes=10060-12377714",
+          "checksum": "sha256-aMpH2NrO5u03gNJ17iHYtPlfaRitf55h34XHLxAsHf4="
+        },
+        "checksum": "Q1SyffnBLmFfDe53woadbVDSHKXgQ="
+      },
+      {
+        "name": "minio",
+        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260604.005411-r1.apk",
+        "version": "0.20260604.005411-r1",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-10428",
+          "checksum": "sha1-vVO+LEPlXJuM6xPZKKYnLQV4MH0="
+        },
+        "data": {
+          "range": "bytes=10429-41406010",
+          "checksum": "sha256-Un0W9bIZvoQMH+y3yutp+zMeONL8FGBmmSHEoEacXxQ="
+        },
+        "checksum": "Q1vVO+LEPlXJuM6xPZKKYnLQV4MH0="
+      }
+    ]
+  }
+}
