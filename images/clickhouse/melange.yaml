@@ -51,6 +51,9 @@ pipeline:
       install -Dm0644 users.xml "${{targets.destdir}}/etc/clickhouse-server/users.xml"
       install -Dm0644 config.d/hardened.xml "${{targets.destdir}}/etc/clickhouse-server/config.d/hardened.xml"
   - runs: |
+      # Entrypoint that honors the CLICKHOUSE_* user/password env-var contract.
+      install -Dm0755 entrypoint.sh "${{targets.destdir}}/usr/local/bin/entrypoint.sh"
+  - runs: |
       "${{targets.destdir}}/usr/bin/clickhouse" local --query "SELECT 1"
 
 update:

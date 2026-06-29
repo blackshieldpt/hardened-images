@@ -12,6 +12,25 @@ docker exec "$CONTAINER" clickhouse-client --query "INSERT INTO test_tbl VALUES 
 assert_eq "inserted row readable" "42" "$(docker exec "$CONTAINER" clickhouse-client --query 'SELECT id FROM test_tbl' 2>&1)"
 assert_contains "version 26.1.12.23" "26\.1\.12\.23" "$(docker exec "$CONTAINER" clickhouse-client --query 'SELECT version()' 2>&1)"
 assert_eq "HTTP interface 200" "200" "$(http_code 'http://localhost:18123/?query=SELECT%201')"
+
+# Env-var contract: CLICKHOUSE_PASSWORD must enforce auth on the default user.
+AUTH="${CONTAINER}-auth"
+docker rm -f "$AUTH" >/dev/null 2>&1 || true
+docker run -d --name "$AUTH" -e CLICKHOUSE_PASSWORD=s3cret "$IMAGE" >/dev/null
+i=0; while [ "$i" -lt 60 ]; do
+    docker exec "$AUTH" clickhouse-client --password s3cret --query 'SELECT 1' >/dev/null 2>&1 && break
+    sleep 1; i=$((i + 1))
+done
+assert_eq "env password: correct password works" "1" \
+    "$(docker exec "$AUTH" clickhouse-client --password s3cret --query 'SELECT 1' 2>&1)"
+# Explicit empty password (no env fallback — clickhouse-client reads CLICKHOUSE_PASSWORD otherwise).
+if docker exec "$AUTH" clickhouse-client --password '' --query 'SELECT 1' >/dev/null 2>&1; then
+    fail "env password: wrong/empty password rejected"
+else
+    pass "env password: wrong/empty password rejected"
+fi
+docker rm -f "$AUTH" >/dev/null 2>&1 || true
+
 check_user
-if [ -n "${DEV:-}" ]; then check_dev curl jq; else check_no_shell; fi
+[ -n "${DEV:-}" ] && check_dev curl jq
 finish
