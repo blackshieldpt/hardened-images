@@ -6,11 +6,18 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.11] - 2026-06-29
+
 ### Added
 - `node24` image: hardened, shell-less Node.js 24 (Wolfi `nodejs-24`), published
   alongside the existing `node` (22) image so both major lines stay available.
 - `minio` image: hardened, shell-less MinIO S3-compatible object storage (Wolfi
   `minio` + `mc` client), apk-native and lock-pinned.
+
+### Changed
+- Bump GitHub Actions off the deprecated Node 20 runtime: `actions/checkout` v5,
+  `actions/upload-artifact` v6, `docker/login-action` v4,
+  `actions/attest-build-provenance` v3.
 
 ### Fixed
 - Melange-repackaged images no longer attempt committed apko lockfiles: their
@@ -18,6 +25,10 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   control hash never matches on rebuild (`control hash mismatch`). They now
   resolve fresh each build; committed lockfiles remain for apk-native images,
   and `relock` / `make lock` skip melange images.
+- Harden the in-pipeline verify step so a hung cosign/Rekor fetch can't stall the
+  build: bound the step with a shell timeout, bound each cosign call, skip the
+  Rekor query in the self-check, and discard cosign payload stdout to clear
+  log-pipe backpressure.
 
 ## [0.1.0] - 2026-06-27
 
@@ -60,5 +71,6 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.11...HEAD
+[0.11]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.0...v0.11
 [0.1.0]: https://github.com/blackshieldpt/hardened-images/releases/tag/v0.1.0
