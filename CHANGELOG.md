@@ -6,7 +6,7 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
-## [0.11.0] - 2026-06-29
+## [0.1.1] - 2026-06-29
 
 ### Added
 - `node24` image: hardened, shell-less Node.js 24 (Wolfi `nodejs-24`), published
@@ -71,6 +71,6 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.11.0...HEAD
-[0.11.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.0...v0.11.0
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/blackshieldpt/hardened-images/releases/tag/v0.1.0
