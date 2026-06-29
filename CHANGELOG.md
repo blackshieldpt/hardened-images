@@ -6,6 +6,16 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-06-29
+
+### Added
+- `clickhouse` image: honor the upstream `CLICKHOUSE_*` env-var contract. A
+  busybox entrypoint generates a `users.d` override from `CLICKHOUSE_USER`,
+  `CLICKHOUSE_PASSWORD` (stored as `password_sha256_hex`),
+  `CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT`, and `CLICKHOUSE_SKIP_USER_SETUP` — so
+  the hardened image is a drop-in for deployments that set a password. No vars
+  set keeps stock (passwordless) behavior; database creation stays app-side.
+
 ## [0.1.2] - 2026-06-29
 
 ### Added
@@ -80,7 +90,8 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/blackshieldpt/hardened-images/releases/tag/v0.1.0
