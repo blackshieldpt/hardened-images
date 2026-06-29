@@ -30,7 +30,7 @@ jobs:
           if [ -n "$KEY" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else
             echo "RELOCK_DEPLOY_KEY not configured — skipping (see README)."; echo "ok=false" >> "$GITHUB_OUTPUT"; fi
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: steps.guard.outputs.ok == 'true'
         with:
           # Write-enabled deploy key so the push triggers the build workflow.

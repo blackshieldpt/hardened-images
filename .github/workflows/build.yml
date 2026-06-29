@@ -54,7 +54,7 @@ jobs:
     env:
       SUF: ${{ matrix.variant == 'dev' && '-dev' || '' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install build tools
         run: |
@@ -94,7 +94,7 @@ jobs:
         run: make sbom IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
 
       - name: Upload SBOM artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: sbom-${{ matrix.image }}-${{ matrix.variant }}
           path: reports/${{ matrix.image }}/sbom-*${{ env.SUF }}.json
@@ -113,7 +113,7 @@ jobs:
 
       - name: Log in to GHCR
         if: ${{ github.event_name != 'pull_request' }}
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -121,7 +121,7 @@ jobs:
 
       - name: Log in to mirror
         if: ${{ github.event_name != 'pull_request' && steps.cfg.outputs.mirror == 'true' }}
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ secrets.MIRROR_REGISTRY }}
           username: ${{ secrets.MIRROR_USERNAME }}
@@ -148,7 +148,7 @@ jobs:
 
       - name: SLSA build provenance (L3)
         if: ${{ github.event_name != 'pull_request' }}
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v3
         with:
           subject-name: ${{ steps.img.outputs.name }}
           subject-digest: ${{ steps.img.outputs.digest }}
