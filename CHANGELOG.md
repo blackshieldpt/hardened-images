@@ -6,6 +6,13 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Added
+- `python-sodium` image: hardened, shell-less Python 3.14 app base — same CPython as
+  `python` plus the system libs web apps load at runtime (`libsodium`,
+  `libmagic`, `ttf-dejavu`) and `ld-linux` so `ctypes.util.find_library` resolves
+  via the apko-generated `/etc/ld.so.cache` and the `ldconfig -p` fallback. Ships
+  no entrypoint (the app sets its own `CMD`) and `HOME=/tmp` for non-root gunicorn.
+
 ## [0.1.1] - 2026-06-29
 
 ### Added

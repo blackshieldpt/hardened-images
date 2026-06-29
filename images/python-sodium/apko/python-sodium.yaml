@@ -1,0 +1,68 @@
+# Hardened Python app base (apko) — Wolfi python-3.14, shell-less, non-root.
+# Like the `python` image but carries system libs commonly needed by web apps
+# (libsodium for pysodium, libmagic, DejaVu fonts) and ships no entrypoint so the
+# downstream image sets its own CMD (e.g. gunicorn).
+contents:
+  repositories:
+    - https://packages.wolfi.dev/os
+  keyring:
+    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+  packages:
+    - wolfi-baselayout
+    - python-3.14
+    - py3.14-pip
+    - ca-certificates-bundle
+    # System libraries resolved at runtime via ctypes.util.find_library / dlopen.
+    - libsodium
+    - libmagic
+    - ttf-dejavu
+    # ldconfig + /etc/ld.so.cache (generated at build by the ld-linux trigger) so
+    # ctypes.util.find_library('sodium') resolves; CPython shells out to
+    # /sbin/ldconfig -p as its fallback when the cache lookup misses.
+    - ld-linux
+
+accounts:
+  groups:
+    - groupname: nonroot
+      gid: 65532
+  users:
+    - username: nonroot
+      uid: 65532
+      gid: 65532
+  run-as: 65532
+
+# No entrypoint: the downstream image / `docker run` supplies the command
+# (the app sets its own CMD, e.g. gunicorn).
+entrypoint:
+  command: ""
+
+work-dir: /app
+
+environment:
+  PATH: /usr/bin:/bin:/sbin:/usr/sbin
+  LANG: C.UTF-8
+  PYTHONDONTWRITEBYTECODE: "1"
+  PYTHONUNBUFFERED: "1"
+  # Non-root needs a writable HOME (gunicorn creates its control socket there).
+  HOME: /tmp
+
+paths:
+  - path: /app
+    type: directory
+    uid: 65532
+    gid: 65532
+    permissions: 0o755
+  - path: /tmp
+    type: directory
+    uid: 65532
+    gid: 65532
+    permissions: 0o1777
+
+annotations:
+  org.opencontainers.image.title: python-sodium
+  org.opencontainers.image.description: Hardened shell-less Python 3.14 app base (libsodium, libmagic, fonts) built on Wolfi
+  org.opencontainers.image.vendor: Blackshield
+  org.opencontainers.image.licenses: PSF-2.0
+
+archs:
+  - x86_64

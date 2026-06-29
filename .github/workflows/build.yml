@@ -39,6 +39,7 @@ jobs:
           - node24
           - go
           - python
+          - python-sodium
           - postgresql
           - valkey
           - minio

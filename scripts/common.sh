@@ -35,7 +35,7 @@ variant_suffix() { [ "${1:-prod}" = dev ] && printf -- "-dev" || true; }
 dev_packages_for() {
     local base="busybox bash apk-tools wget"
     case "$1" in
-        node|node24|python|go) echo "$base build-base git pkgconf glibc-dev" ;;
+        node|node24|python|python-sodium|go) echo "$base build-base git pkgconf glibc-dev" ;;
         nginx|mailpit) echo "$base curl openssl" ;;
         *)             echo "$base curl jq" ;;
     esac
@@ -44,7 +44,7 @@ dev_packages_for() {
 # Image-specific tools a dev variant must expose on PATH (asserted by tests).
 dev_tools_for() {
     case "$1" in
-        node|node24|python|go) echo "gcc git" ;;
+        node|node24|python|python-sodium|go) echo "gcc git" ;;
         nginx|mailpit) echo "curl openssl" ;;
         *)             echo "curl jq" ;;
     esac
