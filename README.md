@@ -91,15 +91,15 @@ Build one locally with `make build IMAGE=<name> VARIANT=dev` (likewise `test`,
 ## Building locally
 
 Requires `docker apko melange bubblewrap cosign syft grype trivy jq` (see
-`make check-tools`). melange (used by the 8 repackaged-source images) needs
-bubblewrap for its build sandbox.
+`make check-tools`). melange (used by the 9 images that build a package from
+source or ship a melange-packaged entrypoint) needs bubblewrap for its build sandbox.
 
 ```sh
-make build  IMAGE=nginx   # apko build from the committed lockfile + provenance
-make test   IMAGE=nginx   # smoke test
-make scan   IMAGE=nginx   # Grype + Trivy gate (honors vex/)
-make sbom   IMAGE=nginx
-make lock   IMAGE=nginx   # re-resolve + update images/nginx/apko/nginx.lock.json
+make build  IMAGE=valkey   # apko build from the committed lockfile + provenance
+make test   IMAGE=valkey   # smoke test
+make scan   IMAGE=valkey   # Grype + Trivy gate (honors vex/)
+make sbom   IMAGE=valkey
+make lock   IMAGE=valkey   # re-resolve + update images/valkey/apko/valkey.lock.json
 ```
 
 apk-native images build from the **committed** `images/<name>/apko/<name>.lock.json`;

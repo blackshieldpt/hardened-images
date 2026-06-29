@@ -1,0 +1,30 @@
+# Ships the hardened nginx entrypoint (runtime envsubst templating) plus a
+# conf.d-include nginx config and the default-server template, as an apk so apko
+# can install them. Files are read from images/nginx via --source-dir.
+# Note: adding melange moves nginx off committed-lock pinning — it now resolves
+# its package set fresh each build, like the other melange-based images.
+package:
+  name: nginx-entrypoint
+  version: "1.0.0"
+  epoch: 0
+  description: "Hardened nginx entrypoint + conf.d-include config (runtime envsubst templating)"
+  copyright:
+    - license: BSD-2-Clause
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+
+pipeline:
+  - runs: |
+      install -Dm0755 docker-entrypoint.sh "${{targets.destdir}}/usr/local/bin/docker-entrypoint.sh"
+      install -Dm0644 nginx-hardened.conf "${{targets.destdir}}/etc/nginx/nginx-hardened.conf"
+      install -Dm0644 templates/default.conf.template "${{targets.destdir}}/etc/nginx/templates/default.conf.template"
+  - runs: |
+      test -x "${{targets.destdir}}/usr/local/bin/docker-entrypoint.sh"
+      head -1 "${{targets.destdir}}/usr/local/bin/docker-entrypoint.sh"
