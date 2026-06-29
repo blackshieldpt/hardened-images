@@ -36,6 +36,7 @@ jobs:
         image:
           - nginx
           - node
+          - node24
           - go
           - python
           - postgresql

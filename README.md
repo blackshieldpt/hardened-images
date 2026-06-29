@@ -9,8 +9,8 @@ entirely on GitHub Actions.
 
 ## Images
 
-Published to **`ghcr.io/blackshieldpt/<image>`** — 14 images: nginx, node, go,
-python, postgresql, valkey, clickhouse, nats, manticore, mailpit, redpanda,
+Published to **`ghcr.io/blackshieldpt/<image>`** — 15 images: nginx, node, node24,
+go, python, postgresql, valkey, clickhouse, nats, manticore, mailpit, redpanda,
 kafka, zookeeper, etcd.
 
 Each build pushes three tags:

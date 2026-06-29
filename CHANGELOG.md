@@ -6,6 +6,10 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Added
+- `node24` image: hardened, shell-less Node.js 24 (Wolfi `nodejs-24`), published
+  alongside the existing `node` (22) image so both major lines stay available.
+
 ### Fixed
 - Melange-repackaged images no longer attempt committed apko lockfiles: their
   package is signed with an ephemeral per-build key, so a committed lock's
