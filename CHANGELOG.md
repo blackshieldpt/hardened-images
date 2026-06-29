@@ -6,6 +6,8 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-06-29
+
 ### Added
 - `python-sodium` image: hardened, shell-less Python 3.14 app base — same CPython as
   `python` plus the system libs web apps load at runtime (`libsodium`,
@@ -78,6 +80,7 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/blackshieldpt/hardened-images/releases/tag/v0.1.0
