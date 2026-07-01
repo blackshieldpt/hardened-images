@@ -308,22 +308,22 @@
       },
       {
         "name": "libffi",
-        "url": "https://packages.wolfi.dev/os/x86_64/libffi-3.6.0-r1.apk",
-        "version": "3.6.0-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/libffi-3.6.0-r2.apk",
+        "version": "3.6.0-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8670",
-          "checksum": "sha1-XUqtJZyA0C5RivQq0515yJBvvnQ="
+          "range": "bytes=0-8776",
+          "checksum": "sha1-tZJTaq4/xek1geiCMhXyhdmOnJI="
         },
         "data": {
-          "range": "bytes=8671-42788",
-          "checksum": "sha256-xb5dpcvrhDtEfNbs0GET/+OU3I9M5+9GX/BOqNdlvnM="
+          "range": "bytes=8777-42892",
+          "checksum": "sha256-Y8L+BXYRK/lWOwg2OfCH1MC5FuIXMmcfUyG4r9Fct1E="
         },
-        "checksum": "Q1XUqtJZyA0C5RivQq0515yJBvvnQ="
+        "checksum": "Q1tZJTaq4/xek1geiCMhXyhdmOnJI="
       },
       {
         "name": "zlib",
