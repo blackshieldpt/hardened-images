@@ -80,60 +80,60 @@
       },
       {
         "name": "glibc-locale-posix",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.43-r9.apk",
-        "version": "2.43-r9",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.43-r10.apk",
+        "version": "2.43-r10",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-12840",
-          "checksum": "sha1-H64y8mukP523u0pCZf8hfFWbbRo="
+          "range": "bytes=0-12856",
+          "checksum": "sha1-AHrpHmVFsPmZUTs3YB5soMuknCI="
         },
         "data": {
-          "range": "bytes=12841-89581",
-          "checksum": "sha256-Uss+kZ8QQvAIOljUCQsmOCzkr9mDf86+RmdJcmZkHBc="
+          "range": "bytes=12857-89603",
+          "checksum": "sha256-XqPCiX6YAmLwbGBf2UhbYIa+aQjfY7XAymVVngOdbJY="
         },
-        "checksum": "Q1H64y8mukP523u0pCZf8hfFWbbRo="
+        "checksum": "Q1AHrpHmVFsPmZUTs3YB5soMuknCI="
       },
       {
         "name": "glibc",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.43-r9.apk",
-        "version": "2.43-r9",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.43-r10.apk",
+        "version": "2.43-r10",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13094",
-          "checksum": "sha1-55FrWEeQ3Y3FogkXEzPPmk+3DTM="
+          "range": "bytes=0-13103",
+          "checksum": "sha1-bwZp7SQF0qZ3H9excupBlBD15KM="
         },
         "data": {
-          "range": "bytes=13095-3069364",
-          "checksum": "sha256-UODeJ9r02RcR6ys5AtpxdTOz86nLL5T70lcPmbaMdLI="
+          "range": "bytes=13104-3077169",
+          "checksum": "sha256-N2iZ+DjM/9mPrYnbIHilYvj+srUpbT1u7H6CxXAPMXU="
         },
-        "checksum": "Q155FrWEeQ3Y3FogkXEzPPmk+3DTM="
+        "checksum": "Q1bwZp7SQF0qZ3H9excupBlBD15KM="
       },
       {
         "name": "ld-linux",
-        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.43-r9.apk",
-        "version": "2.43-r9",
+        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.43-r10.apk",
+        "version": "2.43-r10",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-12891",
-          "checksum": "sha1-QXR2tE2zmZfHSFVq6FdarWn4TSI="
+          "range": "bytes=0-12889",
+          "checksum": "sha1-Fb2t7Z+xZ79KFb38qK+ygHHVRAU="
         },
         "data": {
-          "range": "bytes=12892-147121",
-          "checksum": "sha256-2MetOLJhj/fCCOaw4gPiNRO/dQZSA960MbfYuBUJS9Y="
+          "range": "bytes=12890-147121",
+          "checksum": "sha256-MirxT24F9VYYVYYKpihD63+VGYsaDhtqdcPC+SBUhN4="
         },
-        "checksum": "Q1QXR2tE2zmZfHSFVq6FdarWn4TSI="
+        "checksum": "Q1Fb2t7Z+xZ79KFb38qK+ygHHVRAU="
       },
       {
         "name": "libmagic",
@@ -403,22 +403,22 @@
       },
       {
         "name": "sqlite-libs",
-        "url": "https://packages.wolfi.dev/os/x86_64/sqlite-libs-3.53.3-r0.apk",
-        "version": "3.53.3-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/sqlite-libs-3.53.3-r1.apk",
+        "version": "3.53.3-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-5168",
-          "checksum": "sha1-tJ7DnnhwMzt8gBk/bAznlK0aWe4="
+          "range": "bytes=0-5175",
+          "checksum": "sha1-sFj+lgA2MA7BdvVhNDj8lBfDGn4="
         },
         "data": {
-          "range": "bytes=5169-978384",
-          "checksum": "sha256-HI6LwiorM4UnmYXJ0nRzyjf/h8/zgekNc0jrSj0EqH4="
+          "range": "bytes=5176-978392",
+          "checksum": "sha256-9cMqdm1RmP6Ewo8LiF00V3hJ4l6i4PPkQ4+mtgoR5rg="
         },
-        "checksum": "Q1tJ7DnnhwMzt8gBk/bAznlK0aWe4="
+        "checksum": "Q1sFj+lgA2MA7BdvVhNDj8lBfDGn4="
       },
       {
         "name": "libuuid",
