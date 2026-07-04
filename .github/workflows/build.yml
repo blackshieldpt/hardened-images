@@ -45,6 +45,7 @@ jobs:
           - minio
           - clickhouse
           - nats
+          - openbao
           - manticore
           - mailpit
           - redpanda
