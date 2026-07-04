@@ -6,6 +6,14 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-07-04
+
+### Added
+- `openbao` image: hardened, shell-less OpenBao 2.5.4 (the Vault-compatible
+  secrets manager, Wolfi `openbao`), non-root with a single-node `file`-storage
+  config shipped via a small melange package. No in-image TLS (terminate
+  upstream); needs no `mlock`/`CAP_IPC_LOCK`.
+
 ## [0.1.4] - 2026-06-29
 
 ### Added
@@ -104,7 +112,8 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.4...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.5...HEAD
+[0.1.5]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.1...v0.1.2
