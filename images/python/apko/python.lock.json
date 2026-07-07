@@ -80,60 +80,60 @@
       },
       {
         "name": "glibc-locale-posix",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.43-r10.apk",
-        "version": "2.43-r10",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.43-r11.apk",
+        "version": "2.43-r11",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-12856",
-          "checksum": "sha1-AHrpHmVFsPmZUTs3YB5soMuknCI="
+          "range": "bytes=0-13015",
+          "checksum": "sha1-npirsSp9Qt3Aa1n8CaC2i99nv8A="
         },
         "data": {
-          "range": "bytes=12857-89603",
-          "checksum": "sha256-XqPCiX6YAmLwbGBf2UhbYIa+aQjfY7XAymVVngOdbJY="
+          "range": "bytes=13016-89758",
+          "checksum": "sha256-qXzcGBEELIJays9BPEo77JB6Qr5gMKFbZteJHEuthAI="
         },
-        "checksum": "Q1AHrpHmVFsPmZUTs3YB5soMuknCI="
+        "checksum": "Q1npirsSp9Qt3Aa1n8CaC2i99nv8A="
       },
       {
         "name": "glibc",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.43-r10.apk",
-        "version": "2.43-r10",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.43-r11.apk",
+        "version": "2.43-r11",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13103",
-          "checksum": "sha1-bwZp7SQF0qZ3H9excupBlBD15KM="
+          "range": "bytes=0-13257",
+          "checksum": "sha1-XSTHGW6PUOUepKQvlUCPEpu+my0="
         },
         "data": {
-          "range": "bytes=13104-3077169",
-          "checksum": "sha256-N2iZ+DjM/9mPrYnbIHilYvj+srUpbT1u7H6CxXAPMXU="
+          "range": "bytes=13258-3077429",
+          "checksum": "sha256-C538Z51QWuZPy/fxQGBCBbpulG8dVbn1OeaW+JsKoXQ="
         },
-        "checksum": "Q1bwZp7SQF0qZ3H9excupBlBD15KM="
+        "checksum": "Q1XSTHGW6PUOUepKQvlUCPEpu+my0="
       },
       {
         "name": "ld-linux",
-        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.43-r10.apk",
-        "version": "2.43-r10",
+        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.43-r11.apk",
+        "version": "2.43-r11",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-12889",
-          "checksum": "sha1-Fb2t7Z+xZ79KFb38qK+ygHHVRAU="
+          "range": "bytes=0-13051",
+          "checksum": "sha1-Dc94e4JF2fG8/SX4PWCAtLjItu4="
         },
         "data": {
-          "range": "bytes=12890-147121",
-          "checksum": "sha256-MirxT24F9VYYVYYKpihD63+VGYsaDhtqdcPC+SBUhN4="
+          "range": "bytes=13052-147283",
+          "checksum": "sha256-oI72DIuJLqlUM/LSFYKdgbxsaYUZgfThezkV95CHQPk="
         },
-        "checksum": "Q1Fb2t7Z+xZ79KFb38qK+ygHHVRAU="
+        "checksum": "Q1Dc94e4JF2fG8/SX4PWCAtLjItu4="
       },
       {
         "name": "gdbm",
