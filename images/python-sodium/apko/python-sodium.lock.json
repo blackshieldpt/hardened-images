@@ -345,25 +345,6 @@
         "checksum": "Q1xMbaAqRKwa/Tx0fRXhz88d+0V3M="
       },
       {
-        "name": "libffi",
-        "url": "https://packages.wolfi.dev/os/x86_64/libffi-3.6.0-r2.apk",
-        "version": "3.6.0-r2",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-8776",
-          "checksum": "sha1-tZJTaq4/xek1geiCMhXyhdmOnJI="
-        },
-        "data": {
-          "range": "bytes=8777-42892",
-          "checksum": "sha256-Y8L+BXYRK/lWOwg2OfCH1MC5FuIXMmcfUyG4r9Fct1E="
-        },
-        "checksum": "Q1tZJTaq4/xek1geiCMhXyhdmOnJI="
-      },
-      {
         "name": "zlib",
         "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3.2-r3.apk",
         "version": "1.3.2-r3",
@@ -381,6 +362,25 @@
           "checksum": "sha256-GtMaz7tc+6/gw51/jRq2trQH8bshZpL66etBeg87OHE="
         },
         "checksum": "Q1d+xgnhv2qmmnyUpkIEMLv/Ccfts="
+      },
+      {
+        "name": "libffi",
+        "url": "https://packages.wolfi.dev/os/x86_64/libffi-3.7.0-r0.apk",
+        "version": "3.7.0-r0",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-8903",
+          "checksum": "sha1-pYWhDhaYDGpipeiztapAiA9I1oE="
+        },
+        "data": {
+          "range": "bytes=8904-46306",
+          "checksum": "sha256-/ou8r6MZseXlwv0eExzmc+Geiye4DtTNWoTO75cZsr4="
+        },
+        "checksum": "Q1pYWhDhaYDGpipeiztapAiA9I1oE="
       },
       {
         "name": "libexpat1",
