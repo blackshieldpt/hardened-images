@@ -498,22 +498,22 @@
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.6-r1.apk",
-        "version": "3.14.6-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.6-r2.apk",
+        "version": "3.14.6-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13642",
-          "checksum": "sha1-G0Uf6adE9jtDCKR2+PWgDQelDQA="
+          "range": "bytes=0-14106",
+          "checksum": "sha1-7vZAPMVtxleLm3mNgOTwmf7HFxU="
         },
         "data": {
-          "range": "bytes=13643-12962952",
-          "checksum": "sha256-BruxHUXm8L7lB7Za15TZvQbsIti95gEs/6qMhHDa0dM="
+          "range": "bytes=14107-12960621",
+          "checksum": "sha256-+ICr8flySx9yJTEw8mz5ipIaH6BiPifcpVeFZuAAMMw="
         },
-        "checksum": "Q1G0Uf6adE9jtDCKR2+PWgDQelDQA="
+        "checksum": "Q17vZAPMVtxleLm3mNgOTwmf7HFxU="
       },
       {
         "name": "py3.14-setuptools",
@@ -574,22 +574,22 @@
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.6-r1.apk",
-        "version": "3.14.6-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.6-r2.apk",
+        "version": "3.14.6-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13481",
-          "checksum": "sha1-L7n4ZkqJsfLiVdotO2y7YlFEOQA="
+          "range": "bytes=0-13913",
+          "checksum": "sha1-UVjRUaZe3AZenzhhQiaya+eIRis="
         },
         "data": {
-          "range": "bytes=13482-15219",
-          "checksum": "sha256-OGpcJkLH839/iDWgMtg/P7HGc8SQo7EwfMnhaIehYpA="
+          "range": "bytes=13914-15647",
+          "checksum": "sha256-1T4ZEknWEme/UU3Z45bgoZZiEpTLsyJTBP6FvzwN9bM="
         },
-        "checksum": "Q1L7n4ZkqJsfLiVdotO2y7YlFEOQA="
+        "checksum": "Q1UVjRUaZe3AZenzhhQiaya+eIRis="
       },
       {
         "name": "ttf-dejavu",
