@@ -6,6 +6,12 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Added
+- `versitygw` image: hardened, shell-less Versity S3 Gateway 1.6.0, built from
+  source with melange (versitygw isn't packaged in Wolfi), pure-Go/static
+  (CGO disabled). Non-root; defaults to the POSIX backend serving `/data` as S3
+  with a health endpoint at `GET /_health`. No in-image TLS (terminate upstream).
+
 ## [0.1.5] - 2026-07-04
 
 ### Added

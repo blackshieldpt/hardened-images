@@ -52,6 +52,7 @@ jobs:
           - kafka
           - zookeeper
           - etcd
+          - versitygw
         variant: [prod, dev]
     env:
       SUF: ${{ matrix.variant == 'dev' && '-dev' || '' }}

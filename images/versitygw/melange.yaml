@@ -1,0 +1,45 @@
+# Builds versitygw from source (versitygw isn't in Wolfi). Pure-Go, CGO disabled,
+# so the result is a static binary. The bundled Go dependencies in v1.6.0 are
+# already current (golang.org/x/crypto v0.53.0, golang.org/x/net v0.56.0), so no
+# dependency bumping is needed here.
+package:
+  name: versitygw-hardened
+  version: 1.6.0
+  epoch: 0
+  description: "Versity S3 Gateway (built from source)"
+  copyright:
+    - license: Apache-2.0
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+      - ca-certificates-bundle
+      - go
+      - git
+
+pipeline:
+  - uses: git-checkout
+    with:
+      repository: https://github.com/versity/versitygw
+      tag: v${{package.version}}
+      expected-commit: 0aa0f0d4fc7602baa61db3428ad54f866275479c
+  - name: Compile static binary
+    runs: |
+      CGO_ENABLED=0 go build \
+        -ldflags "-s -w -X=main.Version=v${{package.version}}" \
+        -o "${{targets.destdir}}/usr/bin/versitygw" ./cmd/versitygw
+  - runs: |
+      "${{targets.destdir}}/usr/bin/versitygw" --version
+
+update:
+  enabled: true
+  github:
+    identifier: versity/versitygw
+    use-tag: true
+    tag-filter: "v"
+    strip-prefix: "v"

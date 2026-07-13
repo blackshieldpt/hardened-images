@@ -9,9 +9,9 @@ entirely on GitHub Actions.
 
 ## Images
 
-Published to **`ghcr.io/blackshieldpt/<image>`** — 18 images: nginx, node, node24,
+Published to **`ghcr.io/blackshieldpt/<image>`** — 19 images: nginx, node, node24,
 go, python, python-sodium, postgresql, valkey, minio, clickhouse, nats, openbao,
-manticore, mailpit, redpanda, kafka, zookeeper, etcd.
+manticore, mailpit, redpanda, kafka, zookeeper, etcd, versitygw.
 
 Each build pushes three tags:
 
@@ -143,7 +143,7 @@ Until `RELOCK_DEPLOY_KEY` is set, the relock job no-ops.
 2. Set its tag: `VERSION_<name>` in `config.env` for apk-native images (and the
    melange images that pin there); or `package.version` in
    `images/<name>/melange.yaml` for repackaged-source images that declare an
-   `update.github` block (clickhouse, manticore, mailpit, redpanda).
+   `update.github` block (clickhouse, manticore, mailpit, redpanda, versitygw).
 3. For an apk-native image, run `make lock IMAGE=<name>` and commit
    `images/<name>/apko/<name>.lock.json` (melange images skip this — they resolve
    fresh at build).
