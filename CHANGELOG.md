@@ -6,11 +6,15 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-07-13
+
 ### Added
 - `versitygw` image: hardened, shell-less Versity S3 Gateway 1.6.0, built from
   source with melange (versitygw isn't packaged in Wolfi), pure-Go/static
   (CGO disabled). Non-root; defaults to the POSIX backend serving `/data` as S3
   with a health endpoint at `GET /_health`. No in-image TLS (terminate upstream).
+  Its smoke test does an authenticated SigV4 round-trip (create bucket, PUT +
+  GET object, verify body) via a new stdlib-only `scripts/s3-roundtrip.py`.
 
 ## [0.1.5] - 2026-07-04
 
@@ -118,7 +122,8 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.5...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.6...HEAD
+[0.1.6]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.2...v0.1.3
