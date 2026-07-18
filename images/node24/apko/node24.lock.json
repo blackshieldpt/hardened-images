@@ -403,22 +403,22 @@
       },
       {
         "name": "npm",
-        "url": "https://packages.wolfi.dev/os/x86_64/npm-12.0.1-r0.apk",
-        "version": "12.0.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/npm-12.0.1-r1.apk",
+        "version": "12.0.1-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7341",
-          "checksum": "sha1-yKU28MSlLwdR6+zG3KcD+EiWKjs="
+          "range": "bytes=0-7332",
+          "checksum": "sha1-MlpGpYq2xbAYHcBrmc0n+A8mqCc="
         },
         "data": {
-          "range": "bytes=7342-2168764",
-          "checksum": "sha256-2dAHC5K7S5V4seFqifOeFp5jmBLxBZzy5yUyk1rQ/ww="
+          "range": "bytes=7333-2168916",
+          "checksum": "sha256-Sfu8fGL02sdCMDc86/o0QmbAJ/Y/42P7w9LnkQWha4w="
         },
-        "checksum": "Q1yKU28MSlLwdR6+zG3KcD+EiWKjs="
+        "checksum": "Q1MlpGpYq2xbAYHcBrmc0n+A8mqCc="
       }
     ]
   }
