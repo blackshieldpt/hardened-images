@@ -194,27 +194,27 @@
       },
       {
         "name": "ncurses-terminfo-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260711-r0.apk",
-        "version": "6.6.20260711-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260718-r0.apk",
+        "version": "6.6.20260718-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10344",
-          "checksum": "sha1-pVN+YvFtG69jaMZJt1Tqh20wICg="
+          "range": "bytes=0-10349",
+          "checksum": "sha1-ohry9iJ9EPiq1h84PvmLK0L3Ne8="
         },
         "data": {
-          "range": "bytes=10345-117892",
-          "checksum": "sha256-60tsu38al1Llm+/RtctrJ6trjIy+aNm+CwLwZSIN3C0="
+          "range": "bytes=10350-118080",
+          "checksum": "sha256-4MGGnP2I2FqS0SllL0xvWMGCuF6BAUzpjEaQ0k3BFu8="
         },
-        "checksum": "Q1pVN+YvFtG69jaMZJt1Tqh20wICg="
+        "checksum": "Q1ohry9iJ9EPiq1h84PvmLK0L3Ne8="
       },
       {
         "name": "ncurses",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260711-r0.apk",
-        "version": "6.6.20260711-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260718-r0.apk",
+        "version": "6.6.20260718-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
@@ -222,13 +222,13 @@
         },
         "control": {
           "range": "bytes=0-10489",
-          "checksum": "sha1-oPiv8opB0FpEKDHei2gycB7Lcsk="
+          "checksum": "sha1-0gyrR0IeyJCrMsHGLqw8bscyewQ="
         },
         "data": {
-          "range": "bytes=10490-621030",
-          "checksum": "sha256-tq1Y6IreKkDvbO6vHEb/+oysUnBVBfw7uPrxYQ9s3oQ="
+          "range": "bytes=10490-621086",
+          "checksum": "sha256-HrQRncGKYRcErxKaVUr30rsWcK5Xpv4iSCpBMOzPGRI="
         },
-        "checksum": "Q1oPiv8opB0FpEKDHei2gycB7Lcsk="
+        "checksum": "Q10gyrR0IeyJCrMsHGLqw8bscyewQ="
       },
       {
         "name": "readline",
