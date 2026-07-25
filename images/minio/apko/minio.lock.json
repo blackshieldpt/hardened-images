@@ -61,8 +61,8 @@
       },
       {
         "name": "mc",
-        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r17.apk",
-        "version": "0.20250813.083541-r17",
+        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r18.apk",
+        "version": "0.20250813.083541-r18",
         "architecture": "x86_64",
         "signature": {
           "range": "",
@@ -70,32 +70,32 @@
         },
         "control": {
           "range": "bytes=0-10981",
-          "checksum": "sha1-CKBaiRVfj7aa8SV/XrhdS8YlJZw="
+          "checksum": "sha1-u800GAdC8YsIzZ0bYpgz3eal9d0="
         },
         "data": {
-          "range": "bytes=10982-12418904",
-          "checksum": "sha256-WdEDXpbj/oJj5CID2T4RY91WUJndnUCfpq2wpPcrZl4="
+          "range": "bytes=10982-12403174",
+          "checksum": "sha256-7zJyY8UX8XkMCL4setLnS5h0K2kAbXTCSvxYLroWSOw="
         },
-        "checksum": "Q1CKBaiRVfj7aa8SV/XrhdS8YlJZw="
+        "checksum": "Q1u800GAdC8YsIzZ0bYpgz3eal9d0="
       },
       {
         "name": "minio",
-        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260717.120751-r2.apk",
-        "version": "0.20260717.120751-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260717.120751-r3.apk",
+        "version": "0.20260717.120751-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-11297",
-          "checksum": "sha1-qdqRZurZaM+eE1PMi7fHz6X8T3c="
+          "range": "bytes=0-11316",
+          "checksum": "sha1-VpQywKG6sMgke6xZ41uFIUwGChE="
         },
         "data": {
-          "range": "bytes=11298-41490910",
-          "checksum": "sha256-Vy5dPV6qWKDoxfqPBHrAGXm5cK5+L2rNqtODZIEDPbg="
+          "range": "bytes=11317-41508005",
+          "checksum": "sha256-7s+euGl8KfxO3IH6X1TPzQjfij03LF6XDucFx2wc1Ls="
         },
-        "checksum": "Q1qdqRZurZaM+eE1PMi7fHz6X8T3c="
+        "checksum": "Q1VpQywKG6sMgke6xZ41uFIUwGChE="
       }
     ]
   }
