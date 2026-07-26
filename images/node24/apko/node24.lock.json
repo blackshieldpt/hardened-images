@@ -384,22 +384,22 @@
       },
       {
         "name": "node-gyp",
-        "url": "https://packages.wolfi.dev/os/x86_64/node-gyp-13.0.1-r0.apk",
-        "version": "13.0.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/node-gyp-13.0.1-r1.apk",
+        "version": "13.0.1-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-2210",
-          "checksum": "sha1-C32DNFeSJ5bxj32BcGsxpAP2ics="
+          "range": "bytes=0-2204",
+          "checksum": "sha1-PvNs1ILxOMrR493LUTNXL8Vo7k0="
         },
         "data": {
-          "range": "bytes=2211-1899063",
-          "checksum": "sha256-VrfLta7U3AucBQLf209JZ25AJHnj7j+i5eyGwyzrHNI="
+          "range": "bytes=2205-1910497",
+          "checksum": "sha256-OPYqQDnsl+4xP5UBhkJOnAHRib3Vr54Q4EFgBWkksVg="
         },
-        "checksum": "Q1C32DNFeSJ5bxj32BcGsxpAP2ics="
+        "checksum": "Q1PvNs1ILxOMrR493LUTNXL8Vo7k0="
       },
       {
         "name": "npm",
