@@ -80,6 +80,10 @@ Every image also ships a `-dev` variant — the same hardened build **plus a she
 (`/bin/sh`, bash), `apk`, and a small toolchain** — for debugging. Tags:
 `:<version>-dev`, `:latest-dev`, `:<version>-dev-<commit>`.
 
+A dev variant is also where a build-time package manager lives: `python-sodium` ships
+`pip` there and not in its runtime image, so app dependencies are installed in a
+`-dev` builder stage and the result copied into the hardened image.
+
 Dev variants are keyless-signed, SBOM'd, and attested like prod, but their scan
 is **advisory, not gated** (a shell + compiler inevitably carries CVEs) and they
 are not committed-lock pinned. **Don't run `-dev` images in production** — use

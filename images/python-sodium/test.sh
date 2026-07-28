@@ -8,7 +8,16 @@ assert_eq "python executes code" "python-ok" "$("${PY[@]}" -c "print('python-ok'
 assert_contains "python 3.14" "3\.14" "$("${PY[@]}" --version 2>&1)"
 assert_eq "runs as UID 65532" "65532" "$("${PY[@]}" -c 'import os; print(os.getuid())' 2>&1)"
 assert_eq "HOME is writable /tmp" "/tmp" "$("${PY[@]}" -c 'import os; print(os.environ["HOME"])' 2>&1)"
-assert_rc0 "pip available" docker run --rm --entrypoint pip3.14 "$IMAGE" --version
+# pip ships in the dev variant only: in a shell-less runtime it would be the
+# readiest arbitrary-code-fetch-and-execute primitive available to the app user.
+if [ -n "${DEV:-}" ]; then
+    assert_rc0 "dev: pip available" docker run --rm --entrypoint pip3.14 "$IMAGE" --version
+else
+    assert_eq "no pip binary" "False" \
+        "$("${PY[@]}" -c 'import glob; print(bool(glob.glob("/usr/bin/pip*")))' 2>&1)"
+    assert_eq "no pip module" "False" \
+        "$("${PY[@]}" -c 'import importlib.util as u; print(u.find_spec("pip") is not None)' 2>&1)"
+fi
 
 # No default entrypoint: the downstream image / run command supplies the CMD.
 assert_eq "no default entrypoint" "[]" \

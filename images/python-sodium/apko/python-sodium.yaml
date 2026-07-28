@@ -10,8 +10,11 @@ contents:
   packages:
     - wolfi-baselayout
     - python-3.14
-    - py3.14-pip
     - ca-certificates-bundle
+    # No pip in the runtime image: it is an installer with network reach, and in a
+    # shell-less image it is the readiest way to fetch and execute arbitrary code
+    # (`pip install --target /tmp` works even under a read-only rootfs). Deps belong
+    # in a builder stage on the :*-dev variant, which carries pip — see README.
     # System libraries resolved at runtime via ctypes.util.find_library / dlopen.
     - libsodium
     - libmagic

@@ -2,7 +2,7 @@
   "version": "v1",
   "config": {
     "name": "images/python-sodium/apko/python-sodium.yaml",
-    "checksum": "sha256-bn7zQ9Cip4rvvZaBwy3c42zbzypChqdXzN96D4ByI3g="
+    "checksum": "sha256-IqKPEnias0q7iecbFF6+oRZV3nUfIzRpdxGIdyYcJJg="
   },
   "contents": {
     "keyring": [
@@ -514,63 +514,6 @@
           "checksum": "sha256-scDQkNNeGQr3KG+KyTBsTHJ7pLKOI+raoEDog4l6K10="
         },
         "checksum": "Q1RW0+M4KPCbk5VS/tKGPxgAnwYaE="
-      },
-      {
-        "name": "py3.14-setuptools",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-setuptools-83.0.0-r0.apk",
-        "version": "83.0.0-r0",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-8709",
-          "checksum": "sha1-I5CIUisxOG68fDZv9bT9fEjlGL0="
-        },
-        "data": {
-          "range": "bytes=8710-2526829",
-          "checksum": "sha256-y/C4zUrdcCyLOKB71yFmqRfYnheMhjEm42Ttxhh0flo="
-        },
-        "checksum": "Q1I5CIUisxOG68fDZv9bT9fEjlGL0="
-      },
-      {
-        "name": "py3.14-pip-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-pip-base-26.1.2-r1.apk",
-        "version": "26.1.2-r1",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-12652",
-          "checksum": "sha1-ceYw1sc+q0PVFpW69ca2STEwV/g="
-        },
-        "data": {
-          "range": "bytes=12653-4143286",
-          "checksum": "sha256-dn+OABf5wkr5Lw6Vq0IntUec+f0ZWyAxtNu36FB4Sgo="
-        },
-        "checksum": "Q1ceYw1sc+q0PVFpW69ca2STEwV/g="
-      },
-      {
-        "name": "py3.14-pip",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-pip-26.1.2-r1.apk",
-        "version": "26.1.2-r1",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-12668",
-          "checksum": "sha1-yDNc/ryQMfadtyz6zmAIHTF6qdc="
-        },
-        "data": {
-          "range": "bytes=12669-14592",
-          "checksum": "sha256-VQOQowPanRj/j//BqxnhjYy87hiNza8fsTbCLJ8QQII="
-        },
-        "checksum": "Q1yDNc/ryQMfadtyz6zmAIHTF6qdc="
       },
       {
         "name": "python-3.14",

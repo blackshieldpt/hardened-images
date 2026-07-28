@@ -6,6 +6,15 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Changed
+- `python-sodium`: **pip is no longer in the runtime image** — it moved to the `-dev`
+  variant. An installer with network reach is the readiest
+  arbitrary-code-fetch-and-execute primitive in an otherwise shell-less image, and
+  nothing needs it once the app is built. Install dependencies in a `-dev` builder
+  stage and copy `site-packages` across (see the image README). Dropping `py3.14-pip`
+  also drops `py3.14-setuptools`, so `pkg_resources` / `_distutils_hack` are gone from
+  the runtime image unless the app's own dependency tree installs setuptools.
+
 ## [0.1.6] - 2026-07-13
 
 ### Added

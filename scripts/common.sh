@@ -35,7 +35,10 @@ variant_suffix() { [ "${1:-prod}" = dev ] && printf -- "-dev" || true; }
 dev_packages_for() {
     local base="busybox bash apk-tools wget"
     case "$1" in
-        node|node24|python|python-sodium|go) echo "$base build-base git pkgconf glibc-dev" ;;
+        # python-sodium keeps pip out of its runtime image, so the dev variant is
+        # where it lives — that is the stage apps install their dependencies in.
+        python-sodium) echo "$base build-base git pkgconf glibc-dev py3.14-pip" ;;
+        node|node24|python|go) echo "$base build-base git pkgconf glibc-dev" ;;
         nginx|mailpit) echo "$base curl openssl" ;;
         *)             echo "$base curl jq" ;;
     esac
