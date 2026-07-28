@@ -1,12 +1,12 @@
 # Builds mailpit from source (instead of repackaging the upstream release binary),
-# so the bundled Go dependencies are current — golang.org/x/crypto and
-# golang.org/x/net are bumped past the GO-2026 criticals shipped in the v1.30.0
-# release binary. Pure-Go (CGO disabled); the Vue UI is built with esbuild via npm
+# so the bundled Go dependencies are current — golang.org/x/crypto, x/net, x/text
+# and x/image are bumped past the GO-2026 advisories shipped in the release binary.
+# Pure-Go (CGO disabled); the Vue UI is built with esbuild via npm
 # and embedded (server/embed.go: //go:embed ui -> server/ui/dist).
 package:
   name: mailpit-hardened
-  version: 1.30.0
-  epoch: 1
+  version: 1.30.6
+  epoch: 0
   description: "Mailpit SMTP testing server (built from source, patched deps)"
   copyright:
     - license: MIT
@@ -30,14 +30,15 @@ pipeline:
     with:
       repository: https://github.com/axllent/mailpit
       tag: v${{package.version}}
-      expected-commit: af8756a32cf7ecf06bef109c1348b783f1a239ee
+      expected-commit: a58a22122eb5259b24e34bd33b7274d046606364
   - name: Build the embedded web UI
     runs: |
       npm ci
       npm run package
   - name: Bump vulnerable Go dependencies
     runs: |
-      go get golang.org/x/crypto@v0.52.0 golang.org/x/net@v0.55.0
+      go get golang.org/x/crypto@v0.52.0 golang.org/x/net@v0.55.0 \
+        golang.org/x/text@v0.39.0 golang.org/x/image@v0.43.0
       go mod tidy
   - name: Compile static binary
     runs: |

@@ -6,7 +6,30 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Security
+
+- Swept every repackaged-source image for vendored code that ships inside a
+  binary or tree the apk/Go scanners cannot see — the class of problem the
+  `redpanda` krb5 and `manticore` PHP findings both belong to. Results:
+  - `clickhouse` **statically links OpenSSL 3.5.6**, which is affected by fifteen
+    CVEs fixed upstream in OpenSSL 3.5.7 (including CVE-2026-45447, a heap
+    use-after-free in `PKCS7_verify()`, and CVE-2026-42768, a Bleichenbacher
+    oracle in `CMS_decrypt()`). Both scanners report the image completely clean.
+    **Not fixed here** — see the note below.
+  - `redpanda` bundles its own glibc 2.35, OpenSSL and krb5 under
+    `/opt/redpanda/lib`. Its OpenSSL is **3.5.7**, i.e. current.
+  - `mailpit` and `versitygw` are pure-Go static builds, so their dependencies
+    stay scanner-visible; both are patched below.
+  - The config-only melange images (`kafka`, `nats`, `nginx`, `openbao`,
+    `postgresql`, `zookeeper`) ship no upstream binaries — their software comes
+    from Wolfi apks and is fully visible.
+
 ### Changed
+- `mailpit`: 1.30.0 → 1.30.6, clearing GHSA-28pq-6qxg-wg5r and GHSA-w4mc-hhc6-xp28
+  in mailpit itself (fixed in 1.30.1 / 1.30.2), and the dependency patch now also
+  bumps `x/text` and `x/image` — eight further High/Medium advisories. Scans clean.
+- `versitygw`: dependency patch added to bump `x/text` past GO-2026-5970. The image
+  built from v1.6.0 sources otherwise stays as-is. Scans clean.
 - `manticore`: the upstream bundle's PHP tools (`manticore-backup`, `manticore-buddy`,
   `manticore-load`) are no longer copied into the image. They ship their own composer
   `vendor/` trees, which carried **CVE-2026-54133 (Critical)** in `mtdowling/jmespath.php`
