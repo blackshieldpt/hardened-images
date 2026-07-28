@@ -42,11 +42,28 @@ pipeline:
       strip --strip-unneeded "${{targets.destdir}}/usr/bin/searchd" "${{targets.destdir}}/usr/bin/indexer"
       mkdir -p "${{targets.destdir}}/usr/share"
       cp -a usr/share/manticore "${{targets.destdir}}/usr/share/manticore"
+      # Drop the bundled PHP tools (manticore-backup / -buddy / -load). They ship
+      # their whole composer vendor/ trees, which carry known CVEs — including
+      # CVE-2026-54133 (Critical) in mtdowling/jmespath.php — and they trip the scan
+      # gate. Nothing here can run them: the image has no PHP interpreter (usr/bin is
+      # searchd, indexer, ld.so, ldconfig) and manticore.conf sets no buddy_path, so
+      # this removes unexecutable code, not functionality. Re-adding any of these
+      # means also shipping an interpreter and tracking their composer deps.
+      # Delete only these three directories — modules/ also holds the columnar,
+      # secondary, knn and galera .so libraries, which searchd does load.
+      rm -rf "${{targets.destdir}}/usr/share/manticore/modules/manticore-backup" \
+             "${{targets.destdir}}/usr/share/manticore/modules/manticore-buddy" \
+             "${{targets.destdir}}/usr/share/manticore/modules/manticore-load"
   - runs: |
       install -Dm0644 manticore.conf "${{targets.destdir}}/etc/manticoresearch/manticore.conf"
   - runs: |
       "${{targets.destdir}}/usr/bin/searchd" --help >/dev/null 2>&1 || true
       "${{targets.destdir}}/usr/bin/indexer" --help >/dev/null
+      # No PHP should survive the removal above, but the .so modules must.
+      ! find "${{targets.destdir}}" -name '*.php' -print -quit | grep -q .
+      for so in lib_manticore_columnar lib_manticore_secondary lib_manticore_knn libgalera_manticore; do
+        test -f "${{targets.destdir}}/usr/share/manticore/modules/${so}.so"
+      done
 
 update:
   enabled: true

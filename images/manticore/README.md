@@ -48,3 +48,8 @@ No in-image `HEALTHCHECK` (the image is distroless/shell-minimal). Probe from yo
 
 - Config at `/etc/manticoresearch/manticore.conf`; data under `/var/lib/manticore`.
 - Bundled modules (columnar, secondary, knn) ship under `/usr/share/manticore`.
+- The upstream bundle's PHP tools — `manticore-backup`, `manticore-buddy` and
+  `manticore-load` — are **not** included. They ship their own composer `vendor/`
+  trees carrying known CVEs, and nothing in this image could run them anyway: there
+  is no PHP interpreter and `manticore.conf` sets no `buddy_path`. Run them from the
+  upstream image if you need them. The `.so` modules above are unaffected.
