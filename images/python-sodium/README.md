@@ -9,7 +9,7 @@ downstream image sets its own `CMD` (e.g. gunicorn).
 
 | Property   | Value |
 |------------|-------|
-| Build      | apko (Wolfi python-3.14, py3.14-pip) |
+| Build      | apko (Wolfi python-3.14; no pip — see Usage) |
 | Version    | 3.14 |
 | User       | nonroot (UID 65532) |
 | Shell      | none (distroless) |
@@ -30,12 +30,21 @@ downstream image sets its own `CMD` (e.g. gunicorn).
 
 ## Usage
 
-Use it as a base and supply your own command:
+The runtime image carries **no pip**. An installer with network reach is the readiest
+arbitrary-code-fetch-and-execute primitive in an otherwise shell-less image (`pip
+install --target /tmp` works even under a read-only rootfs), and nothing needs it once
+the app is built. Install dependencies in a builder stage on the `-dev` variant — same
+Wolfi CPython, so the installed tree is ABI-compatible — and copy `site-packages`
+across:
 
 ```dockerfile
+FROM hub.blackshield.pt/test_images/python-sodium:3.14-dev AS build
+COPY requirements.txt /
+RUN pip install --no-cache-dir -r /requirements.txt
+
 FROM hub.blackshield.pt/test_images/python-sodium:3.14
+COPY --from=build /usr/lib/python3.14/site-packages /usr/lib/python3.14/site-packages
 COPY . /app
-# install deps with the bundled pip, then:
 CMD ["gunicorn", "myapp:app", "--bind", "0.0.0.0:8000"]
 ```
 
@@ -47,8 +56,8 @@ docker run --rm hub.blackshield.pt/test_images/python-sodium:3.14 \
 
 ## Dev variant
 
-A `:latest-dev` companion adds a shell, gcc, and git (see the repo README "Dev
-Variants"). For interactive use:
+A `:latest-dev` companion adds a shell, gcc, git and **pip** (see the repo README "Dev
+Variants"). It is the stage to install dependencies in. For interactive use:
 
 ```bash
 docker run -it --entrypoint /bin/sh hub.blackshield.pt/test_images/python-sodium:latest-dev
@@ -60,7 +69,13 @@ Not applicable (base image — `docker run ... python3.14 --version`).
 
 ## Notes
 
-- No entrypoint; `python3.14` is at `/usr/bin/python3.14`, pip at `pip3.14`.
+- No entrypoint; `python3.14` is at `/usr/bin/python3.14`. No pip in the runtime
+  image — it is `pip3.14` on the `-dev` variant.
+- pip removal is defence in depth, not a boundary: `python-3.14-base` hard-depends on
+  `py3-pip-wheel`, so `/usr/share/python-wheels/pip-*.whl` still ships and
+  `python -m ensurepip --user` restores a working pip into `HOME=/tmp` offline. That
+  takes code execution the attacker must already have; what the removal buys is that
+  pip is not simply *there* for the app user to reach.
 - Workdir is `/app`; `HOME=/tmp`.
 - System libs are loaded dynamically — install the matching Python bindings
-  (e.g. `pysodium`, `python-magic`) with pip in your app image.
+  (e.g. `pysodium`, `python-magic`) in the `-dev` builder stage.
