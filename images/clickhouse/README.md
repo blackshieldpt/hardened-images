@@ -7,7 +7,7 @@ Wolfi-based hardened ClickHouse image, built with melange by repackaging the ups
 | Property   | Value |
 |------------|-------|
 | Build      | melange (upstream static binary) + entrypoint |
-| Version    | 26.1.12.23 |
+| Version    | 26.7.1.1315 |
 | User       | clickhouse (UID 65532) |
 | Shell      | busybox (env-var entrypoint) |
 | Image size | ~602 MB |
@@ -25,7 +25,7 @@ Wolfi-based hardened ClickHouse image, built with melange by repackaging the ups
 ```bash
 docker run -d -p 8123:8123 -p 9000:9000 \
   -e CLICKHOUSE_PASSWORD=secret -v chdata:/var/lib/clickhouse \
-  hub.blackshield.pt/test_images/clickhouse:26.1.12.23
+  hub.blackshield.pt/test_images/clickhouse:26.7.1.1315
 ```
 
 ### Environment variables
