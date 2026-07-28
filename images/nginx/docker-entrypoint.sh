@@ -26,6 +26,6 @@ if [ -d "$template_dir" ]; then
     fi
 fi
 
-# -c our config (nginx-stable owns the default /etc/nginx/nginx.conf); keep the
+# -c our config (nginx-mainline owns the default /etc/nginx/nginx.conf); keep the
 # pid under /run/nginx where the non-root user can write.
 exec nginx -c /etc/nginx/nginx-hardened.conf -g "daemon off; pid /run/nginx/nginx.pid;" "$@"

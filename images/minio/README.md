@@ -7,7 +7,7 @@ Wolfi-based hardened MinIO image, assembled with apko from the Wolfi `minio` pac
 | Property   | Value |
 |------------|-------|
 | Build      | apko (Wolfi minio, mc) |
-| Version    | 0.20260604.005411 (Wolfi package version; upstream `RELEASE.2026-06-04T00-54-11Z`) |
+| Version    | 0.20260717.120751 (Wolfi package version; upstream `RELEASE.2026-07-17T12-07-51Z`) |
 | User       | minio (UID 65532) |
 | Shell      | none (distroless) |
 | License    | AGPL-3.0-or-later |
@@ -26,7 +26,7 @@ docker run -d -p 9000:9000 -p 9001:9001 \
   -e MINIO_ROOT_USER=minioadmin \
   -e MINIO_ROOT_PASSWORD=minioadmin \
   -v $(pwd)/data:/data \
-  hub.blackshield.pt/test_images/minio:0.20260604.005411
+  hub.blackshield.pt/test_images/minio:0.20260717.120751
 ```
 
 The default command is `server /data --console-address :9001`. Override it to change

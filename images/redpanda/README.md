@@ -7,7 +7,7 @@ Wolfi-based hardened Redpanda image, built with melange by repackaging the upstr
 | Property   | Value |
 |------------|-------|
 | Build      | melange (upstream broker .deb + rpk) |
-| Version    | 26.1.9 |
+| Version    | 26.1.14 |
 | User       | redpanda (UID 65532) |
 | Shell      | bash + busybox |
 | Image size | ~299 MB |
@@ -24,7 +24,7 @@ Wolfi-based hardened Redpanda image, built with melange by repackaging the upstr
 ## Usage
 
 ```bash
-docker run -d -p 9092:9092 -p 9644:9644 -e REDPANDA_SUPERUSER_PASSWORD=secret -v rpdata:/var/lib/redpanda/data hub.blackshield.pt/test_images/redpanda:26.1.9
+docker run -d -p 9092:9092 -p 9644:9644 -e REDPANDA_SUPERUSER_PASSWORD=secret -v rpdata:/var/lib/redpanda/data hub.blackshield.pt/test_images/redpanda:26.1.14
 ```
 
 | Variable | Default | Description |
