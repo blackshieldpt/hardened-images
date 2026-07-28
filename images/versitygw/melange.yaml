@@ -1,11 +1,11 @@
 # Builds versitygw from source (versitygw isn't in Wolfi). Pure-Go, CGO disabled,
-# so the result is a static binary. The bundled Go dependencies in v1.6.0 are
-# already current (golang.org/x/crypto v0.53.0, golang.org/x/net v0.56.0), so no
-# dependency bumping is needed here.
+# so the result is a static binary. v1.6.0 already carries current x/crypto
+# (v0.53.0) and x/net (v0.56.0), but its x/text v0.38.0 is affected by GO-2026-5970,
+# so that one is bumped below.
 package:
   name: versitygw-hardened
   version: 1.6.0
-  epoch: 0
+  epoch: 1
   description: "Versity S3 Gateway (built from source)"
   copyright:
     - license: Apache-2.0
@@ -28,6 +28,10 @@ pipeline:
       repository: https://github.com/versity/versitygw
       tag: v${{package.version}}
       expected-commit: 0aa0f0d4fc7602baa61db3428ad54f866275479c
+  - name: Bump vulnerable Go dependencies
+    runs: |
+      go get golang.org/x/text@v0.39.0
+      go mod tidy
   - name: Compile static binary
     runs: |
       CGO_ENABLED=0 go build \
