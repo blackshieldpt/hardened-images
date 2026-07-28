@@ -7,6 +7,22 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 ## [Unreleased]
 
 ### Changed
+- `nginx`: built from Wolfi `nginx-mainline` (1.31.3) instead of `nginx-stable`, and
+  tagged `1.31` instead of `1.30`. `nginx-stable` is capped at 1.30.2 in Wolfi, which
+  is affected by CVE-2026-42055 (heap buffer overflow in HTTP/2 proxying, CVSS 4.0
+  9.2) and CVE-2026-48142; upstream fixed both in 1.30.3 / 1.31.2, but Wolfi has so
+  far only published the fix on the mainline line. This will move back to
+  `nginx-stable` once its patched build lands. Consumers pinning `nginx:1.30` must
+  move to `nginx:1.31`.
+- `redpanda`: 26.1.9 → 26.1.14. 26.1.9 ships a bundled krb5 under `/opt/redpanda/lib`
+  affected by CVE-2026-40355 and CVE-2026-40356 (NegoEx message parsing; unauthenticated
+  remote crash, CVSS 8.7), which upstream patched in 26.1.10 and fully resolved by moving
+  to krb5 1.22.2 in 26.1.11. Because the broker vendors its own libraries, **no apk or
+  Go-module scanner surfaced this** — the image scanned clean throughout. rpk's patched
+  dependency set also now bumps `x/net`, `x/text`, `klauspost/compress` and `grpc`.
+- `minio`: tagged `0.20260717.120751` — the committed lock had already picked up that
+  build via relock, but `VERSION_minio` still carried the older `0.20260604.005411`,
+  so the tag understated what shipped.
 - `python-sodium`: **pip is no longer in the runtime image** — it moved to the `-dev`
   variant. An installer with network reach is the readiest
   arbitrary-code-fetch-and-execute primitive in an otherwise shell-less image, and

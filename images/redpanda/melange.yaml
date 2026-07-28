@@ -4,8 +4,8 @@
 # are needed for it. entrypoint.sh/redpanda.yaml are read from images/redpanda via --source-dir.
 package:
   name: redpanda-hardened
-  version: 26.1.9
-  epoch: 1
+  version: 26.1.14
+  epoch: 0
   description: "Redpanda streaming data platform (broker repackaged, rpk from source)"
   copyright:
     - license: BUSL-1.1
@@ -15,7 +15,7 @@ package:
 
 vars:
   token: nzc4ZYQK3WRGd9sy
-  deb_sha256: 4acb940cdf93fcfd3e9e3d40c8d18ccc784a97d2caa649f96710388a09bbdc51
+  deb_sha256: ae146b319e4bb45bde0605ce25fd9031c4dd107d6a21225bf247dfc5dd9a3a66
 
 environment:
   contents:
@@ -48,6 +48,10 @@ pipeline:
       # The C++ broker is repackaged from the deb above; rpk is the Go CLI that
       # carried the GO-2026 x/crypto/x/net criticals, so rebuild just it from
       # source (sparse checkout of src/go/rpk) with the deps bumped.
+      # docker/docker is deliberately not bumped: the advisories point at 29.3.1,
+      # but docker/docker publishes no v29 module path (it moved to moby/moby), so
+      # go get can't reach it. It is only linked for `rpk container` (local dev
+      # clusters), which this broker image never runs.
       git init rpk-src && cd rpk-src
       git remote add origin https://github.com/redpanda-data/redpanda.git
       git sparse-checkout init --cone
@@ -55,12 +59,14 @@ pipeline:
       git fetch --depth 1 origin v${{package.version}}
       git checkout FETCH_HEAD
       cd src/go/rpk
-      go get golang.org/x/crypto@v0.52.0 golang.org/x/net@v0.55.0
+      go get golang.org/x/crypto@v0.53.0 golang.org/x/net@v0.56.0 \
+        golang.org/x/text@v0.39.0 github.com/klauspost/compress@v1.18.7 \
+        google.golang.org/grpc@v1.82.1
       go mod tidy
       VER=github.com/redpanda-data/redpanda/src/go/rpk/pkg/cli/version
       CONT=github.com/redpanda-data/redpanda/src/go/rpk/pkg/cli/container/containerutil
       CGO_ENABLED=0 go build \
-        -ldflags "-s -w -X ${VER}.version=v${{package.version}} -X ${VER}.rev=988a61b -X ${CONT}.tag=v${{package.version}}" \
+        -ldflags "-s -w -X ${VER}.version=v${{package.version}} -X ${VER}.rev=f888144 -X ${CONT}.tag=v${{package.version}}" \
         -o rpk ./cmd/rpk
       install -Dm0755 rpk "${{targets.destdir}}/usr/bin/rpk"
   - runs: |

@@ -1,15 +1,15 @@
 # Hardened nginx
 
 Wolfi-based hardened nginx image, assembled with apko from the Wolfi
-`nginx-stable` package, with a small entrypoint shipped via a melange package for
+`nginx-mainline` package, with a small entrypoint shipped via a melange package for
 runtime config templating.
 
 ## Details
 
 | Property   | Value |
 |------------|-------|
-| Build      | apko (Wolfi nginx-stable) + melange (entrypoint) |
-| Version    | 1.30 |
+| Build      | apko (Wolfi nginx-mainline) + melange (entrypoint) |
+| Version    | 1.31 |
 | User       | nginx (UID 65532) |
 | Shell      | busybox (env-var entrypoint) |
 
@@ -36,7 +36,7 @@ CONF
 docker run -d -p 8080:8080 \
   -e API_UPSTREAM=backend:5000 -e NGINX_ENVSUBST_FILTER='^API_' \
   -v "$PWD/t:/etc/nginx/templates:ro" \
-  hub.blackshield.pt/test_images/nginx:1.30
+  hub.blackshield.pt/test_images/nginx:1.31
 ```
 
 ### Environment variables
@@ -58,7 +58,7 @@ touched, but setting a filter (e.g. `^API_`) and naming your placeholders
 
 Notes:
 - The bind-mounted template dir must be readable by UID 65532 (world-readable, e.g. `chmod 755`).
-- Templates render into `conf.d`, which the hardened config (`/etc/nginx/nginx-hardened.conf`, run via `nginx -c`) includes. `nginx-stable`'s default `/etc/nginx/nginx.conf` is left untouched.
+- Templates render into `conf.d`, which the hardened config (`/etc/nginx/nginx-hardened.conf`, run via `nginx -c`) includes. `nginx-mainline`'s default `/etc/nginx/nginx.conf` is left untouched.
 
 ## Dev variant
 
