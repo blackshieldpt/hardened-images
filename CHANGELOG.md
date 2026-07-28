@@ -15,7 +15,7 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
     CVEs fixed upstream in OpenSSL 3.5.7 (including CVE-2026-45447, a heap
     use-after-free in `PKCS7_verify()`, and CVE-2026-42768, a Bleichenbacher
     oracle in `CMS_decrypt()`). Both scanners report the image completely clean.
-    **Not fixed here** — see the note below.
+    **Fixed** by the ClickHouse upgrade below.
   - `redpanda` bundles its own glibc 2.35, OpenSSL and krb5 under
     `/opt/redpanda/lib`. Its OpenSSL is **3.5.7**, i.e. current.
   - `mailpit` and `versitygw` are pure-Go static builds, so their dependencies
@@ -25,6 +25,17 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
     from Wolfi apks and is fully visible.
 
 ### Changed
+- `clickhouse`: 26.1.12.23 → 26.7.1.1315, moving the statically linked OpenSSL from
+  3.5.6 to **3.5.7** and clearing the fifteen CVEs above. Verified by reading the
+  version banner out of the built binary, not from upstream metadata.
+  Two consequences worth knowing:
+  - **26.7 is a `-stable` release, not LTS.** ClickHouse backports only to the three
+    latest stable releases, so this line needs re-bumping roughly quarterly. The
+    `update.github` `tag-filter` moves from `v26.1.` to `v26.7.` accordingly. This was
+    a deliberate trade: the current LTS line (26.3.x) still ships OpenSSL 3.5.6, so no
+    LTS release fixes these CVEs today.
+  - The previous pin, 26.1, had already fallen out of ClickHouse's backport window.
+  Consumers pinning `clickhouse:26.1.12.23` must move to `clickhouse:26.7.1.1315`.
 - `mailpit`: 1.30.0 → 1.30.6, clearing GHSA-28pq-6qxg-wg5r and GHSA-w4mc-hhc6-xp28
   in mailpit itself (fixed in 1.30.1 / 1.30.2), and the dependency patch now also
   bumps `x/text` and `x/image` — eight further High/Medium advisories. Scans clean.
