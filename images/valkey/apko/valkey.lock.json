@@ -156,8 +156,8 @@
       },
       {
         "name": "ncurses-terminfo-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260711-r0.apk",
-        "version": "6.6.20260711-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260725-r0.apk",
+        "version": "6.6.20260725-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
@@ -165,32 +165,32 @@
         },
         "control": {
           "range": "bytes=0-10344",
-          "checksum": "sha1-pVN+YvFtG69jaMZJt1Tqh20wICg="
+          "checksum": "sha1-U7SYCoOewVJdXDLzjgZgxgQmuHI="
         },
         "data": {
-          "range": "bytes=10345-117892",
-          "checksum": "sha256-60tsu38al1Llm+/RtctrJ6trjIy+aNm+CwLwZSIN3C0="
+          "range": "bytes=10345-118111",
+          "checksum": "sha256-qLblR/bssHvcCvyuRhQFCaXoLC4uc3EbapeN48qdoN0="
         },
-        "checksum": "Q1pVN+YvFtG69jaMZJt1Tqh20wICg="
+        "checksum": "Q1U7SYCoOewVJdXDLzjgZgxgQmuHI="
       },
       {
         "name": "ncurses",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260711-r0.apk",
-        "version": "6.6.20260711-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260725-r0.apk",
+        "version": "6.6.20260725-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10489",
-          "checksum": "sha1-oPiv8opB0FpEKDHei2gycB7Lcsk="
+          "range": "bytes=0-10491",
+          "checksum": "sha1-yu52cGNrMGFOHpxzuLK24b3Vm3A="
         },
         "data": {
-          "range": "bytes=10490-621030",
-          "checksum": "sha256-tq1Y6IreKkDvbO6vHEb/+oysUnBVBfw7uPrxYQ9s3oQ="
+          "range": "bytes=10492-621204",
+          "checksum": "sha256-T9fDHmJfavPIFwxyC4S9c91COoXA+akWn/aWwI/z3b0="
         },
-        "checksum": "Q1oPiv8opB0FpEKDHei2gycB7Lcsk="
+        "checksum": "Q1yu52cGNrMGFOHpxzuLK24b3Vm3A="
       },
       {
         "name": "bash",
