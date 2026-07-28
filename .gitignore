@@ -6,3 +6,4 @@ sbom-*.json
 melange.rsa
 melange.rsa.pub
 *.key
+.serena/

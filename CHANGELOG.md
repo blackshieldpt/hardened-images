@@ -7,6 +7,15 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 ## [Unreleased]
 
 ### Changed
+- `manticore`: the upstream bundle's PHP tools (`manticore-backup`, `manticore-buddy`,
+  `manticore-load`) are no longer copied into the image. They ship their own composer
+  `vendor/` trees, which carried **CVE-2026-54133 (Critical)** in `mtdowling/jmespath.php`
+  plus ~19 High/Medium findings across `composer/composer`, `guzzlehttp/*` and
+  `symfony/cache` — enough to fail the scan gate and block every publish since at least
+  2026-07-27. Nothing in the image could execute them: there is no PHP interpreter and
+  `manticore.conf` sets no `buddy_path`. The `.so` modules that share that directory
+  (columnar, secondary, knn, galera) are retained, and the melange build now asserts
+  both that no `.php` file survives and that those four libraries do.
 - `nginx`: built from Wolfi `nginx-mainline` (1.31.3) instead of `nginx-stable`, and
   tagged `1.31` instead of `1.30`. `nginx-stable` is capped at 1.30.2 in Wolfi, which
   is affected by CVE-2026-42055 (heap buffer overflow in HTTP/2 proxying, CVSS 4.0
