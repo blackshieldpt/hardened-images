@@ -53,3 +53,6 @@ No in-image `HEALTHCHECK` (the image is distroless/shell-minimal). Probe from yo
   trees carrying known CVEs, and nothing in this image could run them anyway: there
   is no PHP interpreter and `manticore.conf` sets no `buddy_path`. Run them from the
   upstream image if you need them. The `.so` modules above are unaffected.
+- `/usr/share/manticore/api` is not included either — it is client-library *source*
+  (libsphinxclient C sources, a Ruby client and its specs, `sphinxapi.php`) that
+  searchd never reads. Install a client from your own package manager.

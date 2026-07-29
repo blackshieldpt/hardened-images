@@ -54,19 +54,24 @@ pipeline:
       rm -rf "${{targets.destdir}}/usr/share/manticore/modules/manticore-backup" \
              "${{targets.destdir}}/usr/share/manticore/modules/manticore-buddy" \
              "${{targets.destdir}}/usr/share/manticore/modules/manticore-load"
+      # api/ is client-library source, not runtime data: libsphinxclient C sources,
+      # a Ruby client with its specs, and sphinxapi.php. searchd never reads any of
+      # it, and shipping other languages' client source in a server image is only
+      # surface. Consumers get clients from their own package manager.
+      rm -rf "${{targets.destdir}}/usr/share/manticore/api"
   - runs: |
       install -Dm0644 manticore.conf "${{targets.destdir}}/etc/manticoresearch/manticore.conf"
   - runs: |
       "${{targets.destdir}}/usr/bin/searchd" --help >/dev/null 2>&1 || true
       "${{targets.destdir}}/usr/bin/indexer" --help >/dev/null
-      # The PHP tools must not come back, and the .so modules must survive.
+      # No PHP anywhere in the package, and the .so modules must survive.
       # Written as an explicit if/exit rather than `! find ... | grep -q .`:
       # under set -e a command whose status is inverted with `!` is exempt from
       # triggering an exit, so that form silently passes whatever it finds.
-      # Scoped to modules/ because api/ruby/spec/fixtures legitimately ships .php
-      # test fixtures for the Ruby client — inert data, never the tools removed above.
-      if find "${{targets.destdir}}/usr/share/manticore/modules" -name '*.php' -print -quit | grep -q .; then
-        echo "ERROR: PHP reappeared under modules/ — the removal above needs updating" >&2
+      # Now covers the whole package: with api/ gone too, nothing upstream ships
+      # legitimately carries .php, so any hit means a removal above went stale.
+      if find "${{targets.destdir}}" -name '*.php' -print -quit | grep -q .; then
+        echo "ERROR: unexpected .php in the package — a removal above needs updating" >&2
         exit 1
       fi
       for so in lib_manticore_columnar lib_manticore_secondary lib_manticore_knn libgalera_manticore; do
