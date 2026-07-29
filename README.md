@@ -133,7 +133,10 @@ workflow runs weekly to make sure you know it is due: it reads the `update:`
 blocks already declared in each `melange.yaml`, compares the pinned
 `package.version` against upstream tags, and records anything behind in a single
 tracking issue that it updates in place. Run it yourself with `make
-check-updates` (exit 1 means something is behind).
+check-updates`: exit 10 means something is behind, exit 0 means all current, and
+anything else means the check itself could not complete (usually a `tag-filter`
+that no longer matches) — which fails the workflow loudly rather than filing a
+partial table as if it were authoritative.
 
 It reports rather than bumps, on purpose — each image pins a different artifact
 (a deb filename plus sha256, a tgz sha256, a git `expected-commit`), so bumping
