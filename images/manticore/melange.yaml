@@ -3,15 +3,15 @@
 # manticore.conf is read from images/manticore via --source-dir.
 package:
   name: manticore-hardened
-  version: 25.0.0
+  version: 28.4.4
   epoch: 0
   description: "Manticore Search daemon (upstream bundle deb repackaged)"
   copyright:
     - license: GPL-3.0-or-later
 
 vars:
-  deb: "manticore_25.0.0-26032712-ce3c27828_amd64.deb"
-  sha256: c51b054aa4d6c2c26a371277baf26bac4b049e5db424189509eda39efd2b8d1d
+  deb: "manticore_28.4.4-26071006-f63d06ecb_amd64.deb"
+  sha256: 719ee83dd8615765a88ceca3b7e74b365460d9881752183966b2f15508869edc
 
 environment:
   contents:
@@ -59,8 +59,16 @@ pipeline:
   - runs: |
       "${{targets.destdir}}/usr/bin/searchd" --help >/dev/null 2>&1 || true
       "${{targets.destdir}}/usr/bin/indexer" --help >/dev/null
-      # No PHP should survive the removal above, but the .so modules must.
-      ! find "${{targets.destdir}}" -name '*.php' -print -quit | grep -q .
+      # The PHP tools must not come back, and the .so modules must survive.
+      # Written as an explicit if/exit rather than `! find ... | grep -q .`:
+      # under set -e a command whose status is inverted with `!` is exempt from
+      # triggering an exit, so that form silently passes whatever it finds.
+      # Scoped to modules/ because api/ruby/spec/fixtures legitimately ships .php
+      # test fixtures for the Ruby client — inert data, never the tools removed above.
+      if find "${{targets.destdir}}/usr/share/manticore/modules" -name '*.php' -print -quit | grep -q .; then
+        echo "ERROR: PHP reappeared under modules/ — the removal above needs updating" >&2
+        exit 1
+      fi
       for so in lib_manticore_columnar lib_manticore_secondary lib_manticore_knn libgalera_manticore; do
         test -f "${{targets.destdir}}/usr/share/manticore/modules/${so}.so"
       done
