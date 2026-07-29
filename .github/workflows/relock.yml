@@ -48,7 +48,12 @@ jobs:
           # apko only. lock.sh returns early for every image that has a melange.yaml,
           # so `make lock-all` never invokes melange — which means melange, bubblewrap
           # and the AppArmor sysctl this job used to install were all doing nothing.
-          sudo apt-get update -qq && sudo apt-get install -y -qq jq
+          for attempt in 1 2 3; do
+            sudo apt-get update -qq && sudo apt-get install -y -qq jq && break
+            echo "::warning::apt attempt ${attempt} failed; retrying"
+            sleep $((attempt * 5))
+          done
+          command -v jq >/dev/null || { echo "::error::jq missing after apt install"; exit 1; }
           curl -sSfL --retry 5 --retry-all-errors --retry-delay 3 \
             "https://github.com/chainguard-dev/apko/releases/download/v${APKO_VERSION}/apko_${APKO_VERSION}_linux_amd64.tar.gz" \
             | sudo tar xz -C /usr/local/bin --strip-components=1 "apko_${APKO_VERSION}_linux_amd64/apko"
