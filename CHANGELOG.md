@@ -41,6 +41,18 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   bumps `x/text` and `x/image` — eight further High/Medium advisories. Scans clean.
 - `versitygw`: dependency patch added to bump `x/text` past GO-2026-5970. The image
   built from v1.6.0 sources otherwise stays as-is. Scans clean.
+- `manticore`: 25.0.0 → 28.4.4, three major lines forward. The pin had gone stale
+  because nothing tracks upstream versions for from-source images (see below);
+  28.4.4 is the newest build published to Manticore's apt channel — GitHub tags
+  28.5.3, but no deb exists for it yet. Consumers pinning `manticore:25.0.0` must
+  move to `manticore:28.4.4`.
+  Also **fixes the `.php` guard added alongside the PHP-tool removal**: it was
+  written as `! find … | grep -q .`, and under `set -e` a command whose status is
+  inverted with `!` is exempt from triggering an exit, so it silently passed
+  whatever it found. It is now an explicit `if … exit 1`, verified to fail the
+  build when a `.php` is planted under `modules/`, and scoped to `modules/` because
+  `api/ruby/spec/fixtures` legitimately ships `.php` test fixtures for the Ruby
+  client. The `.so` checks were always effective — plain commands under `set -e`.
 - `manticore`: the upstream bundle's PHP tools (`manticore-backup`, `manticore-buddy`,
   `manticore-load`) are no longer copied into the image. They ship their own composer
   `vendor/` trees, which carried **CVE-2026-54133 (Critical)** in `mtdowling/jmespath.php`
