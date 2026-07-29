@@ -14,6 +14,13 @@ on:
 permissions:
   contents: read   # the push uses the deploy key, not GITHUB_TOKEN
 
+env:
+  # Keep in step with the same pins in build.yml — a lockfile resolved by one
+  # apko version and then built by another is the kind of drift this repo exists
+  # to avoid.
+  APKO_VERSION: 1.2.19
+  MELANGE_VERSION: 0.54.0
+
 concurrency:
   group: relock
   cancel-in-progress: false
@@ -44,8 +51,12 @@ jobs:
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
           sudo apt-get update -qq && sudo apt-get install -y -qq bubblewrap jq
           for tool in apko melange; do
-            case $tool in apko) ver=1.2.19;; melange) ver=0.54.0;; esac
-            curl -sSL "https://github.com/chainguard-dev/${tool}/releases/download/v${ver}/${tool}_${ver}_linux_amd64.tar.gz" \
+            case $tool in
+              apko)    ver="$APKO_VERSION" ;;
+              melange) ver="$MELANGE_VERSION" ;;
+            esac
+            curl -sSL --retry 5 --retry-all-errors --retry-delay 3 \
+              "https://github.com/chainguard-dev/${tool}/releases/download/v${ver}/${tool}_${ver}_linux_amd64.tar.gz" \
               | sudo tar xz -C /usr/local/bin --strip-components=1 "${tool}_${ver}_linux_amd64/${tool}"
           done
 

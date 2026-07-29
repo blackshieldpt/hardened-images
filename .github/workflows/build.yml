@@ -27,6 +27,20 @@ permissions:
   id-token: write        # keyless cosign signing (Fulcio OIDC)
   attestations: write    # actions/attest-build-provenance (SLSA L3)
 
+env:
+  # Every tool is pinned. syft/grype/trivy used to install whatever `main` served
+  # at the moment each job ran, which meant CI silently drifted and could differ
+  # from what developers run locally — a stale local grype is how a Critical in
+  # manticore got missed outside CI. Bump these deliberately, in a reviewable diff.
+  #
+  # Pinning the scanner *binaries* does not stale the scan: grype and trivy still
+  # fetch their vulnerability databases fresh on every run. Only the code is fixed.
+  APKO_VERSION: 1.2.19
+  MELANGE_VERSION: 0.54.0
+  SYFT_VERSION: 1.50.0
+  GRYPE_VERSION: 0.116.0
+  TRIVY_VERSION: 0.72.0
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -59,20 +73,59 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # Keyed on the exact pinned versions, with no restore-keys on purpose: a
+      # partial restore would leave an older binary in place and the install step
+      # below would skip re-downloading it, silently running the wrong version.
+      - name: Cache build tools
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/hardened-images-tools
+          key: tools-${{ runner.os }}-apko${{ env.APKO_VERSION }}-melange${{ env.MELANGE_VERSION }}-syft${{ env.SYFT_VERSION }}-grype${{ env.GRYPE_VERSION }}-trivy${{ env.TRIVY_VERSION }}
+
       - name: Install build tools
         run: |
           # Ubuntu 24.04 runners block unprivileged user namespaces (AppArmor),
           # which melange's bubblewrap sandbox needs. Re-enable it.
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
           sudo apt-get update -qq && sudo apt-get install -y -qq bubblewrap jq
+
+          # Tools live in a cached directory on PATH rather than /usr/local/bin,
+          # so a warm cache needs no network at all. This matrix runs 38 jobs and
+          # each used to fetch five tools independently — ~190 unpinned downloads
+          # per run, any one of which could fail the job it belonged to. That is
+          # exactly how a `trivy not found` error failed a build whose code was
+          # fine. Downloads now retry, and on a warm cache there are none.
+          TOOLBIN="$HOME/.cache/hardened-images-tools"
+          mkdir -p "$TOOLBIN"
+          echo "$TOOLBIN" >> "$GITHUB_PATH"
+
+          get() { curl -sSfL --retry 5 --retry-all-errors --retry-delay 3 "$@"; }
+
           for tool in apko melange; do
-            case $tool in apko) ver=1.2.19;; melange) ver=0.54.0;; esac
-            curl -sSL "https://github.com/chainguard-dev/${tool}/releases/download/v${ver}/${tool}_${ver}_linux_amd64.tar.gz" \
-              | sudo tar xz -C /usr/local/bin --strip-components=1 "${tool}_${ver}_linux_amd64/${tool}"
+            case $tool in
+              apko)    ver="$APKO_VERSION" ;;
+              melange) ver="$MELANGE_VERSION" ;;
+            esac
+            if [ ! -x "$TOOLBIN/$tool" ]; then
+              get "https://github.com/chainguard-dev/${tool}/releases/download/v${ver}/${tool}_${ver}_linux_amd64.tar.gz" \
+                | tar xz -C "$TOOLBIN" --strip-components=1 "${tool}_${ver}_linux_amd64/${tool}"
+            fi
           done
-          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh  | sudo sh -s -- -b /usr/local/bin
-          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
-          curl -sSfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin
+
+          if [ ! -x "$TOOLBIN/syft" ]; then
+            get https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b "$TOOLBIN" "v${SYFT_VERSION}"
+          fi
+          if [ ! -x "$TOOLBIN/grype" ]; then
+            get https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b "$TOOLBIN" "v${GRYPE_VERSION}"
+          fi
+          if [ ! -x "$TOOLBIN/trivy" ]; then
+            get https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b "$TOOLBIN" "v${TRIVY_VERSION}"
+          fi
+
+          # Fail loudly here rather than mid-scan if a pin and a binary disagree.
+          "$TOOLBIN/grype" version | grep -q "${GRYPE_VERSION}"
+          "$TOOLBIN/trivy" --version | grep -q "${TRIVY_VERSION}"
+          "$TOOLBIN/syft" version | grep -q "${SYFT_VERSION}"
 
       - name: Install cosign
         uses: sigstore/cosign-installer@v3
