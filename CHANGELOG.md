@@ -6,6 +6,41 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-29
+
+Security release. The minor bump — rather than 0.1.7 — is because consumers pinning a
+floating `:<version>` tag must change it. Nine images move:
+
+| image | old tag | new tag |
+|-------|---------|---------|
+| `clickhouse` | `26.1.12.23` | `26.7.1.1315` |
+| `etcd` | `3.6` | `3.6.14` |
+| `kafka` | `4.2` | `4.3` |
+| `mailpit` | `1.30.0` | `1.30.6` |
+| `manticore` | `25.0.0` | `28.4.4` |
+| `minio` | `0.20260604.005411` | `0.20260717.120751` |
+| `nginx` | `1.30` | `1.31` |
+| `openbao` | `2.5.4` | `2.6.1` |
+| `valkey` | `8.1` | `9.1` |
+
+Immutable `:<version>-<commit>` pins and digests are unaffected.
+
+Three images also stop shipping content they previously carried: `python-sodium` drops
+pip from the runtime variant, `manticore` drops the bundled PHP tools and the
+client-library source tree, and `etcd`/`openbao` are now built from source rather than
+installed from Wolfi.
+
+Two things worth reading before upgrading:
+
+- **Several of the vulnerabilities fixed here were invisible to both grype and trivy.**
+  The affected code was vendored inside a static binary or a bundled library tree, so
+  the images scanned clean while carrying it — ClickHouse's OpenSSL 3.5.6 (fifteen
+  CVEs) and Redpanda's krb5 (CVSS 8.7) were both found by reading binaries, not
+  reports.
+- **A version bump is not automatically a fix.** `kafka` 4.2 → 4.3 halves the reported
+  finding count while shipping byte-identical vulnerable JARs, because Wolfi has not
+  annotated the newer line. The Security section below says which changes were real.
+
 ### Security
 
 - Swept every repackaged-source image for vendored code that ships inside a
@@ -49,6 +84,17 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   stays a human step.
 
 ### Changed
+- `clickhouse`: 26.1.12.23 → 26.7.1.1315, moving the statically linked OpenSSL from
+  3.5.6 to **3.5.7** and clearing the fifteen CVEs above. Verified by reading the
+  version banner out of the built binary, not from upstream metadata.
+  Two consequences worth knowing:
+  - **26.7 is a `-stable` release, not LTS.** ClickHouse backports only to the three
+    latest stable releases, so this line needs re-bumping roughly quarterly. The
+    `update.github` `tag-filter` moves from `v26.1.` to `v26.7.` accordingly. This was
+    a deliberate trade: the current LTS line (26.3.x) still ships OpenSSL 3.5.6, so no
+    LTS release fixes these CVEs today.
+  - The previous pin, 26.1, had already fallen out of ClickHouse's backport window.
+  Consumers pinning `clickhouse:26.1.12.23` must move to `clickhouse:26.7.1.1315`.
 - `etcd` and `openbao` are now **built from upstream source** with melange instead of
   installing Wolfi's `etcd-3.6` / `openbao`. Both of those packages stopped being
   rebuilt in early June 2026 while Wolfi's advisory data went on naming fixes —
@@ -67,12 +113,6 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   comes from `package.version`, and each build asserts the binary reports it.
   Consumers pinning `etcd:3.6` must move to `etcd:3.6.14`, and `openbao:2.5.4` to
   `openbao:2.6.1`.
-- `valkey`: **8.1 → 9.1**. Not a rebuild — a whole line move. Wolfi last built
-  `valkey-8.1` on 2025-10-03 (298 days), while `valkey-9.1` (9.1.1, exactly upstream
-  latest) was built seven days ago. Nothing noticed because the relock only moves
-  patches *within* the pinned line. Verified beyond the smoke test that data written
-  by 8.1 loads under 9.1, since that is what an upgrade actually does. Consumers
-  pinning `valkey:8.1` must move to `valkey:9.1`.
 - `kafka`: 4.2 → 4.3. Read the finding count with care — it drops from 38 to 18, but
   **the vulnerable code is unchanged**: jackson-databind 2.21.2, jackson-core 2.21.2,
   jetty 12.0.34 and jline-remote-telnet 3.30.4 are byte-identical across both lines
@@ -82,47 +122,39 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   the maintained line — but it is not a fix, and the real remedy is a Wolfi rebuild
   (`kafka-4.2.1-r3` and later, never published) that refreshes the bundled JARs.
   Consumers pinning `kafka:4.2` must move to `kafka:4.3`.
-- `clickhouse`: 26.1.12.23 → 26.7.1.1315, moving the statically linked OpenSSL from
-  3.5.6 to **3.5.7** and clearing the fifteen CVEs above. Verified by reading the
-  version banner out of the built binary, not from upstream metadata.
-  Two consequences worth knowing:
-  - **26.7 is a `-stable` release, not LTS.** ClickHouse backports only to the three
-    latest stable releases, so this line needs re-bumping roughly quarterly. The
-    `update.github` `tag-filter` moves from `v26.1.` to `v26.7.` accordingly. This was
-    a deliberate trade: the current LTS line (26.3.x) still ships OpenSSL 3.5.6, so no
-    LTS release fixes these CVEs today.
-  - The previous pin, 26.1, had already fallen out of ClickHouse's backport window.
-  Consumers pinning `clickhouse:26.1.12.23` must move to `clickhouse:26.7.1.1315`.
 - `mailpit`: 1.30.0 → 1.30.6, clearing GHSA-28pq-6qxg-wg5r and GHSA-w4mc-hhc6-xp28
   in mailpit itself (fixed in 1.30.1 / 1.30.2), and the dependency patch now also
   bumps `x/text` and `x/image` — eight further High/Medium advisories. Scans clean.
-- `versitygw`: dependency patch added to bump `x/text` past GO-2026-5970. The image
-  built from v1.6.0 sources otherwise stays as-is. Scans clean.
-- `manticore`: 25.0.0 → 28.4.4, three major lines forward. The pin had gone stale
-  because nothing tracks upstream versions for from-source images (see below);
-  28.4.4 is the newest build published to Manticore's apt channel — GitHub tags
-  28.5.3, but no deb exists for it yet. Consumers pinning `manticore:25.0.0` must
-  move to `manticore:28.4.4`.
-  The image also no longer ships `/usr/share/manticore/api` — client-library
-  *source* (libsphinxclient C sources, a Ruby client with its specs, and
-  `sphinxapi.php`) that searchd never reads. 99 files; the image drops from 2213
-  to 2114. Get clients from your own package manager instead.
-  Also **fixes the `.php` guard added alongside the PHP-tool removal**: it was
-  written as `! find … | grep -q .`, and under `set -e` a command whose status is
-  inverted with `!` is exempt from triggering an exit, so it silently passed
-  whatever it found — it had been a no-op since it merged. It is now an explicit
-  `if … exit 1` covering the whole package (possible because `api/`, the only
-  source of legitimate `.php`, is gone), verified to fail the build when a `.php`
-  is planted. The `.so` checks were always effective — plain commands under `set -e`.
-- `manticore`: the upstream bundle's PHP tools (`manticore-backup`, `manticore-buddy`,
-  `manticore-load`) are no longer copied into the image. They ship their own composer
-  `vendor/` trees, which carried **CVE-2026-54133 (Critical)** in `mtdowling/jmespath.php`
-  plus ~19 High/Medium findings across `composer/composer`, `guzzlehttp/*` and
-  `symfony/cache` — enough to fail the scan gate and block every publish since at least
-  2026-07-27. Nothing in the image could execute them: there is no PHP interpreter and
-  `manticore.conf` sets no `buddy_path`. The `.so` modules that share that directory
-  (columnar, secondary, knn, galera) are retained, and the melange build now asserts
-  both that no `.php` file survives and that those four libraries do.
+- `manticore`: 25.0.0 → **28.4.4**, three major lines forward, and the image now ships
+  considerably less. The pin had gone stale because nothing tracked upstream versions
+  for from-source images (see the `check-updates` entry above); 28.4.4 is the newest
+  build published to Manticore's apt channel — GitHub tags 28.5.3, but no deb exists
+  for it in either the stable or dev channel.
+  - The upstream bundle's **PHP tools** (`manticore-backup`, `manticore-buddy`,
+    `manticore-load`) are no longer copied in. They ship their own composer `vendor/`
+    trees, which carried **CVE-2026-54133 (Critical)** in `mtdowling/jmespath.php` plus
+    ~19 High/Medium findings across `composer/composer`, `guzzlehttp/*` and
+    `symfony/cache` — enough to fail the scan gate and block every publish since at
+    least 2026-07-27. Nothing in the image could execute them: there is no PHP
+    interpreter and `manticore.conf` sets no `buddy_path`. The `.so` modules sharing
+    that directory (columnar, secondary, knn, galera) are retained, and the build
+    asserts they survive.
+  - `/usr/share/manticore/api` is gone too — client-library *source* (libsphinxclient
+    C sources, a Ruby client with its specs, `sphinxapi.php`) that searchd never reads.
+    99 files; the image drops from 2213 to 2114.
+  - The `.php` guard added with the PHP-tool removal **never worked**: written as
+    `! find … | grep -q .`, and under `set -e` a command whose status is inverted with
+    `!` is exempt from triggering an exit, so it silently passed whatever it found. It
+    is now an explicit `if … exit 1` covering the whole package — possible because
+    `api/`, the only source of legitimate `.php`, is gone — and verified to fail the
+    build when a `.php` is planted. The `.so` checks were always effective.
+  - The build now asserts `searchd --version` reports `package.version`; the previous
+    check was `searchd --help … || true`, which asserted nothing, while `vars.deb`
+    carries its own copy of the version and could silently disagree with it.
+  Consumers pinning `manticore:25.0.0` must move to `manticore:28.4.4`.
+- `minio`: tagged `0.20260717.120751` — the committed lock had already picked up that
+  build via relock, but `VERSION_minio` still carried the older `0.20260604.005411`,
+  so the tag understated what shipped.
 - `nginx`: built from Wolfi `nginx-mainline` (1.31.3) instead of `nginx-stable`, and
   tagged `1.31` instead of `1.30`. `nginx-stable` is capped at 1.30.2 in Wolfi, which
   is affected by CVE-2026-42055 (heap buffer overflow in HTTP/2 proxying, CVSS 4.0
@@ -130,15 +162,6 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   far only published the fix on the mainline line. This will move back to
   `nginx-stable` once its patched build lands. Consumers pinning `nginx:1.30` must
   move to `nginx:1.31`.
-- `redpanda`: 26.1.9 → 26.1.14. 26.1.9 ships a bundled krb5 under `/opt/redpanda/lib`
-  affected by CVE-2026-40355 and CVE-2026-40356 (NegoEx message parsing; unauthenticated
-  remote crash, CVSS 8.7), which upstream patched in 26.1.10 and fully resolved by moving
-  to krb5 1.22.2 in 26.1.11. Because the broker vendors its own libraries, **no apk or
-  Go-module scanner surfaced this** — the image scanned clean throughout. rpk's patched
-  dependency set also now bumps `x/net`, `x/text`, `klauspost/compress` and `grpc`.
-- `minio`: tagged `0.20260717.120751` — the committed lock had already picked up that
-  build via relock, but `VERSION_minio` still carried the older `0.20260604.005411`,
-  so the tag understated what shipped.
 - `python-sodium`: **pip is no longer in the runtime image** — it moved to the `-dev`
   variant. An installer with network reach is the readiest
   arbitrary-code-fetch-and-execute primitive in an otherwise shell-less image, and
@@ -152,6 +175,29 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   restores a working pip offline. This is defence in depth, not a boundary; it takes
   code execution an attacker must already have. What it removes is pip simply being
   *there*, on PATH, for the app user.
+- `redpanda`: 26.1.9 → 26.1.14. 26.1.9 ships a bundled krb5 under `/opt/redpanda/lib`
+  affected by CVE-2026-40355 and CVE-2026-40356 (NegoEx message parsing; unauthenticated
+  remote crash, CVSS 8.7), which upstream patched in 26.1.10 and fully resolved by moving
+  to krb5 1.22.2 in 26.1.11. Because the broker vendors its own libraries, **no apk or
+  Go-module scanner surfaced this** — the image scanned clean throughout. rpk's patched
+  dependency set also now bumps `x/net`, `x/text`, `klauspost/compress` and `grpc`.
+- `valkey`: **8.1 → 9.1**. Not a rebuild — a whole line move. Wolfi last built
+  `valkey-8.1` on 2025-10-03 (298 days), while `valkey-9.1` (9.1.1, exactly upstream
+  latest) was built seven days ago. Nothing noticed because the relock only moves
+  patches *within* the pinned line. Verified beyond the smoke test that data written
+  by 8.1 loads under 9.1, since that is what an upgrade actually does. Consumers
+  pinning `valkey:8.1` must move to `valkey:9.1`.
+- `versitygw`: dependency patch added to bump `x/text` past GO-2026-5970. The image
+  built from v1.6.0 sources otherwise stays as-is. Scans clean.
+- CI tool installs are retried and then **verified**, and `cosign` joins the cached,
+  pinned toolchain instead of `sigstore/cosign-installer`. Three separate install paths
+  reddened runs in a single day: `trivy` (missing binary), `cosign` (three times), and
+  `apt`, which reported success while `bubblewrap` was simply not installed — surfacing
+  two steps later as an opaque `bwrap not found` from `check-tools`. Each install now
+  retries, and the step asserts every tool is present and reports its pinned version,
+  so a silent partial install fails where it happens rather than somewhere downstream.
+  With cosign cached, a warm cache needs no network at all: 11.5s cold, 0.15s warm for
+  the whole toolchain. `relock.yml` gets the same apt retry and assertion.
 
 ## [0.1.6] - 2026-07-13
 
