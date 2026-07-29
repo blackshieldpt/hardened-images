@@ -40,6 +40,7 @@ env:
   SYFT_VERSION: 1.50.0
   GRYPE_VERSION: 0.116.0
   TRIVY_VERSION: 0.72.0
+  COSIGN_VERSION: 2.6.1
 
 jobs:
   build:
@@ -80,14 +81,24 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/hardened-images-tools
-          key: tools-${{ runner.os }}-apko${{ env.APKO_VERSION }}-melange${{ env.MELANGE_VERSION }}-syft${{ env.SYFT_VERSION }}-grype${{ env.GRYPE_VERSION }}-trivy${{ env.TRIVY_VERSION }}
+          key: tools-${{ runner.os }}-apko${{ env.APKO_VERSION }}-melange${{ env.MELANGE_VERSION }}-syft${{ env.SYFT_VERSION }}-grype${{ env.GRYPE_VERSION }}-trivy${{ env.TRIVY_VERSION }}-cosign${{ env.COSIGN_VERSION }}
 
       - name: Install build tools
         run: |
           # Ubuntu 24.04 runners block unprivileged user namespaces (AppArmor),
           # which melange's bubblewrap sandbox needs. Re-enable it.
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
-          sudo apt-get update -qq && sudo apt-get install -y -qq bubblewrap jq
+
+          # Retried and then verified. This step once reported success while
+          # bubblewrap was simply not installed, and the run failed two steps later
+          # with an opaque "bwrap not found" from check-tools. apt can end up in
+          # that state after a transient mirror failure, and -qq hides the warning
+          # that would have said so. Verifying here fails at the cause instead.
+          for attempt in 1 2 3; do
+            sudo apt-get update -qq && sudo apt-get install -y -qq bubblewrap jq && break
+            echo "::warning::apt attempt ${attempt} failed; retrying"
+            sleep $((attempt * 5))
+          done
 
           # Tools live in a cached directory on PATH rather than /usr/local/bin,
           # so a warm cache needs no network at all. This matrix runs 38 jobs and
@@ -121,16 +132,26 @@ jobs:
           if [ ! -x "$TOOLBIN/trivy" ]; then
             get https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b "$TOOLBIN" "v${TRIVY_VERSION}"
           fi
+          # cosign was installed by sigstore/cosign-installer, whose download flaked
+          # three times in one day. Fetching it like every other tool puts it behind
+          # the same retry and the same cache, so a warm cache needs no network at all.
+          if [ ! -x "$TOOLBIN/cosign" ]; then
+            get -o "$TOOLBIN/cosign" \
+              "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-amd64"
+            chmod +x "$TOOLBIN/cosign"
+          fi
 
-          # Fail loudly here rather than mid-scan if a pin and a binary disagree.
-          "$TOOLBIN/grype" version | grep -q "${GRYPE_VERSION}"
-          "$TOOLBIN/trivy" --version | grep -q "${TRIVY_VERSION}"
-          "$TOOLBIN/syft" version | grep -q "${SYFT_VERSION}"
-
-      - name: Install cosign
-        uses: sigstore/cosign-installer@v3
-        with:
-          cosign-release: v2.6.1
+          # Fail loudly here rather than mid-scan if a pin and a binary disagree, or
+          # if an install quietly did nothing. Anchored with -F so the dots in a
+          # version are not regex wildcards.
+          command -v bwrap >/dev/null || { echo "::error::bubblewrap missing after apt install"; exit 1; }
+          command -v jq    >/dev/null || { echo "::error::jq missing after apt install"; exit 1; }
+          "$TOOLBIN/apko"   version 2>&1 | grep -qF "${APKO_VERSION}"
+          "$TOOLBIN/melange" version 2>&1 | grep -qF "${MELANGE_VERSION}"
+          "$TOOLBIN/grype"  version | grep -qF "${GRYPE_VERSION}"
+          "$TOOLBIN/trivy" --version | grep -qF "${TRIVY_VERSION}"
+          "$TOOLBIN/syft"   version | grep -qF "${SYFT_VERSION}"
+          "$TOOLBIN/cosign" version 2>&1 | grep -qF "${COSIGN_VERSION}"
 
       - run: make check-tools
 
