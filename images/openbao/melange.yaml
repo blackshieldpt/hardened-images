@@ -1,11 +1,20 @@
-# Ships the hardened OpenBao config as an apk for apko to install.
-# The bao binary comes from the Wolfi `openbao` package (CVE-patched).
-# openbao.hcl is read from images/openbao via --source-dir.
+# Builds OpenBao from source and ships the hardened config, replacing Wolfi's
+# openbao package.
+#
+# Wolfi's openbao has not been rebuilt since 2026-06-04 and is capped at 2.5.4-r2,
+# while its advisory data names fixes in 2.5.5-r2 and 2.6.1-r0 that were never
+# published to the public repo. 2.6.1 is exactly the version those advisories point
+# at for CVE-2026-56852 (High) — so this is the only way to actually get it.
+# Building here also links against Wolfi's current Go toolchain, clearing the Go
+# stdlib findings the apk build carried (go1.26.4; fixed in 1.26.5).
+#
+# Pure Go, CGO disabled, so the result is static and its module graph stays visible
+# to grype/trivy. openbao.hcl is read from images/openbao via --source-dir.
 package:
-  name: openbao-config
-  version: "1.0.0"
+  name: openbao-hardened
+  version: 2.6.1
   epoch: 0
-  description: "Hardened OpenBao single-node config"
+  description: "OpenBao secrets manager (built from source) + hardened config"
   copyright:
     - license: MPL-2.0
 
@@ -17,7 +26,49 @@ environment:
       - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
     packages:
       - busybox
+      - ca-certificates-bundle
+      - go
+      - git
 
 pipeline:
+  - uses: git-checkout
+    with:
+      repository: https://github.com/openbao/openbao
+      tag: v${{package.version}}
+      expected-commit: ba7ad8861d0578cd4da4f7b9e5a6756d30484f8f
+  - name: Bump vulnerable Go dependencies
+    runs: |
+      # grpc carries GHSA-hrxh-6v49-42gf (High); cel-go and go-ntlmssp carry
+      # Mediums. Unlike etcd, openbao is a single module, so a bump here does not
+      # desynchronise sibling go.mod files.
+      GOFLAGS=-mod=mod go get \
+        google.golang.org/grpc@v1.82.1 \
+        github.com/google/cel-go@v0.29.0 \
+        github.com/Azure/go-ntlmssp@v0.1.1
+      go mod tidy
+  - name: Compile the bao binary
+    runs: |
+      # Mirrors upstream scripts/build.sh, minus the `ui` build tag: that embeds the
+      # web UI, which needs a Node toolchain to generate and is surface this image
+      # has no use for. The server runs identically without it.
+      # fullVersion is a package-private var upstream fills via goreleaser, so it
+      # has to be injected or `bao version` reports the 2.0.0-HEAD placeholder.
+      REV="$(git rev-parse HEAD)"
+      CGO_ENABLED=0 go build -trimpath -tags openbao \
+        -ldflags "-s -w \
+          -X github.com/openbao/openbao/version.fullVersion=${{package.version}} \
+          -X github.com/openbao/openbao/version.GitCommit=${REV}" \
+        -o "${{targets.destdir}}/usr/bin/bao" .
   - runs: |
       install -Dm0644 openbao.hcl "${{targets.destdir}}/etc/openbao/openbao.hcl"
+  - name: Verify the binary reports the version we claim
+    runs: |
+      "${{targets.destdir}}/usr/bin/bao" version | grep -q "${{package.version}}"
+
+update:
+  enabled: true
+  github:
+    identifier: openbao/openbao
+    use-tag: true
+    tag-filter: "v"
+    strip-prefix: "v"

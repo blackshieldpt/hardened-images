@@ -1,4 +1,6 @@
-# Hardened OpenBao (apko) — Wolfi openbao + hardened config, shell-less, non-root.
+# Hardened OpenBao (apko) — bao built from source via melange + hardened config,
+# shell-less, non-root. Not Wolfi's openbao: that package is capped at 2.5.4-r2 and
+# its advisory data names fixes (2.5.5-r2, 2.6.1-r0) that were never published.
 contents:
   repositories:
     - https://packages.wolfi.dev/os
@@ -6,8 +8,7 @@ contents:
     - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
   packages:
     - wolfi-baselayout
-    - openbao
-    - openbao-config
+    - openbao-hardened
     - ca-certificates-bundle
 
 accounts:

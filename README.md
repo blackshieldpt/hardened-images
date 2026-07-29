@@ -101,7 +101,7 @@ Build one locally with `make build IMAGE=<name> VARIANT=dev` (likewise `test`,
 ## Building locally
 
 Requires `docker apko melange bubblewrap cosign syft grype trivy jq` (see
-`make check-tools`), plus `gh` for `make check-updates`. melange (used by the 11
+`make check-tools`), plus `gh` for `make check-updates`. melange (used by the 12
 images that build a package from source or ship a melange-packaged entrypoint)
 needs bubblewrap for its build sandbox.
 
@@ -168,8 +168,9 @@ Until `RELOCK_DEPLOY_KEY` is set, the relock job no-ops.
    repackage upstream source) plus `images/<name>/test.sh`.
 2. Set its tag: `VERSION_<name>` in `config.env` for apk-native images (and the
    melange images that pin there); or `package.version` in
-   `images/<name>/melange.yaml` for repackaged-source images that declare an
-   `update.github` block (clickhouse, manticore, mailpit, redpanda, versitygw).
+   `images/<name>/melange.yaml` for images built from source or repackaged from an
+   upstream artifact, which declare an `update.github` block (clickhouse, etcd,
+   mailpit, manticore, openbao, redpanda, versitygw).
 3. For an apk-native image, run `make lock IMAGE=<name>` and commit
    `images/<name>/apko/<name>.lock.json` (melange images skip this — they resolve
    fresh at build).

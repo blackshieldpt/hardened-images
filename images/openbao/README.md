@@ -1,15 +1,16 @@
 # Hardened OpenBao
 
 Wolfi-based hardened [OpenBao](https://openbao.org) image (the open-source,
-Vault-compatible secrets manager), assembled with apko from the Wolfi `openbao`
-package, with a single-node config shipped via a small melange package.
+Vault-compatible secrets manager), built from upstream source with melange (pure
+Go, CGO disabled) and assembled with apko. The same melange package ships the
+single-node hardened config.
 
 ## Details
 
 | Property   | Value |
 |------------|-------|
-| Build      | apko (Wolfi openbao) + melange (config) |
-| Version    | 2.5.4 |
+| Build      | melange (OpenBao source, CGO disabled) + apko |
+| Version    | 2.6.1 |
 | User       | openbao (UID 65532) |
 | Shell      | none (distroless) |
 | License    | MPL-2.0 |
@@ -25,7 +26,7 @@ package, with a single-node config shipped via a small melange package.
 
 ```bash
 docker run -d -p 8200:8200 -v baodata:/openbao/data \
-  hub.blackshield.pt/test_images/openbao:2.5.4
+  hub.blackshield.pt/test_images/openbao:2.6.1
 ```
 
 The default command is `server -config=/etc/openbao/openbao.hcl` (single-node
@@ -45,7 +46,7 @@ Override the shipped config by bind-mounting your own at
 ```bash
 docker run -d -p 8200:8200 \
   -v "$PWD/my-openbao.hcl:/etc/openbao/openbao.hcl:ro" -v baodata:/openbao/data \
-  hub.blackshield.pt/test_images/openbao:2.5.4
+  hub.blackshield.pt/test_images/openbao:2.6.1
 ```
 
 ## Dev variant
@@ -77,5 +78,10 @@ even while sealed/uninitialized).
 - Runs non-root (UID 65532); OpenBao does not require `mlock`/`CAP_IPC_LOCK`.
 - `BAO_ADDR=http://127.0.0.1:8200` is set so `docker exec … bao …` reaches the
   local server without `-address`.
-- Version is the config-package tag; the actual `bao` version tracks the Wolfi
-  `openbao` package (CVE-patched on rebuild).
+- The tag is the OpenBao version actually built (`bao version` matches it; the
+  melange build asserts this). Built without the `ui` build tag — the web UI needs
+  a Node toolchain to generate and is surface this image has no use for; the server
+  is otherwise identical.
+- Not built from Wolfi's `openbao` package: that is capped at 2.5.4-r2 and Wolfi's
+  advisory data names fixes (2.5.5-r2, 2.6.1-r0) that were never published to the
+  public repo. 2.6.1 is what those advisories point at for CVE-2026-56852.

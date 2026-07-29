@@ -1,4 +1,6 @@
-# Hardened etcd (apko) — Wolfi etcd-3.6, shell-less, non-root.
+# Hardened etcd (apko) — etcd built from source via melange, shell-less, non-root.
+# Not Wolfi's etcd-3.6: that package has not been rebuilt since 2026-06-03 and its
+# advisory data names fixes in versions that were never published. See melange.yaml.
 contents:
   repositories:
     - https://packages.wolfi.dev/os
@@ -6,7 +8,7 @@ contents:
     - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
   packages:
     - wolfi-baselayout
-    - etcd-3.6
+    - etcd-hardened
     - ca-certificates-bundle
 
 accounts:
