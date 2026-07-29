@@ -128,6 +128,18 @@ updates automatically on **any** rebuild (e.g. the weekly schedule); a patch to
 the repackaged upstream binary itself needs a version bump in
 `images/<name>/melange.yaml`.
 
+That bump is the one thing here nothing patches for you, so the `check-updates`
+workflow runs weekly to make sure you know it is due: it reads the `update:`
+blocks already declared in each `melange.yaml`, compares the pinned
+`package.version` against upstream tags, and records anything behind in a single
+tracking issue that it updates in place. Run it yourself with `make
+check-updates` (exit 1 means something is behind).
+
+It reports rather than bumps, on purpose — each image pins a different artifact
+(a deb filename plus sha256, a tgz sha256, a git `expected-commit`), so bumping
+means re-fetching and re-hashing, and a tag can exist before its artifact does.
+Treat the issue as the prompt to do that by hand.
+
 One-time setup — a write-enabled deploy key so the relock commit can trigger the
 build (a `GITHUB_TOKEN` push cannot):
 

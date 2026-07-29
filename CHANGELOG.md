@@ -24,6 +24,16 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
     `postgresql`, `zookeeper`) ship no upstream binaries — their software comes
     from Wolfi apks and is fully visible.
 
+### Added
+- `check-updates` workflow (weekly) and `make check-updates`: reports from-source
+  images whose pinned `package.version` has fallen behind upstream, into a single
+  tracking issue updated in place. The daily relock covers apk-based images, but
+  the from-source pins were checked by nothing — and **every one of them had
+  drifted**, `manticore` by three major lines. It reports rather than bumps: each
+  image pins a different artifact shape (deb filename + sha256, tgz sha256, git
+  `expected-commit`), and a tag can exist before its artifact does, so the bump
+  stays a human step.
+
 ### Changed
 - `clickhouse`: 26.1.12.23 → 26.7.1.1315, moving the statically linked OpenSSL from
   3.5.6 to **3.5.7** and clearing the fifteen CVEs above. Verified by reading the
