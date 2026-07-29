@@ -1,14 +1,20 @@
 name: check-updates
 
-# Weekly: report from-source images whose pinned version has fallen behind
-# upstream, into a single tracking issue.
+# Weekly: find images whose pinned version has fallen behind upstream and open a
+# PR per image with the bump already applied, so acting on it is a review rather
+# than an investigation.
 #
-# The daily relock covers apk-based images. Images built from source pin a
-# hardcoded package.version that nothing checked, and all of them had drifted —
-# manticore by three major lines — before this existed. Detection only; the bump
-# stays manual, because each image pins a different artifact shape (deb filename
-# plus sha256, tgz sha256, git expected-commit) and an automated bump would be
-# more fragile than what it protects.
+# Two kinds of pin rot this covers, both of which happened here:
+#   * from-source images pin package.version in melange.yaml — manticore sat three
+#     major lines behind because nothing checked it.
+#   * apk-native images pin a Wolfi *version line* in config.env. The daily relock
+#     moves patches within a line but never the line itself, so valkey sat on a
+#     line Wolfi had not rebuilt in 298 days while valkey-9.1 was a week old.
+#
+# The bump is applied, never merged: the PR's own build/test/scan run is what says
+# whether it is good. Images whose bump cannot be fully automated (an artifact
+# sha256 that must be re-fetched) are listed in a tracking issue instead of
+# getting a half-applied PR.
 
 on:
   schedule:
@@ -16,7 +22,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
   issues: write
 
 concurrency:
@@ -28,58 +35,134 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          # Push with the deploy key when it exists: a branch pushed with
+          # GITHUB_TOKEN does not trigger workflows, and a bump PR whose CI never
+          # runs is as useful as no PR at all.
+          ssh-key: ${{ secrets.RELOCK_DEPLOY_KEY }}
+
+      - name: Install apko
+        run: |
+          # Needed to re-resolve committed lockfiles when an apk-native line moves.
+          curl -sSfL --retry 5 --retry-all-errors --retry-delay 3 \
+            "https://github.com/chainguard-dev/apko/releases/download/v1.2.19/apko_1.2.19_linux_amd64.tar.gz" \
+            | sudo tar xz -C /usr/local/bin --strip-components=1 "apko_1.2.19_linux_amd64/apko"
 
       - name: Check for upstream updates
         id: check
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # Drift (10) is the expected finding and must not redden the run — a red
-          # cron is noise nobody reads. A broken check (anything else) is the
-          # opposite: it means the report cannot be trusted, so fail loudly rather
-          # than file a half-finished table as if it were authoritative.
+          # Drift (10) is the expected finding and must not redden the run. A broken
+          # check (anything else) means the report cannot be trusted, so fail loudly
+          # rather than act on a half-finished table.
           rc=0
           ./scripts/check-updates.sh > report.txt 2>&1 || rc=$?
           cat report.txt
+          ./scripts/check-updates.sh --porcelain > porcelain.tsv 2>/dev/null || true
           case "$rc" in
             0)  echo "behind=false" >> "$GITHUB_OUTPUT" ;;
             10) echo "behind=true"  >> "$GITHUB_OUTPUT" ;;
             *)  echo "::error::check-updates.sh could not complete (exit $rc) — report is unreliable"
                 exit "$rc" ;;
           esac
-          cat report.txt
-          echo '### From-source image versions' >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-          cat report.txt >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          { echo '### Image versions'; echo '```'; cat report.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
 
-      # One long-lived issue, updated in place, so a weekly cron cannot spam.
-      - name: Open or update the tracking issue
+      - name: Open a PR per image behind upstream
         if: steps.check.outputs.behind == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          TITLE: "From-source images behind upstream"
+          HAS_KEY: ${{ secrets.RELOCK_DEPLOY_KEY != '' }}
         run: |
+          git config user.name  "hardened-images bot"
+          git config user.email "noreply@blackshield.pt"
+          : > manual.txt
+
+          while IFS="$(printf '\t')" read -r image pinned latest status; do
+            case "$status" in BEHIND*) ;; *) continue ;; esac
+
+            branch="auto-update/${image}-${latest}"
+            git checkout -q main && git checkout -q -B "$branch"
+
+            # propose-update exits 3 when the bump needs a human (artifact re-hash).
+            if ! ./scripts/propose-update.sh "$image" "$latest" 2>>manual.txt; then
+              echo "- \`${image}\` ${pinned} -> ${latest}" >> manual.txt
+              git checkout -q -- . ; git checkout -q main; continue
+            fi
+
+            if git diff --quiet; then
+              echo "::warning::${image}: nothing changed for ${latest}, skipping"
+              git checkout -q main; continue
+            fi
+
+            git add -A
+            git commit -q -m "${image}: ${pinned} -> ${latest}" \
+              -m "Opened automatically because upstream published ${latest}. The bump is applied but unverified — this PR's build, smoke test and scan are what decide whether it is good."
+
+            # --force-with-lease: a branch for this same target version may exist
+            # from an earlier run and should be replaced, not appended to.
+            if ! git push -q --force-with-lease -u origin "$branch"; then
+              echo "::warning::${image}: push failed"; git checkout -q main; continue
+            fi
+
+            if gh pr view "$branch" --json number >/dev/null 2>&1; then
+              echo "updated existing PR for ${image}"
+            else
+              body="Upstream published **${latest}**; this image pins \`${pinned}\`.
+
+          The bump is applied mechanically — the version pin, the dependent package
+          names, and whatever the image derives from them (lockfile, \`expected-commit\`).
+          **Nothing here is verified yet**: this PR's own build, smoke test and scan are
+          the check.
+
+          Two things worth looking at before merging:
+
+          - the scan result, because a version bump can make findings *disappear*
+            without fixing the underlying code — a newer line Wolfi has not annotated
+            yet reports clean while shipping the same vulnerable contents;
+          - whether the bump crosses a major line, which may need config or data-format
+            review rather than just a green build.
+
+          Opened by the \`check-updates\` workflow."
+              if [ "$HAS_KEY" != "true" ]; then
+                body="${body}
+
+          > **CI will not start on its own here.** \`RELOCK_DEPLOY_KEY\` is not configured, so
+          > this branch was pushed with \`GITHUB_TOKEN\`, and GitHub does not trigger workflows
+          > for those pushes. Push an empty commit, or close and reopen the PR, to run checks."
+              fi
+              gh pr create --base main --head "$branch" \
+                --title "${image}: ${pinned} -> ${latest}" --body "$body" \
+                || echo "::warning::${image}: could not open PR"
+            fi
+            git checkout -q main
+          done < porcelain.tsv
+
+          git checkout -q main
+          [ -s manual.txt ] && cat manual.txt || true
+
+      # One long-lived issue for whatever could not be turned into a PR.
+      - name: Record images needing a manual bump
+        if: steps.check.outputs.behind == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: "Images needing a manual version bump"
+        run: |
+          if [ ! -s manual.txt ]; then
+            echo "nothing needed a manual bump"; exit 0
+          fi
           {
-            echo "Pinned versions in \`images/*/melange.yaml\` that have fallen behind upstream."
+            echo "These images are behind upstream but their bump could not be applied"
+            echo "automatically — they pin an artifact by sha256, so the new artifact has to"
+            echo "be fetched and hashed by hand (see the image's \`melange.yaml\`)."
             echo
-            echo '```'
-            cat report.txt
-            echo '```'
+            cat manual.txt
             echo
-            echo "Bumping is manual: each image pins a different artifact (deb filename +"
-            echo "sha256, tgz sha256, git expected-commit), so re-hash when you bump."
-            echo "A tag may also exist without a downloadable artifact — Manticore tags"
-            echo "releases before publishing the matching deb, for instance."
+            echo "Everything else that was behind has its own PR."
             echo
             echo "_Updated by the \`check-updates\` workflow (run ${GITHUB_RUN_ID})._"
           } > body.md
-
           num="$(gh issue list --state open --search "$TITLE in:title" --json number,title \
                  --jq "[.[] | select(.title == env.TITLE)] | .[0].number // empty")"
-          if [ -n "$num" ]; then
-            gh issue edit "$num" --body-file body.md
-            echo "Updated issue #${num}"
-          else
-            gh issue create --title "$TITLE" --body-file body.md
-          fi
+          if [ -n "$num" ]; then gh issue edit "$num" --body-file body.md
+          else gh issue create --title "$TITLE" --body-file body.md; fi

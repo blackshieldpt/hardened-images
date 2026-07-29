@@ -25,6 +25,20 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
     from Wolfi apks and is fully visible.
 
 ### Added
+- `check-updates` now **opens a PR per image that is behind upstream**, with the bump
+  already applied — version pin, dependent package names, and whatever the image
+  derives from them (lockfile, `expected-commit`) — via a new
+  `scripts/propose-update.sh`. Nothing merges automatically: the PR's own build,
+  smoke test and scan are what decide whether the bump is good, which matters
+  because a version bump can make findings *disappear* without fixing anything.
+  It also now covers **Wolfi version lines**, not just from-source pins. The daily
+  relock moves patches within a line but never the line itself, which is how
+  `valkey` sat on a line Wolfi had not rebuilt in 298 days while `valkey-9.1` was a
+  week old. Deliberate line pins (`node`, `node24`) are marked `# pinned-line` in
+  `config.env` and reported as pinned rather than behind. Images pinning an artifact
+  by sha256 (`clickhouse`, `manticore`, `redpanda`) still get a tracking issue
+  rather than a half-applied PR — the artifact must be fetched and hashed, and a tag
+  can exist before its artifact does.
 - `check-updates` workflow (weekly) and `make check-updates`: reports from-source
   images whose pinned `package.version` has fallen behind upstream, into a single
   tracking issue updated in place. The daily relock covers apk-based images, but
@@ -53,6 +67,12 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   comes from `package.version`, and each build asserts the binary reports it.
   Consumers pinning `etcd:3.6` must move to `etcd:3.6.14`, and `openbao:2.5.4` to
   `openbao:2.6.1`.
+- `valkey`: **8.1 → 9.1**. Not a rebuild — a whole line move. Wolfi last built
+  `valkey-8.1` on 2025-10-03 (298 days), while `valkey-9.1` (9.1.1, exactly upstream
+  latest) was built seven days ago. Nothing noticed because the relock only moves
+  patches *within* the pinned line. Verified beyond the smoke test that data written
+  by 8.1 loads under 9.1, since that is what an upgrade actually does. Consumers
+  pinning `valkey:8.1` must move to `valkey:9.1`.
 - `clickhouse`: 26.1.12.23 → 26.7.1.1315, moving the statically linked OpenSSL from
   3.5.6 to **3.5.7** and clearing the fifteen CVEs above. Verified by reading the
   version banner out of the built binary, not from upstream metadata.

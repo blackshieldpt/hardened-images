@@ -14,5 +14,5 @@ check_user
 # hard-depends on bash, so /bin/bash cannot be removed without dropping valkey
 # itself. Assert what is actually true instead of passing on a technicality.
 if [ -n "${DEV:-}" ]; then check_dev curl jq
-else check_no_sh_but_bash "valkey-8.1 -> posix-libc-utils -> bash"; fi
+else check_no_sh_but_bash "valkey-9.1 -> posix-libc-utils -> bash"; fi
 finish
