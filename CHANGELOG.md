@@ -56,13 +56,17 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   28.4.4 is the newest build published to Manticore's apt channel — GitHub tags
   28.5.3, but no deb exists for it yet. Consumers pinning `manticore:25.0.0` must
   move to `manticore:28.4.4`.
+  The image also no longer ships `/usr/share/manticore/api` — client-library
+  *source* (libsphinxclient C sources, a Ruby client with its specs, and
+  `sphinxapi.php`) that searchd never reads. 99 files; the image drops from 2213
+  to 2114. Get clients from your own package manager instead.
   Also **fixes the `.php` guard added alongside the PHP-tool removal**: it was
   written as `! find … | grep -q .`, and under `set -e` a command whose status is
   inverted with `!` is exempt from triggering an exit, so it silently passed
-  whatever it found. It is now an explicit `if … exit 1`, verified to fail the
-  build when a `.php` is planted under `modules/`, and scoped to `modules/` because
-  `api/ruby/spec/fixtures` legitimately ships `.php` test fixtures for the Ruby
-  client. The `.so` checks were always effective — plain commands under `set -e`.
+  whatever it found — it had been a no-op since it merged. It is now an explicit
+  `if … exit 1` covering the whole package (possible because `api/`, the only
+  source of legitimate `.php`, is gone), verified to fail the build when a `.php`
+  is planted. The `.so` checks were always effective — plain commands under `set -e`.
 - `manticore`: the upstream bundle's PHP tools (`manticore-backup`, `manticore-buddy`,
   `manticore-load`) are no longer copied into the image. They ship their own composer
   `vendor/` trees, which carried **CVE-2026-54133 (Critical)** in `mtdowling/jmespath.php`
