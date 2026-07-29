@@ -6,6 +6,29 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Added
+- `check-updates` now also detects **frozen Wolfi packages** and **unobtainable
+  fixes**, neither of which is version drift and neither of which any existing check
+  could see. A frozen package *is* the newest version, so the version comparison
+  calls it current, the daily relock finds nothing to change, and the scan gate stays
+  quiet if the scanner has not annotated it — which is exactly how `etcd`, `openbao`,
+  `nginx-stable` and the `valkey-8.1` line all rotted unnoticed.
+  - **FROZEN**: a pinned package Wolfi has not rebuilt in `STALE_AFTER_DAYS`
+    (default 45). Rebuilds are how a Wolfi package picks up patched libraries, so a
+    stale build is a stale dependency tree at a current version. Aged only for the
+    package carrying an image's software — the base layer (`bash`, `zlib`,
+    `ca-certificates-bundle`, `su-exec`) is low-churn and routinely months old
+    without anything being wrong, and ageing it weekly would be noise that teaches
+    you to skim the report.
+  - **UNOBTAINABLE FIX**: Wolfi's advisory data names a fixed version that does not
+    exist in the public index — a known CVE with an identified fix you cannot get.
+    Precise enough to run across every package an image installs.
+  Neither produces a bump PR, because there is nothing to bump to; both go to the
+  tracking issue so the choice (accept, VEX, or build from source) is deliberate.
+  On the current tree this reports `kafka-4.3` and `zookeeper-3.9` as frozen at 56
+  and 57 days, and `zookeeper-3.9` as naming a fix at `3.9.5-r11` that was never
+  published.
+
 ## [0.2.0] - 2026-07-29
 
 Security release. The minor bump — rather than 0.1.7 — is because consumers pinning a
