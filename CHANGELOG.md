@@ -99,6 +99,12 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   stage and copy `site-packages` across (see the image README). Dropping `py3.14-pip`
   also drops `py3.14-setuptools`, so `pkg_resources` / `_distutils_hack` are gone from
   the runtime image unless the app's own dependency tree installs setuptools.
+  To be precise about what this does and does not buy — the image README says the
+  same: `python-3.14-base` hard-depends on `py3-pip-wheel`, so
+  `/usr/share/python-wheels/pip-*.whl` still ships and `python -m ensurepip --user`
+  restores a working pip offline. This is defence in depth, not a boundary; it takes
+  code execution an attacker must already have. What it removes is pip simply being
+  *there*, on PATH, for the app user.
 
 ## [0.1.6] - 2026-07-13
 

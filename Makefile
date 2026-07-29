@@ -21,7 +21,7 @@ help:
 	@echo "Images: $(IMAGES)"
 
 check-tools:
-	@for t in docker apko melange bwrap cosign syft jq grype trivy; do \
+	@for t in docker apko melange bwrap cosign syft jq grype trivy gh; do \
 	  command -v $$t >/dev/null || { echo "ERROR: $$t not found"; exit 1; }; done
 	@echo "All tools available."
 

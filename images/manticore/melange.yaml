@@ -62,7 +62,13 @@ pipeline:
   - runs: |
       install -Dm0644 manticore.conf "${{targets.destdir}}/etc/manticoresearch/manticore.conf"
   - runs: |
-      "${{targets.destdir}}/usr/bin/searchd" --help >/dev/null 2>&1 || true
+      # Assert the binary is the version we claim. vars.deb carries its own copy of
+      # the version (plus a build id), so bumping package.version without bumping
+      # deb — or vice versa — would otherwise ship an image whose tag lies about
+      # its contents, with nothing to catch it. searchd --version prints e.g.
+      # "Manticore 28.4.4 f63d06ecb@26071006", which ties both together.
+      # The previous check here was `searchd --help ... || true`, which asserted nothing.
+      "${{targets.destdir}}/usr/bin/searchd" --version | grep -q "Manticore ${{package.version}} "
       "${{targets.destdir}}/usr/bin/indexer" --help >/dev/null
       # No PHP anywhere in the package, and the .so modules must survive.
       # Written as an explicit if/exit rather than `! find ... | grep -q .`:
@@ -70,8 +76,13 @@ pipeline:
       # triggering an exit, so that form silently passes whatever it finds.
       # Now covers the whole package: with api/ gone too, nothing upstream ships
       # legitimately carries .php, so any hit means a removal above went stale.
-      if find "${{targets.destdir}}" -name '*.php' -print -quit | grep -q .; then
-        echo "ERROR: unexpected .php in the package — a removal above needs updating" >&2
+      # Capture find's own status: piping straight into grep would treat a find
+      # error as "nothing found" and pass. Prints the paths so a failure names them.
+      stray="$(find "${{targets.destdir}}" -name '*.php' -print)" || {
+        echo "ERROR: find failed while checking for stray .php" >&2; exit 1; }
+      if [ -n "$stray" ]; then
+        echo "ERROR: unexpected .php in the package — a removal above needs updating:" >&2
+        echo "$stray" >&2
         exit 1
       fi
       for so in lib_manticore_columnar lib_manticore_secondary lib_manticore_knn libgalera_manticore; do

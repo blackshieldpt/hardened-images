@@ -10,7 +10,7 @@ Wolfi-based hardened Manticore Search image, built with melange by repackaging s
 | Version    | 28.4.4 |
 | User       | manticore (UID 65532) |
 | Shell      | none (distroless) |
-| Image size | ~251 MB |
+| Image size | ~285 MB |
 
 ## Ports
 

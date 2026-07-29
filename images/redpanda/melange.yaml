@@ -65,8 +65,13 @@ pipeline:
       go mod tidy
       VER=github.com/redpanda-data/redpanda/src/go/rpk/pkg/cli/version
       CONT=github.com/redpanda-data/redpanda/src/go/rpk/pkg/cli/container/containerutil
+      # Derived, not hardcoded. This used to be a literal copied from the release
+      # tag — but that is the *annotated tag object's* SHA, not the commit it points
+      # at, so `rpk version` reported a revision that is not a commit in the repo.
+      # HEAD here is the checked-out FETCH_HEAD, which is the real commit.
+      REV="$(git rev-parse --short HEAD)"
       CGO_ENABLED=0 go build \
-        -ldflags "-s -w -X ${VER}.version=v${{package.version}} -X ${VER}.rev=f888144 -X ${CONT}.tag=v${{package.version}}" \
+        -ldflags "-s -w -X ${VER}.version=v${{package.version}} -X ${VER}.rev=${REV} -X ${CONT}.tag=v${{package.version}}" \
         -o rpk ./cmd/rpk
       install -Dm0755 rpk "${{targets.destdir}}/usr/bin/rpk"
   - runs: |
