@@ -9,7 +9,7 @@ IMAGES := nginx node node24 go python python-sodium postgresql valkey minio clic
 VARIANT ?=
 
 .PHONY: help build test sbom scan push sign verify publish upload-sbom lock \
-        build-all test-all scan-all lock-all check-tools
+        build-all test-all scan-all lock-all check-tools check-updates
 
 help:
 	@echo "Targets (IMAGE=<name> [VARIANT=dev]):"
@@ -24,6 +24,11 @@ check-tools:
 	@for t in docker apko melange bwrap cosign syft jq grype trivy; do \
 	  command -v $$t >/dev/null || { echo "ERROR: $$t not found"; exit 1; }; done
 	@echo "All tools available."
+
+# Report from-source images whose pinned version is behind upstream. The daily
+# relock covers apk images; these are pinned by hand and nothing else checks them.
+check-updates:
+	@./scripts/check-updates.sh
 
 build:
 	@test -n "$(IMAGE)" || { echo "IMAGE is required"; exit 1; }

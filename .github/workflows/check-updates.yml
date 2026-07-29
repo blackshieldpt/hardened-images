@@ -1,0 +1,81 @@
+name: check-updates
+
+# Weekly: report from-source images whose pinned version has fallen behind
+# upstream, into a single tracking issue.
+#
+# The daily relock covers apk-based images. Images built from source pin a
+# hardcoded package.version that nothing checked, and all of them had drifted —
+# manticore by three major lines — before this existed. Detection only; the bump
+# stays manual, because each image pins a different artifact shape (deb filename
+# plus sha256, tgz sha256, git expected-commit) and an automated bump would be
+# more fragile than what it protects.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: check-updates
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check for upstream updates
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Never fail the job on drift — drift is the expected finding, and a red
+          # cron run is noise nobody reads. The report is the output.
+          if ./scripts/check-updates.sh > report.txt 2>&1; then
+            echo "behind=false" >> "$GITHUB_OUTPUT"
+          else
+            rc=$?
+            [ "$rc" -eq 1 ] || { echo "check-updates.sh failed (exit $rc)"; cat report.txt; exit "$rc"; }
+            echo "behind=true" >> "$GITHUB_OUTPUT"
+          fi
+          cat report.txt
+          echo '### From-source image versions' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          cat report.txt >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      # One long-lived issue, updated in place, so a weekly cron cannot spam.
+      - name: Open or update the tracking issue
+        if: steps.check.outputs.behind == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: "From-source images behind upstream"
+        run: |
+          {
+            echo "Pinned versions in \`images/*/melange.yaml\` that have fallen behind upstream."
+            echo
+            echo '```'
+            cat report.txt
+            echo '```'
+            echo
+            echo "Bumping is manual: each image pins a different artifact (deb filename +"
+            echo "sha256, tgz sha256, git expected-commit), so re-hash when you bump."
+            echo "A tag may also exist without a downloadable artifact — Manticore tags"
+            echo "releases before publishing the matching deb, for instance."
+            echo
+            echo "_Updated by the \`check-updates\` workflow (run ${GITHUB_RUN_ID})._"
+          } > body.md
+
+          num="$(gh issue list --state open --search "$TITLE in:title" --json number,title \
+                 --jq "[.[] | select(.title == env.TITLE)] | .[0].number // empty")"
+          if [ -n "$num" ]; then
+            gh issue edit "$num" --body-file body.md
+            echo "Updated issue #${num}"
+          else
+            gh issue create --title "$TITLE" --body-file body.md
+          fi
