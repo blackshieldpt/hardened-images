@@ -1,4 +1,4 @@
-# Hardened Kafka (apko) — Wolfi kafka-4.2 (KRaft mode), bash + openjdk-17 (auto-dep).
+# Hardened Kafka (apko) — Wolfi kafka-4.3 (KRaft mode), bash + openjdk-17 (auto-dep).
 # Keeps bash: the Kafka start/storage scripts and the bootstrap entrypoint are shell scripts.
 contents:
   repositories:
@@ -9,7 +9,7 @@ contents:
     - wolfi-baselayout
     - bash
     - busybox
-    - kafka-4.2
+    - kafka-4.3
     - kafka-config
     - ca-certificates-bundle
 

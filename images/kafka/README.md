@@ -1,13 +1,13 @@
 # Hardened Kafka
 
-Wolfi-based hardened Apache Kafka image (KRaft mode), assembled with apko from the Wolfi `kafka-4.2` package, with the KRaft config and entrypoint shipped via a small melange package.
+Wolfi-based hardened Apache Kafka image (KRaft mode), assembled with apko from the Wolfi `kafka-4.3` package, with the KRaft config and entrypoint shipped via a small melange package.
 
 ## Details
 
 | Property   | Value |
 |------------|-------|
-| Build      | apko (Wolfi kafka-4.2) + melange (config + entrypoint) |
-| Version    | 4.2 |
+| Build      | apko (Wolfi kafka-4.3) + melange (config + entrypoint) |
+| Version    | 4.3 |
 | User       | kafka (UID 65532) |
 | Shell      | bash + busybox |
 | Image size | ~361 MB |
@@ -22,7 +22,7 @@ Wolfi-based hardened Apache Kafka image (KRaft mode), assembled with apko from t
 ## Usage
 
 ```bash
-docker run -d -p 9092:9092 -v kafkadata:/var/kafka/data hub.blackshield.pt/test_images/kafka:4.2
+docker run -d -p 9092:9092 -v kafkadata:/var/kafka/data hub.blackshield.pt/test_images/kafka:4.3
 ```
 
 | Variable | Default | Description |

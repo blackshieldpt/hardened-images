@@ -73,6 +73,15 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   patches *within* the pinned line. Verified beyond the smoke test that data written
   by 8.1 loads under 9.1, since that is what an upgrade actually does. Consumers
   pinning `valkey:8.1` must move to `valkey:9.1`.
+- `kafka`: 4.2 → 4.3. Read the finding count with care — it drops from 38 to 18, but
+  **the vulnerable code is unchanged**: jackson-databind 2.21.2, jackson-core 2.21.2,
+  jetty 12.0.34 and jline-remote-telnet 3.30.4 are byte-identical across both lines
+  (only lz4-java moves, 1.10.1 → 1.10.2, and it stays flagged). The 20 rows that
+  vanish are apk-level duplicates: Wolfi annotates `kafka-4.2` with those advisories
+  and has not annotated `kafka-4.3` at all. The bump is still worth taking — 4.3 is
+  the maintained line — but it is not a fix, and the real remedy is a Wolfi rebuild
+  (`kafka-4.2.1-r3` and later, never published) that refreshes the bundled JARs.
+  Consumers pinning `kafka:4.2` must move to `kafka:4.3`.
 - `clickhouse`: 26.1.12.23 → 26.7.1.1315, moving the statically linked OpenSSL from
   3.5.6 to **3.5.7** and clearing the fifteen CVEs above. Verified by reading the
   version banner out of the built binary, not from upstream metadata.
