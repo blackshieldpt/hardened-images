@@ -35,6 +35,24 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   stays a human step.
 
 ### Changed
+- `etcd` and `openbao` are now **built from upstream source** with melange instead of
+  installing Wolfi's `etcd-3.6` / `openbao`. Both of those packages stopped being
+  rebuilt in early June 2026 while Wolfi's advisory data went on naming fixes —
+  `etcd 3.6.13-r1`/`3.6.14-r0`, `openbao 2.5.5-r2`/`2.6.1-r0` — in versions that were
+  never published to the public repo, so the "FIXED IN" column pointed at builds
+  nobody could obtain. Building from source gets those versions and links against
+  Wolfi's current Go toolchain, which is what carried the stdlib findings.
+  - `etcd` 3.6.12-r1 → **3.6.14**: 12 findings (4 High) → **1 Medium**.
+  - `openbao` 2.5.4-r2 → **2.6.1**: 15 findings (4 High) → **none**. 2.6.1 is exactly
+    the version Wolfi's advisory names for CVE-2026-56852 (High).
+  Both are pure Go with CGO disabled, so unlike the repackaged-binary images their
+  module graph stays visible to grype and trivy. Both now carry `update.github`
+  blocks, so `check-updates` covers them from day one — the from-source pins are
+  hand-maintained, and that is precisely how every other one had rotted.
+  `VERSION_etcd` and `VERSION_openbao` are gone from `config.env`; the version now
+  comes from `package.version`, and each build asserts the binary reports it.
+  Consumers pinning `etcd:3.6` must move to `etcd:3.6.14`, and `openbao:2.5.4` to
+  `openbao:2.6.1`.
 - `clickhouse`: 26.1.12.23 → 26.7.1.1315, moving the statically linked OpenSSL from
   3.5.6 to **3.5.7** and clearing the fifteen CVEs above. Verified by reading the
   version banner out of the built binary, not from upstream metadata.
