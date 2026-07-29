@@ -1,4 +1,4 @@
-# Ships the KRaft server.properties + entrypoint for the Wolfi kafka-3.9 package.
+# Ships the KRaft server.properties + entrypoint for the Wolfi kafka-4.3 package.
 # Read from images/kafka via --source-dir. No update block: version comes from config.env.
 package:
   name: kafka-config
