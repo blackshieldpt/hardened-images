@@ -30,19 +30,9 @@ if [ -f "$MELANGE_CONFIG" ]; then
     exit 0
 fi
 
-# Repackaged-source images need their melange packages built so apko can resolve
-# them while locking.
+# No melange handling below: the guard above already returned for every image that
+# has a melange.yaml, so anything reaching here is apk-native by definition.
 APKO_EXTRA=()
-if [ -f "$MELANGE_CONFIG" ]; then
-    [ -f melange.rsa ] || melange keygen
-    echo "==> Building package(s) from source: ${MELANGE_CONFIG}"
-    melange build "$MELANGE_CONFIG" \
-        --source-dir "images/${IMAGE}" \
-        --signing-key melange.rsa \
-        --arch "$ARCH" \
-        --out-dir ./packages
-    APKO_EXTRA=(--repository-append ./packages --keyring-append melange.rsa.pub)
-fi
 
 APKO_SRC="$APKO_CONFIG"
 DEV_TMP=""

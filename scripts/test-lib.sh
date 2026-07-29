@@ -67,12 +67,39 @@ check_user() {
         "$(docker inspect --format '{{.Config.User}}' "$IMAGE")"
 }
 
-# check_no_shell — assert the image has no /bin/sh (true distroless).
+# _has_shell <path> — true when the image can execute <path>.
+_has_shell() { docker run --rm --entrypoint "$1" "$IMAGE" -c 'exit 0' >/dev/null 2>&1; }
+
+# check_no_shell — assert the image ships no shell at all.
+# Checks bash as well as sh: this used to test /bin/sh alone, which passed happily
+# on an image carrying /bin/bash and reported it as "shell-less". An attacker with
+# code execution does not care which shell it is.
 check_no_shell() {
-    if docker run --rm --entrypoint /bin/sh "$IMAGE" -c 'exit 0' >/dev/null 2>&1; then
-        fail "image is shell-less (no /bin/sh)"
+    local found=""
+    _has_shell /bin/sh   && found="/bin/sh"
+    _has_shell /bin/bash && found="${found:+$found }/bin/bash"
+    if [ -n "$found" ]; then
+        fail "image is shell-less (found: ${found})"
     else
-        pass "image is shell-less (no /bin/sh)"
+        pass "image is shell-less (no /bin/sh, no /bin/bash)"
+    fi
+}
+
+# check_no_sh_but_bash <why> — for images where a Wolfi package hard-depends on
+# bash and it therefore cannot be removed. Asserts the weaker property that is
+# actually true, and states the reason, rather than letting check_no_shell pass on
+# the technicality that /bin/sh happens to be absent.
+check_no_sh_but_bash() {
+    if _has_shell /bin/sh; then
+        fail "no /bin/sh (bash is expected here: $1)"
+    else
+        pass "no /bin/sh (bash present and unavoidable: $1)"
+    fi
+    if _has_shell /bin/bash; then
+        pass "bash present as documented ($1)"
+    else
+        # Upstream dropped the dependency — tighten this image back to check_no_shell.
+        fail "bash unexpectedly absent — switch this image to check_no_shell"
     fi
 }
 

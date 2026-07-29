@@ -9,7 +9,7 @@ Wolfi-based hardened Valkey image, assembled with apko from the Wolfi `valkey-8.
 | Build      | apko (Wolfi valkey-8.1, valkey-8.1-cli) |
 | Version    | 8.1 |
 | User       | valkey (UID 65532) |
-| Shell      | none (distroless) |
+| Shell      | bash (unavoidable: `valkey-8.1` → `posix-libc-utils` → `bash`); no `/bin/sh` |
 | Image size | ~23 MB |
 
 ## Ports

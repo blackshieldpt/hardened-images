@@ -1,6 +1,6 @@
 name: relock
 
-# Daily: re-resolve every image's apko lockfile and, when a Wolfi package update
+# Daily: re-resolve the apk-native apko lockfiles and, when a Wolfi package update
 # is available, commit the updated lockfile. The commit is pushed with a deploy
 # key (not GITHUB_TOKEN), so it triggers the `build` workflow, which publishes the
 # patched image. Net effect: patches land automatically, yet every published
@@ -15,11 +15,10 @@ permissions:
   contents: read   # the push uses the deploy key, not GITHUB_TOKEN
 
 env:
-  # Keep in step with the same pins in build.yml — a lockfile resolved by one
-  # apko version and then built by another is the kind of drift this repo exists
-  # to avoid.
+  # Keep in step with the same pin in build.yml — a lockfile resolved by one apko
+  # version and then built by another is the kind of drift this repo exists to
+  # avoid. (No MELANGE_VERSION: this job never runs melange, see below.)
   APKO_VERSION: 1.2.19
-  MELANGE_VERSION: 0.54.0
 
 concurrency:
   group: relock
@@ -46,19 +45,13 @@ jobs:
       - name: Install lock tools
         if: steps.guard.outputs.ok == 'true'
         run: |
-          # melange's bubblewrap sandbox needs unprivileged user namespaces,
-          # which Ubuntu 24.04 runners block via AppArmor. Re-enable it.
-          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
-          sudo apt-get update -qq && sudo apt-get install -y -qq bubblewrap jq
-          for tool in apko melange; do
-            case $tool in
-              apko)    ver="$APKO_VERSION" ;;
-              melange) ver="$MELANGE_VERSION" ;;
-            esac
-            curl -sSL --retry 5 --retry-all-errors --retry-delay 3 \
-              "https://github.com/chainguard-dev/${tool}/releases/download/v${ver}/${tool}_${ver}_linux_amd64.tar.gz" \
-              | sudo tar xz -C /usr/local/bin --strip-components=1 "${tool}_${ver}_linux_amd64/${tool}"
-          done
+          # apko only. lock.sh returns early for every image that has a melange.yaml,
+          # so `make lock-all` never invokes melange — which means melange, bubblewrap
+          # and the AppArmor sysctl this job used to install were all doing nothing.
+          sudo apt-get update -qq && sudo apt-get install -y -qq jq
+          curl -sSfL --retry 5 --retry-all-errors --retry-delay 3 \
+            "https://github.com/chainguard-dev/apko/releases/download/v${APKO_VERSION}/apko_${APKO_VERSION}_linux_amd64.tar.gz" \
+            | sudo tar xz -C /usr/local/bin --strip-components=1 "apko_${APKO_VERSION}_linux_amd64/apko"
 
       - name: Re-resolve lockfiles
         if: steps.guard.outputs.ok == 'true'

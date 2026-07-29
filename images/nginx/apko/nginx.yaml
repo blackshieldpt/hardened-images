@@ -2,7 +2,10 @@
 # On mainline rather than stable: nginx-stable is pinned at 1.30.2 in Wolfi, which
 # is affected by CVE-2026-42055 (heap overflow, CVSS 4.0 9.2) and CVE-2026-48142.
 # Upstream fixed those in 1.30.3 / 1.31.2; Wolfi has only shipped the fix on the
-# mainline line so far. Move back to nginx-stable once 1.30.4-r2 is published.
+# mainline line so far. Move back to nginx-stable once it ships >= 1.30.3.
+# Do not hold your breath: nginx-stable has not been rebuilt in Wolfi since
+# 2026-05-26, and Wolfi's advisory data names a fixed version (1.30.4-r2) that has
+# never been published to the public repo, so this may be permanent.
 # Keeps busybox + gettext: the entrypoint (runtime envsubst templating) is a
 # /bin/sh script shipped via the nginx-entrypoint melange package.
 contents:

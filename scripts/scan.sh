@@ -44,8 +44,20 @@ fi
 
 echo ""
 echo "--- Trivy ---"
+# grype's --fail-on means "this level and above"; trivy's --severity is an exact
+# list, so passing the bare threshold makes trivy ignore everything *worse* than
+# it. At CRITICAL the two happen to agree, which is why this was invisible — but
+# set SEVERITY_THRESHOLD=HIGH (which config.env advertises) and trivy would stop
+# reporting CRITICAL altogether, in the gate and in the committed report.
+case "${SEVERITY_THRESHOLD}" in
+    CRITICAL) TRIVY_SEVERITIES="CRITICAL" ;;
+    HIGH)     TRIVY_SEVERITIES="HIGH,CRITICAL" ;;
+    MEDIUM)   TRIVY_SEVERITIES="MEDIUM,HIGH,CRITICAL" ;;
+    LOW)      TRIVY_SEVERITIES="LOW,MEDIUM,HIGH,CRITICAL" ;;
+    *) echo "ERROR: SEVERITY_THRESHOLD='${SEVERITY_THRESHOLD}' is not one of CRITICAL/HIGH/MEDIUM/LOW" >&2; exit 2 ;;
+esac
 trivy image --format json -o "${REPORT_DIR}/trivy${SUF}.json" "${FULL_TAG}" 2>/dev/null || true
-if ! trivy image ${VEX_ARGS[@]+"${VEX_ARGS[@]}"} --severity "${SEVERITY_THRESHOLD}" --exit-code 1 "${FULL_TAG}" 2>&1 | tee "${REPORT_DIR}/trivy${SUF}.txt"; then
+if ! trivy image ${VEX_ARGS[@]+"${VEX_ARGS[@]}"} --severity "${TRIVY_SEVERITIES}" --exit-code 1 "${FULL_TAG}" 2>&1 | tee "${REPORT_DIR}/trivy${SUF}.txt"; then
     echo "WARNING: Trivy found unwaived vulnerabilities at or above ${SEVERITY_THRESHOLD}"
     FAILED=1
 fi

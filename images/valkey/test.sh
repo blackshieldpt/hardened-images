@@ -10,5 +10,9 @@ assert_eq "PING returns PONG" "PONG" "$(docker exec "$CONTAINER" valkey-cli ping
 docker exec "$CONTAINER" valkey-cli SET testkey testval >/dev/null 2>&1 || true
 assert_eq "GET returns value" "testval" "$(docker exec "$CONTAINER" valkey-cli GET testkey 2>&1)"
 check_user
-if [ -n "${DEV:-}" ]; then check_dev curl jq; else check_no_shell; fi
+# Not check_no_shell: valkey-8.1 hard-depends on posix-libc-utils, which
+# hard-depends on bash, so /bin/bash cannot be removed without dropping valkey
+# itself. Assert what is actually true instead of passing on a technicality.
+if [ -n "${DEV:-}" ]; then check_dev curl jq
+else check_no_sh_but_bash "valkey-8.1 -> posix-libc-utils -> bash"; fi
 finish

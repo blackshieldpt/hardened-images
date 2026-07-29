@@ -26,7 +26,13 @@ every rebuild and daily relock patch.
 
 ## What each image guarantees
 
-- **Distroless & non-root** — no `/bin/sh`, no apk, runs as UID 65532.
+- **Distroless & non-root** — no apk, runs as UID 65532. Most images ship no shell
+  at all; the exceptions are forced by upstream and documented in the image's own
+  README: `clickhouse`, `nginx`, `postgresql` and `zookeeper` ship busybox (their
+  entrypoints are shell scripts), `kafka` and `redpanda` ship bash + busybox, and
+  `go` and `valkey` get `/bin/bash` as an unavoidable transitive dependency
+  (`go-1.26` and `posix-libc-utils` both hard-depend on it). Every image's smoke
+  test asserts which of these is true for it, so the claim cannot silently rot.
 - **SBOM** — CycloneDX + SPDX, attached as a cosign attestation, uploaded as a
   downloadable workflow artifact, and (optionally) pushed to Dependency-Track.
 - **Scanned** — Grype + Trivy gate the build at `SEVERITY_THRESHOLD`; exceptions
@@ -95,8 +101,9 @@ Build one locally with `make build IMAGE=<name> VARIANT=dev` (likewise `test`,
 ## Building locally
 
 Requires `docker apko melange bubblewrap cosign syft grype trivy jq` (see
-`make check-tools`). melange (used by the 9 images that build a package from
-source or ship a melange-packaged entrypoint) needs bubblewrap for its build sandbox.
+`make check-tools`), plus `gh` for `make check-updates`. melange (used by the 11
+images that build a package from source or ship a melange-packaged entrypoint)
+needs bubblewrap for its build sandbox.
 
 ```sh
 make build  IMAGE=valkey   # apko build from the committed lockfile + provenance
