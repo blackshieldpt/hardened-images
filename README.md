@@ -135,20 +135,40 @@ updates automatically on **any** rebuild (e.g. the weekly schedule); a patch to
 the repackaged upstream binary itself needs a version bump in
 `images/<name>/melange.yaml`.
 
-That bump is the one thing here nothing patches for you, so the `check-updates`
-workflow runs weekly to make sure you know it is due: it reads the `update:`
-blocks already declared in each `melange.yaml`, compares the pinned
-`package.version` against upstream tags, and records anything behind in a single
-tracking issue that it updates in place. Run it yourself with `make
-check-updates`: exit 10 means something is behind, exit 0 means all current, and
-anything else means the check itself could not complete (usually a `tag-filter`
-that no longer matches) — which fails the workflow loudly rather than filing a
-partial table as if it were authoritative.
+Two kinds of pin sit outside that loop, and both had rotted badly before anything
+watched them:
 
-It reports rather than bumps, on purpose — each image pins a different artifact
-(a deb filename plus sha256, a tgz sha256, a git `expected-commit`), so bumping
-means re-fetching and re-hashing, and a tag can exist before its artifact does.
-Treat the issue as the prompt to do that by hand.
+- from-source images pin `package.version` in `melange.yaml` — `manticore` sat
+  three major lines behind;
+- apk-native images pin a Wolfi **version line** in `config.env`. The relock moves
+  patches *within* a line but never moves the line, so `valkey` sat on a line Wolfi
+  had not rebuilt in 298 days while `valkey-9.1` was a week old.
+
+The weekly `check-updates` workflow watches both and **opens a PR per image with
+the bump already applied** — the version pin, the dependent package names, and
+whatever the image derives from them (lockfile, `expected-commit`). The PR is
+never merged automatically: its own build, smoke test and scan are what decide
+whether the bump is good.
+
+Run the check yourself with `make check-updates` — exit 10 means something is
+behind, 0 means all current, and anything else means the check could not complete
+(usually a `tag-filter` that no longer matches), which fails the workflow loudly
+rather than filing a partial table as if it were authoritative. `scripts/propose-update.sh
+<image> <version>` applies one bump locally if you want to drive it by hand.
+
+Images that pin an artifact by sha256 (`clickhouse`, `manticore`, `redpanda`) get
+a tracking issue instead of a PR: the new artifact has to be fetched and hashed,
+and a tag can exist before its artifact does — Manticore tags releases before
+publishing the matching deb. Half-applying those would ship an image whose tag
+lies about its contents.
+
+A line pin is sometimes deliberate — `node` exists to track Node 22 and `node24`
+to track 24 — so those carry a `# pinned-line` marker in `config.env` and are
+reported as pinned rather than behind.
+
+**`RELOCK_DEPLOY_KEY` matters here too**: a branch pushed with `GITHUB_TOKEN` does
+not trigger workflows, so without the key the bump PRs open but their checks do
+not start, and the PR body says so.
 
 One-time setup — a write-enabled deploy key so the relock commit can trigger the
 build (a `GITHUB_TOKEN` push cannot):

@@ -1,15 +1,15 @@
 # Hardened Valkey
 
-Wolfi-based hardened Valkey image, assembled with apko from the Wolfi `valkey-8.1` package.
+Wolfi-based hardened Valkey image, assembled with apko from the Wolfi `valkey-9.1` package.
 
 ## Details
 
 | Property   | Value |
 |------------|-------|
-| Build      | apko (Wolfi valkey-8.1, valkey-8.1-cli) |
-| Version    | 8.1 |
+| Build      | apko (Wolfi valkey-9.1, valkey-9.1-cli) |
+| Version    | 9.1 |
 | User       | valkey (UID 65532) |
-| Shell      | bash (unavoidable: `valkey-8.1` → `posix-libc-utils` → `bash`); no `/bin/sh` |
+| Shell      | bash (unavoidable: `valkey-9.1` → `posix-libc-utils` → `bash`); no `/bin/sh` |
 | Image size | ~23 MB |
 
 ## Ports
@@ -21,7 +21,7 @@ Wolfi-based hardened Valkey image, assembled with apko from the Wolfi `valkey-8.
 ## Usage
 
 ```bash
-docker run -d -p 6379:6379 hub.blackshield.pt/test_images/valkey:8.1
+docker run -d -p 6379:6379 hub.blackshield.pt/test_images/valkey:9.1
 ```
 
 ## Dev variant
