@@ -289,22 +289,22 @@
       },
       {
         "name": "libnghttp2-14",
-        "url": "https://packages.wolfi.dev/os/x86_64/libnghttp2-14-1.69.0-r0.apk",
-        "version": "1.69.0-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/libnghttp2-14-1.70.0-r0.apk",
+        "version": "1.70.0-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7102",
-          "checksum": "sha1-g6bzH9P+JXiqOWC3Ofkeg+Ae4mk="
+          "range": "bytes=0-7842",
+          "checksum": "sha1-oTGgB4pr72iGCLLfY3KYCTBIH0U="
         },
         "data": {
-          "range": "bytes=7103-108752",
-          "checksum": "sha256-5i2EksNuAPwDuvelewjfjmuqaZAczZZgtce3L4MaPZY="
+          "range": "bytes=7843-109942",
+          "checksum": "sha256-zKfEV91QdeDg5sTa63wO6BJOav6geQ6NW+pLNs7bHV8="
         },
-        "checksum": "Q1g6bzH9P+JXiqOWC3Ofkeg+Ae4mk="
+        "checksum": "Q1oTGgB4pr72iGCLLfY3KYCTBIH0U="
       },
       {
         "name": "zlib",
