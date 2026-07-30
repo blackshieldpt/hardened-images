@@ -1,0 +1,53 @@
+# Phase 2 — a certificate exists. The generic TLS terminator this image ships;
+# override it by mounting your own over /etc/nginx/phases/full.conf.template.
+#
+# Two things must survive any override, and both are load-bearing:
+#
+#   1. ssl_certificate reads ${TLS_CERT_PATH}. In acme mode that points into the
+#      state volume, where lego writes; hardcoding /etc/nginx/tls/tls.crt breaks
+#      acme mode, and copying lego's output to a bind-mounted *file* would break
+#      renewals — replacing a bind-mounted file changes its inode and the
+#      container keeps serving the old certificate even after a reload.
+#
+#   2. The acme-challenge location stays, ahead of the redirect. Phase 1 answers
+#      the FIRST challenge, so issuance succeeds without it and renewal fails ~60
+#      days later: the challenge gets 301'd to HTTPS, proxied onward, and 404s,
+#      while every container looks healthy and every log stays quiet. It costs
+#      nothing when unused — an empty webroot nobody writes to.
+
+server {
+    listen 8080;
+    server_name _;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root ${TLS_ACME_WEBROOT};
+        default_type "text/plain";
+        try_files $uri =404;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 8443 ssl;
+    http2 on;
+    server_name ${TLS_SERVER_NAME};
+
+    ssl_certificate     ${TLS_CERT_PATH};
+    ssl_certificate_key ${TLS_KEY_PATH};
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+
+    add_header Strict-Transport-Security "max-age=31536000" always;
+    access_log /dev/stdout;
+
+    location / {
+        root  html;
+        index index.html index.htm;
+    }
+}

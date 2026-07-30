@@ -1,0 +1,37 @@
+# Phase 1 — no certificate yet. Serves the ACME HTTP-01 challenge on port 80 and
+# nothing else.
+#
+# There is deliberately no `listen 8443 ssl` here. nginx treats an
+# `ssl_certificate` pointing at a missing file as a fatal configuration error, so
+# it cannot start to answer the challenge that produces its first certificate.
+# The usual answer is a self-signed placeholder; this image does not ship one,
+# because a placeholder baked in at build time means shipping a known private key
+# that gets served to real clients, and generating one at boot would mean adding
+# openssl to an image that carries no crypto tooling.
+#
+# So phase 1 is honest instead: port 80 answers, 443 is closed, and everything
+# that is not a challenge gets a 503. A client that arrives mid-issuance sees an
+# error rather than a certificate warning it learns to click through. The
+# entrypoint promotes to phases/full.conf.template as soon as a certificate
+# exists, and a restart with one already in the volume skips phase 1 entirely.
+#
+# No top-level `resolver` either: it exists to re-resolve the proxy upstream, and
+# `resolver ;` — which is what an unset TLS_RESOLVER renders to — is fatal.
+
+server {
+    listen 8080;
+    server_name _;
+
+    # Must come before any redirect. lego writes the challenge file here with
+    # --http.webroot, which also stops it binding a port of its own.
+    location ^~ /.well-known/acme-challenge/ {
+        root ${TLS_ACME_WEBROOT};
+        default_type "text/plain";
+        try_files $uri =404;
+    }
+
+    location / {
+        return 503 "SecureShare is obtaining a TLS certificate.\n";
+        add_header Content-Type text/plain always;
+    }
+}

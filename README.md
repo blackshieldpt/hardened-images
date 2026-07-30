@@ -9,7 +9,7 @@ entirely on GitHub Actions.
 
 ## Images
 
-Published to **`ghcr.io/blackshieldpt/<image>`** — 19 images: nginx, node, node24,
+Published to **`ghcr.io/blackshieldpt/<image>`** — 20 images: nginx, nginx-acme, node, node24,
 go, python, python-sodium, postgresql, valkey, minio, clickhouse, nats, openbao,
 manticore, mailpit, redpanda, kafka, zookeeper, etcd, versitygw.
 

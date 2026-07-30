@@ -7,103 +7,53 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 ## [Unreleased]
 
 ### Added
-- `check-updates` now also detects **frozen Wolfi packages** and **unobtainable
-  fixes**, neither of which is version drift and neither of which any existing check
-  could see. A frozen package *is* the newest version, so the version comparison
-  calls it current, the daily relock finds nothing to change, and the scan gate stays
-  quiet if the scanner has not annotated it — which is exactly how `etcd`, `openbao`,
-  `nginx-stable` and the `valkey-8.1` line all rotted unnoticed.
-  - **FROZEN**: a pinned package Wolfi has not rebuilt in `STALE_AFTER_DAYS`
-    (default 45). Rebuilds are how a Wolfi package picks up patched libraries, so a
-    stale build is a stale dependency tree at a current version. Aged only for the
-    package carrying an image's software — the base layer (`bash`, `zlib`,
-    `ca-certificates-bundle`, `su-exec`) is low-churn and routinely months old
-    without anything being wrong, and ageing it weekly would be noise that teaches
-    you to skim the report.
-  - **UNOBTAINABLE FIX**: Wolfi's advisory data names a fixed version that does not
-    exist in the public index — a known CVE with an identified fix you cannot get.
-    Precise enough to run across every package an image installs.
-  Neither produces a bump PR, because there is nothing to bump to; both go to the
-  tracking issue so the choice (accept, VEX, or build from source) is deliberate.
-  On the current tree this reports `kafka-4.3` and `zookeeper-3.9` as frozen at 56
-  and 57 days, and `zookeeper-3.9` as naming a fix at `3.9.5-r11` that was never
-  published.
+- **`nginx-acme`** — a new image: the `nginx` image plus
+  [lego](https://github.com/go-acme/lego) 5.3.1, which obtains its own TLS
+  certificate from an ACME CA and keeps it renewed. Set `TLS_MODE=acme`,
+  `TLS_SERVER_NAME` and `TLS_ACME_EMAIL`, mount a volume at `/var/lib/acme`, and
+  that is the whole configuration: no certbot on the host, no companion container,
+  no hook scripts, no cron, and no downtime for a renewal.
 
-### Changed
-- `zookeeper` is now **built from upstream source** with melange instead of installing
-  Wolfi's `zookeeper-3.9` — acting on the first thing the freeze detector above found.
-  Wolfi's package stopped at `3.9.5-r4` on 2026-06-02 while its advisory data went on
-  naming fixes in `-r7`, `-r8`, `-r9`, `-r10`, `-r11` and `-r12`: six revisions and
-  ~13 CVEs pointing at builds nobody can obtain. The entire Kafka/ZooKeeper family in
-  public Wolfi stops on that same date, so there was no newer line to move to either.
-  - **48 findings (18 High, 11 Medium, 4 Low, 15 unrated) → 2 High, both documented
-    as not applicable.** The 28 `zookeeper-3.9` apk rows disappear with the package;
-    the 20 java-archive rows are fixed by the dependency overrides below. Note the
-    gate is `CRITICAL`, so the two survivors never blocked it and the VEX below does
-    not change that — it records the reasoning and keeps the grype table honest.
-  - **A plain source build would not have fixed anything.** Every one of those CVEs is
-    in a bundled jar, not in ZooKeeper's own code, and upstream's 3.9.5 pom pins netty
-    4.1.130 and logback 1.3.15 — both *older* than what the frozen apk already shipped.
-    The build overrides netty to **4.1.136.Final** (CVE-2026-59901; upstream's own
-    `branch-3.9` only reached 4.1.135), jackson to **2.18.9** (CVE-2026-54515,
-    CVE-2026-59889) and logback to **1.5.37** (CVE-2026-10532, the same bump upstream
-    made in ZOOKEEPER-5057). The build then *asserts* those jars are the ones shipped,
-    and so does the smoke test — a future bump that silently reverts to upstream's
-    versions fails instead of quietly reintroducing the CVEs.
-  - **Jetty is no longer shipped.** Jetty 9.4 is EOL: 9.4.58 is the last public
-    release and the 9.4.63 its advisories name is commercial-only, so those four
-    findings (2 High) were unfixable by any override. ZooKeeper loads the admin server
-    reflectively precisely so Jetty can be omitted, and our `zoo.cfg` disables it.
-    Two consequences for a bind-mounted `zoo.cfg`, both verified: `admin.enableServer=true`
-    logs a `WARN`/`NoClassDefFoundError` and keeps serving clients with no admin
-    endpoint — so an HTTP probe against it fails while the server looks healthy — and
-    `PrometheusMetricsProvider` exits 1 at startup. Both are in the image README.
-  - The two remaining findings are JLine Telnet-server flaws that ship inside the
-    `jline` uber-jar, which ZooKeeper uses only for `zkCli.sh` line editing. Fixed
-    only in jline 4.2.1, an API break — waived in a new
-    `images/zookeeper/vex.openvex.json`, the first per-image VEX here.
-  - Runtime dependencies that used to arrive as auto-deps of the Wolfi package (the
-    JRE, `bash`, `grep`, `sed`, `procps`) are now declared explicitly in the apko
-    config. `VERSION_zookeeper` is gone from `config.env`; the version comes from
-    `package.version`, and `check-updates` now tracks the image against
-    `apache/zookeeper` tags instead of reporting it frozen.
-  - **Consumers pinning `zookeeper:3.9` must move to `zookeeper:3.9.5`.**
-- `scripts/propose-update.sh` takes the git tag shape from the image's melange
-  `git-checkout` step instead of assuming a `v<version>` prefix. It hardcoded `v`, so
-  ZooKeeper's `release-3.9.5` would have failed the lookup and fallen through to the
-  tracking issue rather than opening a PR — as Kafka's bare `4.3.1` will when it moves
-  from source.
-- `vex/EXAMPLE.openvex.json.sample` used a `pkg:oci/...` product identifier, which
-  grype does not match — copying it produced waivers that silently did nothing. The
-  sample and `vex/README.md` now use a plain image reference, and the README says how
-  to verify a waiver actually applies when the finding is below the gate threshold.
+  **`nginx` is untouched.** A separate image rather than a mode of the existing one
+  because lego is ~40 MB and brings 206 Go modules into the SBOM and the
+  vulnerability scan, and deployments that terminate TLS elsewhere should not carry
+  that. With `TLS_MODE` unset, `nginx-acme` behaves identically to `nginx`.
 
-## [0.2.0] - 2026-07-29
+  It works in-image because the container already owns port 80, which is the hard
+  part of HTTP-01 — every external arrangement has to either take that port away
+  from nginx or coordinate with it. The renewal loop signals **its own pid 1**, so
+  unlike `nginxproxy/acme-companion` nothing mounts a docker socket next to a
+  network-exposed service.
 
-Security release. The minor bump — rather than 0.1.7 — is because consumers pinning a
-floating `:<version>` tag must change it. Nine images move:
+  Two phases, because nginx treats an `ssl_certificate` pointing at a missing file
+  as a *fatal* error and so cannot start in order to answer the challenge that
+  produces its first certificate. Phase 1 serves the challenge on `:80` and `503`s
+  everything else, with `:443` closed; phase 2 is the full TLS config, promoted by
+  `SIGHUP` the moment the certificate arrives — no restart, no dropped connections.
+  The usual alternative, a self-signed placeholder, means shipping a known private
+  key in a public image and briefly serving it to real clients.
 
-| image | old tag | new tag |
-|-------|---------|---------|
-| `clickhouse` | `26.1.12.23` | `26.7.1.1315` |
-| `etcd` | `3.6` | `3.6.14` |
-| `kafka` | `4.2` | `4.3` |
-| `mailpit` | `1.30.0` | `1.30.6` |
-| `manticore` | `25.0.0` | `28.4.4` |
-| `minio` | `0.20260604.005411` | `0.20260717.120751` |
-| `nginx` | `1.30` | `1.31` |
-| `openbao` | `2.5.4` | `2.6.1` |
-| `valkey` | `8.1` | `9.1` |
+  lego is built from source because Wolfi has no `lego` package — its only ACME
+  client is `acme.sh`, needing curl + openssl + socat, three dependencies these
+  images deliberately do not carry. Built as `versitygw` is: `git-checkout` with
+  `expected-commit`, `CGO_ENABLED=0`, and a build-time assertion that the result is
+  not dynamically linked.
 
-Immutable `:<version>-<commit>` pins and digests are unaffected.
+  **A High advisory the gate would have passed:** lego 5.3.1 pins
+  `google.golang.org/grpc` v1.82.0, carrying GHSA-hrxh-6v49-42gf (High, gRPC-Go xDS
+  RBAC and HTTP/2), fixed in v1.82.1. `SEVERITY_THRESHOLD` is CRITICAL, so nothing
+  would have failed. The melange pipeline bumps it before building. Also worth
+  recording: trivy's language scanners see nothing inside a static Go binary
+  (`Number of language-specific files num=0`), so **grype alone** covers those 206
+  modules.
 
-Three images also stop shipping content they previously carried: `python-sodium` drops
-pip from the runtime variant, `manticore` drops the bundled PHP tools and the
-client-library source tree, and `etcd`/`openbao` are now built from source rather than
-installed from Wolfi.
-
-Two things worth reading before upgrading:
-
+  Because the image is a copy of `nginx` plus a client, its smoke test asserts the
+  copies have not drifted — `nginx-hardened.conf` and the default template must be
+  byte-identical to `nginx`'s, and both entrypoints must still share their envsubst
+  core — alongside phase-1 startup, the challenge path being served rather than
+  redirected, `lego --version`, nginx still being pid 1, survival of `SIGHUP`, a
+  writable state directory, and that nothing happens when `TLS_MODE` is unset. See
+  [`images/nginx-acme/README.md`](images/nginx-acme/README.md).
 - **Several of the vulnerabilities fixed here were invisible to both grype and trivy.**
   The affected code was vendored inside a static binary or a bundled library tree, so
   the images scanned clean while carrying it — ClickHouse's OpenSSL 3.5.6 (fifteen
