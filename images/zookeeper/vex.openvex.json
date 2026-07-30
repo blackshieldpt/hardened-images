@@ -1,0 +1,73 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/blackshieldpt/hardened-images/images/zookeeper/vex-0001",
+  "author": "Blackshield Security <security@blackshield.pt>",
+  "timestamp": "2026-07-30T00:00:00Z",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": { "name": "GHSA-2r2c-cx56-8933", "aliases": ["CVE-2026-56741"] },
+      "products": [
+        {
+          "@id": "ghcr.io/blackshieldpt/zookeeper:latest",
+          "subcomponents": [
+            { "@id": "pkg:maven/org.jline/jline-remote-telnet@3.25.1" }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/zookeeper:latest-dev",
+          "subcomponents": [
+            { "@id": "pkg:maven/org.jline/jline-remote-telnet@3.25.1" }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/zookeeper:3.9.5",
+          "subcomponents": [
+            { "@id": "pkg:maven/org.jline/jline-remote-telnet@3.25.1" }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/zookeeper:3.9.5-dev",
+          "subcomponents": [
+            { "@id": "pkg:maven/org.jline/jline-remote-telnet@3.25.1" }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "2026-07-30: the flaw is an unauthenticated DoS in JLine's Telnet server (NAWS terminal-geometry handling). ZooKeeper 3.9.5 depends on JLine only for zkCli.sh line editing and never constructs a Telnet server, so org.jline.builtins.telnet is never on an execution path. The finding is reported because upstream ships jline 3.25.1 as a single uber-jar with the telnet module bundled in, so the classes cannot be removed without repacking the jar. Not overridable either: the fix is jline 4.2.1, and jline 4.x is an API break for zkCli. Re-check when ZooKeeper moves off the 3.x jline line."
+    },
+    {
+      "vulnerability": { "name": "GHSA-47qp-hqvx-6r3f", "aliases": ["CVE-2026-56740"] },
+      "products": [
+        {
+          "@id": "ghcr.io/blackshieldpt/zookeeper:latest",
+          "subcomponents": [
+            { "@id": "pkg:maven/org.jline/jline-remote-telnet@3.25.1" }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/zookeeper:latest-dev",
+          "subcomponents": [
+            { "@id": "pkg:maven/org.jline/jline-remote-telnet@3.25.1" }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/zookeeper:3.9.5",
+          "subcomponents": [
+            { "@id": "pkg:maven/org.jline/jline-remote-telnet@3.25.1" }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/zookeeper:3.9.5-dev",
+          "subcomponents": [
+            { "@id": "pkg:maven/org.jline/jline-remote-telnet@3.25.1" }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "2026-07-30: same component and same reasoning as GHSA-2r2c-cx56-8933 — a JLine Telnet server flaw in a module that ships inside the jline uber-jar but is never instantiated by ZooKeeper, which uses JLine only for zkCli.sh line editing. Fixed only in jline 4.2.1, an API break for zkCli. Re-check when ZooKeeper moves off the 3.x jline line."
+    }
+  ]
+}

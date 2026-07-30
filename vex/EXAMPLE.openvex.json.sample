@@ -9,7 +9,7 @@
       "vulnerability": { "name": "CVE-0000-00000" },
       "products": [
         {
-          "@id": "pkg:oci/EXAMPLE?repository_url=ghcr.io/blackshieldpt/EXAMPLE",
+          "@id": "ghcr.io/blackshieldpt/EXAMPLE:latest",
           "subcomponents": [
             { "@id": "pkg:apk/wolfi/EXAMPLE-PACKAGE" }
           ]

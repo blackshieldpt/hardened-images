@@ -42,14 +42,22 @@ if [ -f "$MEL" ] && grep -qE '^    identifier:' "$MEL"; then
         repo="$(sed -nE 's#^      repository:[[:space:]]*https://github.com/([^[:space:]]+).*#\1#p' "$MEL" | head -1)"
         [ -n "$repo" ] || skip "git-checkout without a resolvable github repository"
         command -v gh >/dev/null || skip "gh needed to resolve the tag's commit"
+        # Take the tag shape from the git-checkout step rather than assuming a `v`
+        # prefix: etcd/mailpit/openbao/versitygw tag v<version>, zookeeper tags
+        # release-<version>. Assuming `v` made every Apache-style bump fail the lookup
+        # and fall through to the tracking issue instead of opening a PR. (Kafka will
+        # need this too once it moves from source — its tags are a bare <version>.)
+        tagtmpl="$(sed -nE 's/^      tag:[[:space:]]*([^[:space:]]+).*/\1/p' "$MEL" | head -1)"
+        [ -n "$tagtmpl" ] || skip "git-checkout without a tag template"
+        tag="$(printf '%s' "$tagtmpl" | sed "s|\${{package\.version}}|${NEW}|g")"
         # Annotated tags must be dereferenced: the tag object's SHA is not the
         # commit, and expected-commit wants the commit.
-        obj="$(gh api "repos/${repo}/git/ref/tags/v${NEW}" --jq '.object.sha' 2>/dev/null)"
-        typ="$(gh api "repos/${repo}/git/ref/tags/v${NEW}" --jq '.object.type' 2>/dev/null)"
-        [ -n "$obj" ] || skip "tag v${NEW} not found in ${repo}"
+        obj="$(gh api "repos/${repo}/git/ref/tags/${tag}" --jq '.object.sha' 2>/dev/null)"
+        typ="$(gh api "repos/${repo}/git/ref/tags/${tag}" --jq '.object.type' 2>/dev/null)"
+        [ -n "$obj" ] || skip "tag ${tag} not found in ${repo}"
         if [ "$typ" = "tag" ]; then
             obj="$(gh api "repos/${repo}/git/tags/${obj}" --jq '.object.sha' 2>/dev/null)"
-            [ -n "$obj" ] || skip "could not dereference annotated tag v${NEW}"
+            [ -n "$obj" ] || skip "could not dereference annotated tag ${tag}"
         fi
         sed -i -E "s/^  version: .*/  version: ${NEW}/" "$MEL"
         sed -i -E "s/^      expected-commit: .*/      expected-commit: ${obj}/" "$MEL"

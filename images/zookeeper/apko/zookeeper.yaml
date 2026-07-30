@@ -1,5 +1,9 @@
-# Hardened ZooKeeper (apko) — Wolfi zookeeper-3.9, bash + openjdk-17 (auto-dep).
-# Keeps bash/busybox: zkServer.sh and friends are shell scripts.
+# Hardened ZooKeeper (apko) — zookeeper-hardened, built from source by melange.yaml
+# because Wolfi's zookeeper-3.9 stopped being rebuilt and its CVE fixes were never
+# published. Keeps bash/busybox: zkServer.sh and friends are shell scripts.
+#
+# The JRE and the shell utilities used to arrive as auto-deps of the Wolfi package,
+# so they are declared here now that it is gone.
 contents:
   repositories:
     - https://packages.wolfi.dev/os
@@ -8,8 +12,17 @@ contents:
   packages:
     - wolfi-baselayout
     - busybox
-    - zookeeper-3.9
-    - zookeeper-config
+    - bash
+    - grep
+    - sed
+    - procps
+    # default-jvm is the load-bearing one: it provides the /usr/lib/jvm/default-jvm
+    # symlink that JAVA_HOME below points at, and it depends on openjdk-17-jre.
+    # Without it the JRE lands in java-17-openjdk/ and zkEnv.sh cannot find java.
+    # The JRE is listed too, redundantly but explicitly, since it is the runtime.
+    - openjdk-17-jre
+    - openjdk-17-default-jvm
+    - zookeeper-hardened
     - ca-certificates-bundle
 
 accounts:
