@@ -1,0 +1,113 @@
+# Ships everything images/nginx's package ships — the hardened entrypoint, the
+# conf.d-include config, the default-server template — plus lego, the renewal loop
+# and the two phase templates that make TLS_MODE=acme work. Files are read from
+# images/nginx-acme via --source-dir.
+#
+# This image exists SEPARATELY from images/nginx so that the plain nginx image
+# stays exactly as it is: lego is ~40 MB and 206 Go modules in the SBOM and the
+# vulnerability scan, and consumers who terminate TLS elsewhere should not pay
+# for it. nginx-acme is the same nginx with a certificate client attached.
+#
+# DRIFT: nginx-hardened.conf and templates/default.conf.template are copies of
+# images/nginx's, and docker-entrypoint.sh is nginx's with an ACME block appended.
+# test.sh asserts the two config files are byte-identical to nginx's and that both
+# entrypoints still share their template-rendering core, so a fix to one that is
+# not carried to the other fails the build rather than rotting quietly.
+# Note: adding melange moves nginx off committed-lock pinning — it now resolves
+# its package set fresh each build, like the other melange-based images.
+#
+# lego is built from source because Wolfi has no lego package (checked against the
+# x86_64 APKINDEX: only acme.sh, which needs curl + openssl + socat — three
+# dependencies this image deliberately does not carry — and cert-manager's
+# Kubernetes-only acmesolver). lego is pure Go with no runtime dependencies, which
+# is why it was chosen for an image that ships no shell utilities beyond busybox.
+#
+# NOTE for anyone adding an `update:` block here: do not. resolve_version() reads
+# package.version from this file only when it contains an `identifier:`, and this
+# image's version comes from VERSION_nginx_acme in config.env, which tracks the
+# nginx line it is built from. Adding one would make the image publish as this
+# package's version instead. lego's version is therefore pinned below by hand;
+# `check-updates` cannot see it.
+package:
+  name: nginx-acme-entrypoint
+  version: "1.0.0"
+  epoch: 0
+  description: "Hardened nginx entrypoint + conf.d-include config + ACME via lego 5.3.1"
+  copyright:
+    - license: BSD-2-Clause
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+      - ca-certificates-bundle
+      - go
+      - git
+
+# lego 5.3.1. Held by hand: see the note above on why there is no update: block.
+vars:
+  lego-version: 5.3.1
+
+pipeline:
+  - name: Install the entrypoint, config and templates
+    runs: |
+      install -Dm0755 docker-entrypoint.sh "${{targets.destdir}}/usr/local/bin/docker-entrypoint.sh"
+      install -Dm0755 acme-loop.sh "${{targets.destdir}}/usr/local/bin/acme-loop.sh"
+      install -Dm0755 acme-deploy.sh "${{targets.destdir}}/usr/local/bin/acme-deploy.sh"
+      install -Dm0644 nginx-hardened.conf "${{targets.destdir}}/etc/nginx/nginx-hardened.conf"
+      install -Dm0644 templates/default.conf.template "${{targets.destdir}}/etc/nginx/templates/default.conf.template"
+      # Phase templates live OUTSIDE /etc/nginx/templates on purpose: the
+      # entrypoint renders every *.template it finds there, and two files each
+      # defining `listen 8080` would leave nginx refusing to start. The phase
+      # step renders the one it wants directly into conf.d.
+      install -Dm0644 phases/bootstrap.conf.template "${{targets.destdir}}/etc/nginx/phases/bootstrap.conf.template"
+      install -Dm0644 phases/full.conf.template "${{targets.destdir}}/etc/nginx/phases/full.conf.template"
+
+  - name: Build lego from source
+    uses: git-checkout
+    with:
+      repository: https://github.com/go-acme/lego
+      tag: v${{vars.lego-version}}
+      expected-commit: 589c84af4f26629fbdaa7fbca712f806632ccb7e
+      destination: lego-src
+
+  # Same treatment versitygw gets: patch what the scan would flag, at the version
+  # we build, rather than waiting for upstream to cut a release. lego 5.3.1 pulls
+  # grpc v1.82.0 through its Google Cloud DNS provider, and grype flags
+  # GHSA-hrxh-6v49-42gf (High, "gRPC-Go: xDS RBAC and HTTP/2 Vulnerabilities"),
+  # fixed in v1.82.1. The repo's gate gates on CRITICAL, so this would have
+  # shipped a known High into an internet-facing image without failing anything.
+  - name: Bump vulnerable Go dependencies
+    runs: |
+      cd lego-src
+      go get google.golang.org/grpc@v1.82.1
+      go mod tidy
+
+  - name: Compile lego (static, no cgo)
+    runs: |
+      cd lego-src
+      # The main package is the repository ROOT in lego 5.x (their Makefile:
+      # MAIN_DIRECTORY := .). It was ./cmd/lego in v4 — that path no longer
+      # exists, and building it fails with "directory not found".
+      # -trimpath and -X main.version mirror lego's own build.
+      CGO_ENABLED=0 go build -trimpath \
+        -ldflags "-s -w -X main.version=v${{vars.lego-version}}" \
+        -o "${{targets.destdir}}/usr/bin/lego" .
+
+  - name: Assert what was built
+    runs: |
+      test -x "${{targets.destdir}}/usr/local/bin/docker-entrypoint.sh"
+      test -x "${{targets.destdir}}/usr/local/bin/acme-loop.sh"
+      test -x "${{targets.destdir}}/usr/local/bin/acme-deploy.sh"
+      test -f "${{targets.destdir}}/etc/nginx/phases/bootstrap.conf.template"
+      test -f "${{targets.destdir}}/etc/nginx/phases/full.conf.template"
+      head -1 "${{targets.destdir}}/usr/local/bin/docker-entrypoint.sh"
+      # A dynamically linked lego would need libc at runtime, which this image
+      # has, but the point of CGO_ENABLED=0 is that it needs nothing at all.
+      "${{targets.destdir}}/usr/bin/lego" --version
+      ! ldd "${{targets.destdir}}/usr/bin/lego" 2>/dev/null | grep -q "=>" || {
+          echo "lego is dynamically linked; expected a static binary" >&2; exit 1; }

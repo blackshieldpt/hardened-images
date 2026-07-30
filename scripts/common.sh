@@ -39,7 +39,7 @@ dev_packages_for() {
         # where it lives — that is the stage apps install their dependencies in.
         python-sodium) echo "$base build-base git pkgconf glibc-dev py3.14-pip" ;;
         node|node24|python|go) echo "$base build-base git pkgconf glibc-dev" ;;
-        nginx|mailpit) echo "$base curl openssl" ;;
+        nginx|nginx-acme|mailpit) echo "$base curl openssl" ;;
         *)             echo "$base curl jq" ;;
     esac
 }

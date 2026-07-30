@@ -50,6 +50,7 @@ jobs:
       matrix:
         image:
           - nginx
+          - nginx-acme
           - node
           - node24
           - go
