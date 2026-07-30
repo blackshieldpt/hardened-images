@@ -1,10 +1,25 @@
-# Ships zoo.cfg into the Wolfi zookeeper-3.9 conf dir (the default ZOOCFGDIR).
-# Read from images/zookeeper via --source-dir. No update block: version from config.env.
+# Builds ZooKeeper from source and ships the hardened config, replacing Wolfi's
+# zookeeper-3.9 package.
+#
+# Wolfi's zookeeper-3.9 has not been rebuilt since 2026-06-02 and is capped at
+# 3.9.5-r4, while its advisory data names fixes in 3.9.5-r7, -r8, -r9, -r10, -r11
+# and -r12 that were never published to the public repo. Six revisions, ~13 CVEs,
+# none obtainable. The whole Kafka/ZooKeeper package family in Wolfi stops on the
+# same date, so there is no newer line to move to either.
+#
+# Every one of those CVEs is in a bundled jar, not in ZooKeeper's own code, so a
+# plain source build at 3.9.5 would reproduce them: upstream's pom pins netty
+# 4.1.130 and logback 1.3.15, both *older* than what the frozen apk already
+# shipped. The dependency overrides below are the actual fix, and the build asserts
+# them (see the last pipeline step) so a future bump cannot silently drop back to
+# upstream's vulnerable versions.
+#
+# zoo.cfg is read from images/zookeeper via --source-dir.
 package:
-  name: zookeeper-config
-  version: "1.0.0"
+  name: zookeeper-hardened
+  version: 3.9.5
   epoch: 0
-  description: "Hardened ZooKeeper standalone config"
+  description: "Apache ZooKeeper (built from source, patched bundled dependencies) + hardened config"
   copyright:
     - license: Apache-2.0
 
@@ -16,7 +31,113 @@ environment:
       - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
     packages:
       - busybox
+      - ca-certificates-bundle
+      - openjdk-17-default-jdk
+      - maven-3.9
+      - git
 
 pipeline:
-  - runs: |
+  - uses: git-checkout
+    with:
+      repository: https://github.com/apache/zookeeper
+      tag: release-${{package.version}}
+      expected-commit: 293c895a8d966a3ecb92872be4a1daf87d725da2
+
+  - name: Build the binary assembly with patched dependencies
+    runs: |
+      export JAVA_HOME=/usr/lib/jvm/default-jvm
+      # netty:   4.1.136.Final is the first release fixing CVE-2026-59901
+      #          (netty-codec); upstream's own branch-3.9 only reached 4.1.135.
+      # jackson: 2.18.9 fixes CVE-2026-54515 and CVE-2026-59889.
+      # logback: 1.5.37 fixes CVE-2026-10532, and is exactly the bump upstream
+      #          made on branch-3.9 (ZOOKEEPER-5057), so it is upstream-validated.
+      #          slf4j stays at the pom's 2.0.13, which is what that bump pairs with.
+      # The property is spelled logback-version, unlike the other two.
+      #
+      # An override upstream has since overtaken would be a silent DOWNGRADE: the
+      # assertions at the end of this file only check that the version named here
+      # is what shipped, so a 3.9.6 pinning netty above ours would pass them while
+      # losing patches. Refuse to build in that case instead.
+      for spec in netty.version:4.1.136.Final jackson.version:2.18.9 \
+                  logback-version:1.5.37; do
+          prop="${spec%%:*}"; want="${spec##*:}"
+          have="$(sed -nE "s|^[[:space:]]*<${prop}>([^<]+)</${prop}>.*|\1|p" pom.xml | head -1)"
+          [ -n "$have" ] || { echo "pom.xml no longer defines ${prop}" >&2; exit 1; }
+          if [ "$(printf '%s\n%s\n' "$have" "$want" | sort -V | tail -1)" != "$want" ]; then
+              echo "override ${prop}=${want} is behind upstream's ${have} — raise it or drop it" >&2
+              exit 1
+          fi
+      done
+      # -C fails on a checksum mismatch instead of warning. Maven has no go.sum
+      # equivalent, so this is the only integrity check on the dependency graph.
+      mvn -B -ntp -C -DskipTests \
+        -Dnetty.version=4.1.136.Final \
+        -Djackson.version=2.18.9 \
+        -Dlogback-version=1.5.37 \
+        -pl zookeeper-assembly -am package
+
+  - name: Install the assembly
+    runs: |
+      tar xzf "zookeeper-assembly/target/apache-zookeeper-${{package.version}}-bin.tar.gz" -C /tmp
+      src="/tmp/apache-zookeeper-${{package.version}}-bin"
+      install -d "${{targets.destdir}}/usr/share/java/zookeeper"
+      cp -a "$src/bin" "$src/lib" "${{targets.destdir}}/usr/share/java/zookeeper/"
       install -Dm0644 zoo.cfg "${{targets.destdir}}/usr/share/java/zookeeper/conf/zoo.cfg"
+      # The upstream tarball carries Windows launchers; the Wolfi package pruned them
+      # and so do we, or the conversion would quietly add 7 dead scripts to the image.
+      rm -f "${{targets.destdir}}/usr/share/java/zookeeper/bin"/*.cmd
+
+  - name: Drop Jetty — no obtainable fix, and upstream supports omitting it
+    runs: |
+      # Jetty 9.4 is EOL: 9.4.58 is the last public release, and the 9.4.63 that
+      # the advisories name is commercial-only. So its findings (2 High, 2 Medium)
+      # cannot be fixed by any override — they can only be removed or waived.
+      # ZooKeeper loads the admin server reflectively for exactly this reason;
+      # AdminServerFactory's javadoc: "it's ok to omit Jetty from the classpath if
+      # a user doesn't wish to pull in Jetty with ZooKeeper". Missing classes fall
+      # back to DummyAdminServer. Our zoo.cfg disables the admin server anyway.
+      #
+      # Consequence for consumers: a bind-mounted zoo.cfg that enables the admin
+      # server or the Prometheus metrics provider will fail loudly instead of
+      # starting a listener. That is documented in the image README.
+      lib="${{targets.destdir}}/usr/share/java/zookeeper/lib"
+      # Checked before and after, because `rm -f <glob>` followed by `! ls <glob>` can
+      # only ever pass: the failure worth catching is upstream renaming the artifacts
+      # (Jetty 12 uses jetty-ee10-*), which would make the rm a silent no-match. So
+      # require that something was there, and that nothing jetty-ish survives.
+      before="$(ls "$lib" | grep -ciE 'jetty|servlet-api' || true)"
+      [ "$before" -gt 0 ] || { echo "no Jetty artifacts found to remove — did upstream rename them?" >&2; exit 1; }
+      rm -f "$lib"/jetty-*.jar "$lib"/jetty-*.LICENSE.txt "$lib"/javax.servlet-api-*.jar
+      if [ "$(ls "$lib" | grep -ciE 'jetty|servlet-api' || true)" -ne 0 ]; then
+          echo "Jetty/servlet artifacts survived removal:" >&2
+          ls "$lib" | grep -iE 'jetty|servlet-api' >&2
+          exit 1
+      fi
+
+  - name: Verify the version and the dependency overrides we claim
+    runs: |
+      # The jar-name checks are weak on their own — the tarball unpacked above is
+      # named for package.version, so a mismatch would already have failed there.
+      # What actually ties the tag to the source is expected-commit; the running
+      # server's own version is asserted in test.sh. These two lines are a cheap
+      # guard against the assembly layout moving under us.
+      lib="${{targets.destdir}}/usr/share/java/zookeeper/lib"
+      test -f "$lib/zookeeper-${{package.version}}.jar"
+      test -f "$lib/zookeeper-jute-${{package.version}}.jar"
+      for jar in netty-codec-4.1.136.Final netty-handler-4.1.136.Final \
+                 jackson-databind-2.18.9 jackson-core-2.18.9 \
+                 logback-core-1.5.37 logback-classic-1.5.37; do
+          test -f "$lib/${jar}.jar" || { echo "MISSING: ${jar}.jar" >&2; exit 1; }
+      done
+
+update:
+  enabled: true
+  github:
+    identifier: apache/zookeeper
+    use-tag: true
+    # Scoped to the 3.9 line, which is ZooKeeper's only current line. A 3.10 or 4.x
+    # release would therefore keep reporting "current" — the same blind spot etcd
+    # (v3.6.) and clickhouse (v26.7.) have, and there is no `# pinned-line` marker
+    # for from-source images to declare it deliberate.
+    tag-filter: "release-3.9."
+    strip-prefix: "release-"

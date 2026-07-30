@@ -28,11 +28,15 @@ every rebuild and daily relock patch.
 
 - **Distroless & non-root** — no apk, runs as UID 65532. Most images ship no shell
   at all; the exceptions are forced by upstream and documented in the image's own
-  README: `clickhouse`, `nginx`, `postgresql` and `zookeeper` ship busybox (their
-  entrypoints are shell scripts), `kafka` and `redpanda` ship bash + busybox, and
+  README: `clickhouse`, `nginx` and `postgresql` ship busybox (their
+  entrypoints are shell scripts), `kafka`, `redpanda` and `zookeeper` ship bash +
+  busybox (`zkServer.sh` and `zkEnv.sh` are bash scripts), and
   `go` and `valkey` get `/bin/bash` as an unavoidable transitive dependency
-  (`go-1.26` and `posix-libc-utils` both hard-depend on it). Every image's smoke
-  test asserts which of these is true for it, so the claim cannot silently rot.
+  (`go-1.26` and `posix-libc-utils` both hard-depend on it). Most of these claims are
+  asserted in the image's own smoke test — `check_no_shell` for the shell-less ones,
+  and the weaker property that is actually true for `valkey` and `zookeeper` — so they
+  cannot silently rot. Six do not yet assert it and can: `clickhouse`, `go`, `kafka`,
+  `nginx`, `postgresql` and `redpanda` only document their shell.
 - **SBOM** — CycloneDX + SPDX, attached as a cosign attestation, uploaded as a
   downloadable workflow artifact, and (optionally) pushed to Dependency-Track.
 - **Scanned** — Grype + Trivy gate the build at `SEVERITY_THRESHOLD`; exceptions
@@ -211,7 +215,7 @@ Until `RELOCK_DEPLOY_KEY` is set, the relock job no-ops.
    melange images that pin there); or `package.version` in
    `images/<name>/melange.yaml` for images built from source or repackaged from an
    upstream artifact, which declare an `update.github` block (clickhouse, etcd,
-   mailpit, manticore, openbao, redpanda, versitygw).
+   mailpit, manticore, openbao, redpanda, versitygw, zookeeper).
 3. For an apk-native image, run `make lock IMAGE=<name>` and commit
    `images/<name>/apko/<name>.lock.json` (melange images skip this — they resolve
    fresh at build).
