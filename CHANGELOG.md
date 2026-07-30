@@ -47,6 +47,16 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   (`Number of language-specific files num=0`), so **grype alone** covers those 206
   modules.
 
+  **What this adds to the pipeline.** A twentieth image, so the build matrix runs
+  two more jobs (prod and dev) and publishes `ghcr.io/blackshieldpt/nginx-acme` with
+  the same three tags as everything else. Its version tracks the nginx line —
+  `VERSION_nginx_acme` in `config.env`, bumped together with `VERSION_nginx`, since
+  it is the same upstream nginx underneath. Its dev variant gets curl and openssl,
+  as `nginx`'s does. The lego version is pinned by hand in the melange `vars:` and
+  `check-updates` cannot see it: `resolve_version()` only reads `package.version`
+  when the melange carries an `identifier:`, and adding one here would make the
+  image publish as the entrypoint package's version instead of nginx's.
+
   Because the image is a copy of `nginx` plus a client, its smoke test asserts the
   copies have not drifted — `nginx-hardened.conf` and the default template must be
   byte-identical to `nginx`'s, and both entrypoints must still share their envsubst
