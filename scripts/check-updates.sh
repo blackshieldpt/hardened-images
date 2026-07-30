@@ -33,6 +33,12 @@ command -v gh >/dev/null || { echo "ERROR: gh not found (needed to query upstrea
 BEHIND=0
 FOUND=0
 ERRORS=0
+FROZEN=0
+
+# A pinned package that is the newest of its family but has stopped being rebuilt
+# does not look like drift, so nothing above catches it. Flag anything not rebuilt
+# in this many days. Override in config.env or the environment.
+STALE_AFTER_DAYS="${STALE_AFTER_DAYS:-45}"
 
 # --porcelain emits tab-separated rows for the workflow to consume, so it never
 # has to parse the aligned table (whose column widths are cosmetic).
@@ -137,6 +143,11 @@ fetch_apkindex() {
     tar xzf "${APKINDEX_CACHE}/APKINDEX.tar.gz" -C "$APKINDEX_CACHE" APKINDEX || return 1
 }
 
+fetch_secdb() {
+    curl -sSfL --retry 5 --retry-all-errors --retry-delay 3 --max-time 180 \
+        -o "${APKINDEX_CACHE}/security.json" https://packages.wolfi.dev/os/security.json
+}
+
 [ "$PORCELAIN" = 1 ] || { echo; row IMAGE PINNED LATEST STATUS; row ------ ------ ------ ------; }
 
 if ! fetch_apkindex; then
@@ -186,11 +197,100 @@ else
     done < config.env
 fi
 
+## ---------------------------------------------------------------------------
+## Freeze detection. Everything above answers "is there a newer version?", which
+## a frozen package passes: it IS the newest. That is how etcd-3.6, openbao,
+## nginx-stable, kafka, zookeeper and the valkey-8.1 line all rotted while every
+## check reported them current. Two signals catch it, both from data already
+## fetched:
+##
+##   FROZEN        the pinned package has not been rebuilt in STALE_AFTER_DAYS.
+##                 Rebuilds are how a Wolfi package picks up patched libraries, so
+##                 a stale build is a stale dependency tree even at a current version.
+##   UNOBTAINABLE  Wolfi's advisory data names a fixed version that does not exist
+##                 in the index. That is worse than staleness: it means a fix for a
+##                 known CVE has been identified and you cannot get it.
+##
+## Neither is drift, so neither produces a bump PR — there is nothing to bump to.
+## They are reported so the decision (accept, VEX, or move off the package) is a
+## choice rather than an oversight.
+
+if [ -d "$APKINDEX_CACHE" ] && [ -f "${APKINDEX_CACHE}/APKINDEX" ]; then
+    [ "$PORCELAIN" = 1 ] || { echo; row PACKAGE VERSION AGE STATUS; row ------- ------- --- ------; }
+
+    # newest build per package: name, version, build timestamp
+    awk -F: '/^P:/{p=$2} /^V:/{v=$2} /^t:/{if (p!="" && (!(p in t) || $2+0>t[p])) {t[p]=$2+0; ver[p]=v}}
+             END{for (k in t) printf "%s\t%s\t%d\n", k, ver[k], t[k]}' \
+        "${APKINDEX_CACHE}/APKINDEX" > "${APKINDEX_CACHE}/newest.tsv"
+    awk -F: '/^P:/{p=$2} /^V:/{print p "\t" $2}' "${APKINDEX_CACHE}/APKINDEX" \
+        | sort -u > "${APKINDEX_CACHE}/allvers.tsv"
+
+    # Two different package sets, because the two signals have different
+    # noise profiles.
+    #
+    # Age is only meaningful for the package carrying an image's *software*. The
+    # base layer — bash, zlib, ca-certificates-bundle, su-exec — is low-churn by
+    # nature and routinely months old without anything being wrong, so ageing it
+    # weekly would be noise that teaches you to skim past the report.
+    : > "${APKINDEX_CACHE}/primary"
+    for apko in images/*/apko/*.yaml; do
+        img="$(basename "$(dirname "$(dirname "$apko")")")"
+        stem="${img%%-*}"                       # python-sodium -> python
+        base="${img%%[0-9]*}"                   # node24        -> node
+        # [a-z]* so an image name can be a prefix of its package: node -> nodejs-22.
+        sed -nE 's/^[[:space:]]+- ([a-z0-9]([a-z0-9._+-]*[a-z0-9])?)$/\1/p' "$apko" \
+            | grep -E "^(${img}|${stem}|${base:-$img})[a-z]*([-.]|$)" >> "${APKINDEX_CACHE}/primary" || true
+    done
+    sort -u -o "${APKINDEX_CACHE}/primary" "${APKINDEX_CACHE}/primary"
+
+    # An unobtainable fix is precise regardless of which package it is in — it
+    # means a CVE has a named fix that was never published — so that runs over
+    # everything the images declare. Locally-built melange packages
+    # (etcd-hardened, nginx-entrypoint, ...) are absent from the index and drop out.
+    sed -nE 's/^[[:space:]]+- ([a-z0-9]([a-z0-9._+-]*[a-z0-9])?)$/\1/p' images/*/apko/*.yaml \
+        | sort -u > "${APKINDEX_CACHE}/declared"
+
+    have_secdb=0
+    if fetch_secdb; then have_secdb=1; else
+        echo "::warning::could not fetch security.json — unobtainable-fix check skipped" >&2
+    fi
+
+    now="$(date +%s)"
+    while IFS= read -r pkg; do
+        line="$(grep -P "^\Q${pkg}\E\t" "${APKINDEX_CACHE}/newest.tsv" 2>/dev/null | head -1)" || true
+        [ -n "$line" ] || continue          # not a Wolfi package (built locally)
+        ver="$(printf '%s' "$line" | cut -f2)"
+        ts="$(printf '%s' "$line" | cut -f3)"
+        age=$(( (now - ts) / 86400 ))
+
+        if [ "$age" -gt "$STALE_AFTER_DAYS" ] && grep -qxF "$pkg" "${APKINDEX_CACHE}/primary"; then
+            row "$pkg" "$ver" "${age}d" "FROZEN (no rebuild in ${age} days)"
+            FROZEN=$((FROZEN + 1))
+        fi
+
+        [ "$have_secdb" = 1 ] || continue
+        fixed="$(jq -r --arg p "$pkg" \
+            '[.packages[] | select(.pkg.name == $p) | .pkg.secfixes | keys[] | select(. != "0")] | .[]' \
+            "${APKINDEX_CACHE}/security.json" 2>/dev/null | sort -V | tail -1)"
+        [ -n "$fixed" ] || continue
+        if ! grep -qxF "${pkg}	${fixed}" "${APKINDEX_CACHE}/allvers.tsv"; then
+            # Only report when the named fix is genuinely ahead of everything shipped.
+            if [ "$(printf '%s\n%s\n' "$ver" "$fixed" | sort -V | tail -1)" = "$fixed" ]; then
+                row "$pkg" "$ver" "-" "UNOBTAINABLE FIX (advisory names ${fixed}, not published)"
+                FROZEN=$((FROZEN + 1))
+            fi
+        fi
+    done < "${APKINDEX_CACHE}/declared"
+fi
+
 if [ "$PORCELAIN" = 0 ]; then
     echo
-    echo "Checked ${FOUND} image(s); ${BEHIND} behind upstream; ${ERRORS} could not be checked."
+    echo "Checked ${FOUND} image(s); ${BEHIND} behind upstream; ${FROZEN} frozen or unobtainable; ${ERRORS} could not be checked."
 fi
 
 [ "$ERRORS" -eq 0 ] || exit 1
-[ "$BEHIND" -eq 0 ] || exit 10
+# 10 means "there is something to report". The workflow decides what to do with
+# each row: BEHIND gets a bump PR, FROZEN and UNOBTAINABLE go to the issue, since
+# there is nothing to bump to.
+{ [ "$BEHIND" -eq 0 ] && [ "$FROZEN" -eq 0 ]; } || exit 10
 exit 0

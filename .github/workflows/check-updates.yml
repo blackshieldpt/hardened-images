@@ -11,6 +11,12 @@ name: check-updates
 #     moves patches within a line but never the line itself, so valkey sat on a
 #     line Wolfi had not rebuilt in 298 days while valkey-9.1 was a week old.
 #
+# It also reports two things that are not drift and get no PR, because there is
+# nothing to bump to: a pinned package Wolfi has stopped rebuilding, and a fix
+# named in Wolfi's advisory data that was never published. Both were invisible to
+# every other check here — a frozen package IS the newest version, so it reads as
+# current — and both are how this repo ended up shipping unpatched code.
+#
 # The bump is applied, never merged: the PR's own build/test/scan run is what says
 # whether it is good. Images whose bump cannot be fully automated (an artifact
 # sha256 that must be re-fetched) are listed in a tracking issue instead of
@@ -79,7 +85,15 @@ jobs:
           : > manual.txt
 
           while IFS="$(printf '\t')" read -r image pinned latest status; do
-            case "$status" in BEHIND*) ;; *) continue ;; esac
+            case "$status" in
+              BEHIND*) ;;
+              FROZEN*|UNOBTAINABLE*)
+                # No PR: there is no newer version to move to. This is a decision
+                # for a human — accept, VEX, or move the image off the package.
+                echo "- \`${image}\` (${pinned}) — ${status}" >> manual.txt
+                continue ;;
+              *) continue ;;
+            esac
 
             branch="auto-update/${image}-${latest}"
             git checkout -q main && git checkout -q -B "$branch"
@@ -152,9 +166,19 @@ jobs:
             echo "nothing needed a manual bump"; exit 0
           fi
           {
-            echo "These images are behind upstream but their bump could not be applied"
-            echo "automatically — they pin an artifact by sha256, so the new artifact has to"
-            echo "be fetched and hashed by hand (see the image's \`melange.yaml\`)."
+            echo "Things the weekly check found that could not be turned into a PR."
+            echo
+            echo "**Behind upstream, but pinned by artifact sha256** — the new artifact has to be"
+            echo "fetched and hashed by hand (see the image's \`melange.yaml\`)."
+            echo
+            echo "**FROZEN** — Wolfi has stopped rebuilding this package. Rebuilds are how a Wolfi"
+            echo "package picks up patched libraries, so a stale build means a stale dependency"
+            echo "tree even though the version looks current. There is nothing newer to bump to;"
+            echo "the options are accept, VEX, or build the software from source instead."
+            echo
+            echo "**UNOBTAINABLE FIX** — Wolfi's advisory data names a fixed version that does not"
+            echo "exist in the public index. A known CVE has an identified fix you cannot get."
+            echo "This is the more urgent of the two."
             echo
             cat manual.txt
             echo

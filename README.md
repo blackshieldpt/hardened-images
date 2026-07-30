@@ -166,6 +166,27 @@ A line pin is sometimes deliberate — `node` exists to track Node 22 and `node2
 to track 24 — so those carry a `# pinned-line` marker in `config.env` and are
 reported as pinned rather than behind.
 
+The same check reports two conditions that are **not** drift and get no PR,
+because there is nothing to bump to:
+
+- **FROZEN** — Wolfi has stopped rebuilding a pinned package (default: no rebuild
+  in 45 days, `STALE_AFTER_DAYS` in `config.env`). Rebuilds are how a Wolfi package
+  picks up patched libraries, so a stale build means a stale dependency tree even
+  though the version reads as current. Only the package carrying an image's
+  software is aged — the base layer is low-churn and routinely months old without
+  anything being wrong.
+- **UNOBTAINABLE FIX** — Wolfi's advisory data names a fixed version that does not
+  exist in the public index, i.e. a known CVE has an identified fix you cannot get.
+  The more urgent of the two, and the sharper signal: it is precise enough to run
+  across every package an image installs, not just the primary one.
+
+Both were invisible to everything else here. A frozen package *is* the newest
+version, so version checks call it current, the relock finds nothing to change,
+and the scan gate stays quiet if the scanner has not annotated it. That is how
+`etcd`, `openbao`, `nginx-stable` and the `valkey-8.1` line all rotted unnoticed.
+The options are accept, VEX, or build the software from source — a decision rather
+than an oversight.
+
 **`RELOCK_DEPLOY_KEY` matters here too**: a branch pushed with `GITHUB_TOKEN` does
 not trigger workflows, so without the key the bump PRs open but their checks do
 not start, and the PR body says so.
