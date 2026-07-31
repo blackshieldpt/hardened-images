@@ -365,22 +365,22 @@
       },
       {
         "name": "nodejs-24",
-        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-24-24.18.0-r2.apk",
-        "version": "24.18.0-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-24-24.18.1-r1.apk",
+        "version": "24.18.1-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8619",
-          "checksum": "sha1-2q2WlvOwisH/OeGv4ZvWQuOnYd8="
+          "range": "bytes=0-8610",
+          "checksum": "sha1-wIGwTJqjgLDzKgGZbhh5xmCrbck="
         },
         "data": {
-          "range": "bytes=8620-29232800",
-          "checksum": "sha256-byIK8oKV6gdpahyvYAQYQuXpkqnlKT8Ir5imwaZKJtI="
+          "range": "bytes=8611-29207538",
+          "checksum": "sha256-J7zPGcFvpTXTDwGdokek6FSBVVpirNV8jAOMgWLvOVg="
         },
-        "checksum": "Q12q2WlvOwisH/OeGv4ZvWQuOnYd8="
+        "checksum": "Q1wIGwTJqjgLDzKgGZbhh5xmCrbck="
       },
       {
         "name": "node-gyp",
@@ -403,22 +403,22 @@
       },
       {
         "name": "npm",
-        "url": "https://packages.wolfi.dev/os/x86_64/npm-12.0.1-r2.apk",
-        "version": "12.0.1-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/npm-12.0.2-r0.apk",
+        "version": "12.0.2-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7335",
-          "checksum": "sha1-vzHD/dxXLRtjsxQjwmMJqCAycus="
+          "range": "bytes=0-7341",
+          "checksum": "sha1-XG9/i377656rpL5Trl8TvjDXiZE="
         },
         "data": {
-          "range": "bytes=7336-2199724",
-          "checksum": "sha256-vlE96sX4M3Qxm8pq4xGDgnHmxvMpVsI4RvP9xpUMdtE="
+          "range": "bytes=7342-2199610",
+          "checksum": "sha256-vXrWWWVO7RC83IRss3of9fqoKFHI5Cf3jOnsd9ANZ3c="
         },
-        "checksum": "Q1vzHD/dxXLRtjsxQjwmMJqCAycus="
+        "checksum": "Q1XG9/i377656rpL5Trl8TvjDXiZE="
       }
     ]
   }
