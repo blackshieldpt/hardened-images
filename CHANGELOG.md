@@ -6,6 +6,13 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Fixed
+- **`nginx-acme` now reaches the CA instead of failing in lego's argument
+  parser.** lego 5.x scopes issuance and renewal options to its `run` command;
+  the loop placed `--accept-tos` and the remaining options before that command,
+  where they were treated as unknown global flags. The smoke test now exercises
+  the full option set and rejects this otherwise-silent renewal-loop failure.
+
 ### Added
 - **`nginx-acme`** — a new image: the `nginx` image plus
   [lego](https://github.com/go-acme/lego) 5.3.1, which obtains its own TLS

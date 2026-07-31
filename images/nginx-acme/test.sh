@@ -107,6 +107,24 @@ assert_rc0 "acme: netstat exists for the readiness probe" \
 assert_contains "acme: lego is on the expected version" "5\.3\.1" \
     "$(docker exec "$ACME" lego --version 2>&1)"
 
+# lego 5.x scopes these flags to the `run` command. The loop used to invoke
+# `lego --accept-tos ... run`, which left nginx healthy and the loop alive but
+# made every issuance/renewal fail in the CLI parser before contacting the CA.
+# Assert both that the complete option set parses and that the actual background
+# attempt did not take that path.
+assert_rc0 "acme: issuance flags are valid after the run command" \
+    docker exec "$ACME" lego run \
+        --accept-tos \
+        --email test@example.invalid \
+        --domains acme-test.invalid \
+        --path /var/lib/acme \
+        --http --http.webroot /var/lib/acme/webroot \
+        --no-random-sleep \
+        --deploy-hook /usr/local/bin/acme-deploy.sh \
+        --help
+assert_eq "acme: renewal loop reaches lego without a flag-scope error" "0" \
+    "$(docker logs "$ACME" 2>&1 | grep -c 'flag provided but not defined' || true)"
+
 # nginx must remain pid 1: SIGHUP to pid 1 is how the deploy hook reloads after a
 # renewal, and `docker kill -s HUP` is the documented operator command.
 assert_contains "acme: nginx is pid 1" "nginx" \

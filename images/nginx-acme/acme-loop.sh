@@ -71,15 +71,17 @@ attempt() {
     # set by container start time, not by a wall-clock cron everyone shares.
     # --renew-days is deliberately unset: lego derives the window from the
     # certificate's own lifetime, which stays right if the CA shortens it.
-    lego \
+    # lego 5.x scopes issuance/renewal flags to the `run` command. Putting
+    # them before `run` makes urfave/cli parse them as global flags and reject
+    # the very first one (`--accept-tos`) before contacting the CA.
+    lego run \
         --accept-tos \
         --email "$email" \
         --domains "$name" \
         --path "$state" \
         --http --http.webroot "$webroot" \
         --no-random-sleep \
-        --deploy-hook /usr/local/bin/acme-deploy.sh \
-        run
+        --deploy-hook /usr/local/bin/acme-deploy.sh
 }
 
 # Rate limits punish a restart loop: Let's Encrypt allows 5 failed validations per
