@@ -270,41 +270,41 @@
       },
       {
         "name": "valkey-9.1",
-        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.1-9.1.1-r0.apk",
-        "version": "9.1.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.1-9.1.1-r1.apk",
+        "version": "9.1.1-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-19429",
-          "checksum": "sha1-lbIM0c6kSFS+UYWy7OA1J9f0bww="
+          "range": "bytes=0-6812",
+          "checksum": "sha1-5LV66RdbU937CUwVyewOw5f6UFY="
         },
         "data": {
-          "range": "bytes=19430-2316998",
-          "checksum": "sha256-8732zKF/QOPFK+Fa1b9h9v8tPw26UhKQE9KfDoCZaXA="
+          "range": "bytes=6813-2304375",
+          "checksum": "sha256-1hII76n6nX/+OqAK8ibvIRx5QoBoWuJVpEXPruUlHSc="
         },
-        "checksum": "Q1lbIM0c6kSFS+UYWy7OA1J9f0bww="
+        "checksum": "Q15LV66RdbU937CUwVyewOw5f6UFY="
       },
       {
         "name": "valkey-9.1-cli",
-        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.1-cli-9.1.1-r0.apk",
-        "version": "9.1.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.1-cli-9.1.1-r1.apk",
+        "version": "9.1.1-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-19433",
-          "checksum": "sha1-5mKYwCaTL2K9K85hIrPpu4LsGMY="
+          "range": "bytes=0-6818",
+          "checksum": "sha1-gCbBQjJ40y3odrgYrN8Pda/HAug="
         },
         "data": {
-          "range": "bytes=19434-700152",
-          "checksum": "sha256-IFdLU+QHTCArGfdepxaRLbzPwFl/rd2kemlcAYNEx1I="
+          "range": "bytes=6819-687532",
+          "checksum": "sha256-uus8pmtlK5ztm5YJp1PvmQq/s88mZc3vsUCupJ1EZSI="
         },
-        "checksum": "Q15mKYwCaTL2K9K85hIrPpu4LsGMY="
+        "checksum": "Q1gCbBQjJ40y3odrgYrN8Pda/HAug="
       }
     ]
   }
