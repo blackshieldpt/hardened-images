@@ -4,8 +4,8 @@
 # so that one is bumped below.
 package:
   name: versitygw-hardened
-  version: 1.6.0
-  epoch: 1
+  version: 1.7.0
+  epoch: 0
   description: "Versity S3 Gateway (built from source)"
   copyright:
     - license: Apache-2.0
@@ -27,7 +27,7 @@ pipeline:
     with:
       repository: https://github.com/versity/versitygw
       tag: v${{package.version}}
-      expected-commit: 0aa0f0d4fc7602baa61db3428ad54f866275479c
+      expected-commit: 8a3dbcf97d996ea4955426e6b8a76eb96d2cd92a
   - name: Bump vulnerable Go dependencies
     runs: |
       go get golang.org/x/text@v0.39.0
