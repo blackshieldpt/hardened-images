@@ -365,22 +365,22 @@
       },
       {
         "name": "nodejs-24",
-        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-24-24.18.1-r1.apk",
-        "version": "24.18.1-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-24-24.19.0-r0.apk",
+        "version": "24.19.0-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8610",
-          "checksum": "sha1-wIGwTJqjgLDzKgGZbhh5xmCrbck="
+          "range": "bytes=0-8625",
+          "checksum": "sha1-7PeucO7JRClAhlOoRTAyZ6m2zT8="
         },
         "data": {
-          "range": "bytes=8611-29207538",
-          "checksum": "sha256-J7zPGcFvpTXTDwGdokek6FSBVVpirNV8jAOMgWLvOVg="
+          "range": "bytes=8626-29325647",
+          "checksum": "sha256-RWik1ZqRM5jTolL5T3iZCSI4MWdkFUp4cuYkPsVps3o="
         },
-        "checksum": "Q1wIGwTJqjgLDzKgGZbhh5xmCrbck="
+        "checksum": "Q17PeucO7JRClAhlOoRTAyZ6m2zT8="
       },
       {
         "name": "node-gyp",
@@ -402,23 +402,23 @@
         "checksum": "Q1PvNs1ILxOMrR493LUTNXL8Vo7k0="
       },
       {
-        "name": "npm",
-        "url": "https://packages.wolfi.dev/os/x86_64/npm-12.0.2-r0.apk",
-        "version": "12.0.2-r0",
+        "name": "npm-12",
+        "url": "https://packages.wolfi.dev/os/x86_64/npm-12-12.0.2-r1.apk",
+        "version": "12.0.2-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7341",
-          "checksum": "sha1-XG9/i377656rpL5Trl8TvjDXiZE="
+          "range": "bytes=0-7441",
+          "checksum": "sha1-QGDuloCdRwTiLifdAlFXQI8U6Ss="
         },
         "data": {
-          "range": "bytes=7342-2199610",
-          "checksum": "sha256-vXrWWWVO7RC83IRss3of9fqoKFHI5Cf3jOnsd9ANZ3c="
+          "range": "bytes=7442-2199762",
+          "checksum": "sha256-UFeU/Bc+DoIuGVP/3ZU+SJhAoepV34pe7LA1Vxdwgow="
         },
-        "checksum": "Q1XG9/i377656rpL5Trl8TvjDXiZE="
+        "checksum": "Q1QGDuloCdRwTiLifdAlFXQI8U6Ss="
       }
     ]
   }
