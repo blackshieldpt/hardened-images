@@ -403,8 +403,8 @@
       },
       {
         "name": "py3-pip-wheel",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3-pip-wheel-26.2-r0.apk",
-        "version": "26.2-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/py3-pip-wheel-26.2.1-r0.apk",
+        "version": "26.2.1-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
@@ -412,13 +412,13 @@
         },
         "control": {
           "range": "bytes=0-12667",
-          "checksum": "sha1-YodqZ19QzshSpcJgacg0INaXmzs="
+          "checksum": "sha1-gQS+ehIS8zQ88Ng2NSaEijR1clI="
         },
         "data": {
-          "range": "bytes=12668-1817433",
-          "checksum": "sha256-S+2l55/lZ95IVvTCOrnnr+zud5PhcjgepAt3uWrsbVs="
+          "range": "bytes=12668-1816390",
+          "checksum": "sha256-ej4LPj7g1gK7ItNg5VK29GcFzYmX4nJtzbFJ1AwsNkE="
         },
-        "checksum": "Q1YodqZ19QzshSpcJgacg0INaXmzs="
+        "checksum": "Q1gQS+ehIS8zQ88Ng2NSaEijR1clI="
       },
       {
         "name": "libcrypto3",
@@ -498,41 +498,41 @@
       },
       {
         "name": "py3.14-pip-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-pip-base-26.2-r0.apk",
-        "version": "26.2-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-pip-base-26.2.1-r0.apk",
+        "version": "26.2.1-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-12697",
-          "checksum": "sha1-Hz19vo/n71Gxroyf47Cb9EZMSH0="
+          "range": "bytes=0-12696",
+          "checksum": "sha1-MU/OwN4R1G5TY+671WlAwJR+29s="
         },
         "data": {
-          "range": "bytes=12698-4209826",
-          "checksum": "sha256-xZOWlSwouVGIpTKJ3uypIVPkrFXJ/HERIFfRzhFrQp0="
+          "range": "bytes=12697-4209703",
+          "checksum": "sha256-ofKihIbtk8ezO40oU48vV8xbZSlojr5IpQ6cyDCc9CY="
         },
-        "checksum": "Q1Hz19vo/n71Gxroyf47Cb9EZMSH0="
+        "checksum": "Q1MU/OwN4R1G5TY+671WlAwJR+29s="
       },
       {
         "name": "py3.14-pip",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-pip-26.2-r0.apk",
-        "version": "26.2-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-pip-26.2.1-r0.apk",
+        "version": "26.2.1-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-12715",
-          "checksum": "sha1-1UenyKk91wSNTZBQy2+hhIO+8jA="
+          "range": "bytes=0-12717",
+          "checksum": "sha1-sLMnltX+4dLiCtRQmZvmJIu2TZ4="
         },
         "data": {
-          "range": "bytes=12716-14626",
-          "checksum": "sha256-NaQnrXU2lx5qtvNnfYn4deDAk26ZGB8BP9plAPfVA8c="
+          "range": "bytes=12718-14637",
+          "checksum": "sha256-Aoutv2/2I1XLWjruingcHRJllp/Jfi0XQPsrwf5PgIg="
         },
-        "checksum": "Q11UenyKk91wSNTZBQy2+hhIO+8jA="
+        "checksum": "Q1sLMnltX+4dLiCtRQmZvmJIu2TZ4="
       },
       {
         "name": "python-3.14",
