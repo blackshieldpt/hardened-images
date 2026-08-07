@@ -460,22 +460,22 @@
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.6-r4.apk",
-        "version": "3.14.6-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.7-r0.apk",
+        "version": "3.14.7-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14378",
-          "checksum": "sha1-RW0+M4KPCbk5VS/tKGPxgAnwYaE="
+          "range": "bytes=0-14347",
+          "checksum": "sha1-7NOPsnUdzzQVM8YeYKFJ/J8erKQ="
         },
         "data": {
-          "range": "bytes=14379-12967288",
-          "checksum": "sha256-scDQkNNeGQr3KG+KyTBsTHJ7pLKOI+raoEDog4l6K10="
+          "range": "bytes=14348-13013142",
+          "checksum": "sha256-uQleGqG3lJcnlq5EMhsWL5O0ZZk3OobRol0LCc8uDFQ="
         },
-        "checksum": "Q1RW0+M4KPCbk5VS/tKGPxgAnwYaE="
+        "checksum": "Q17NOPsnUdzzQVM8YeYKFJ/J8erKQ="
       },
       {
         "name": "py3.14-setuptools",
@@ -536,22 +536,22 @@
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.6-r4.apk",
-        "version": "3.14.6-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.7-r0.apk",
+        "version": "3.14.7-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14205",
-          "checksum": "sha1-tL97SkQJBrJ0X+6sS4x43HW4jcM="
+          "range": "bytes=0-14173",
+          "checksum": "sha1-P39Z41lyj23FXxWGBhoGFQC/l3M="
         },
         "data": {
-          "range": "bytes=14206-15943",
-          "checksum": "sha256-+Prw272PWqxmGtQNAK0xNG1bIihQIVm+obwn2JXtSy0="
+          "range": "bytes=14174-15912",
+          "checksum": "sha256-5JE7fSpquozCwFEisntuV+cd+5VNH40rFI9UZ13lHng="
         },
-        "checksum": "Q1tL97SkQJBrJ0X+6sS4x43HW4jcM="
+        "checksum": "Q1P39Z41lyj23FXxWGBhoGFQC/l3M="
       }
     ]
   }
