@@ -80,60 +80,60 @@
       },
       {
         "name": "glibc-locale-posix",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.43-r11.apk",
-        "version": "2.43-r11",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.43-r12.apk",
+        "version": "2.43-r12",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13015",
-          "checksum": "sha1-npirsSp9Qt3Aa1n8CaC2i99nv8A="
+          "range": "bytes=0-13513",
+          "checksum": "sha1-O9XpdUFc7GATK58W8J4zQA309ww="
         },
         "data": {
-          "range": "bytes=13016-89758",
-          "checksum": "sha256-qXzcGBEELIJays9BPEo77JB6Qr5gMKFbZteJHEuthAI="
+          "range": "bytes=13514-90250",
+          "checksum": "sha256-bXWgPnTHLgFLbObRX+YR3zOs0SF5oN+D4NtHLJ5Jvh8="
         },
-        "checksum": "Q1npirsSp9Qt3Aa1n8CaC2i99nv8A="
+        "checksum": "Q1O9XpdUFc7GATK58W8J4zQA309ww="
       },
       {
         "name": "glibc",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.43-r11.apk",
-        "version": "2.43-r11",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.43-r12.apk",
+        "version": "2.43-r12",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13257",
-          "checksum": "sha1-XSTHGW6PUOUepKQvlUCPEpu+my0="
+          "range": "bytes=0-13736",
+          "checksum": "sha1-oeZlojKI5hEp87Doc/xNjZtqK38="
         },
         "data": {
-          "range": "bytes=13258-3077429",
-          "checksum": "sha256-C538Z51QWuZPy/fxQGBCBbpulG8dVbn1OeaW+JsKoXQ="
+          "range": "bytes=13737-3077928",
+          "checksum": "sha256-8sLLgajkiiQKFmzF5p13fd1+/KwjFpthugZdXHPFit8="
         },
-        "checksum": "Q1XSTHGW6PUOUepKQvlUCPEpu+my0="
+        "checksum": "Q1oeZlojKI5hEp87Doc/xNjZtqK38="
       },
       {
         "name": "ld-linux",
-        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.43-r11.apk",
-        "version": "2.43-r11",
+        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.43-r12.apk",
+        "version": "2.43-r12",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13051",
-          "checksum": "sha1-Dc94e4JF2fG8/SX4PWCAtLjItu4="
+          "range": "bytes=0-13543",
+          "checksum": "sha1-b51T0H+fE461J11lzmRLtrV5iwE="
         },
         "data": {
-          "range": "bytes=13052-147283",
-          "checksum": "sha256-oI72DIuJLqlUM/LSFYKdgbxsaYUZgfThezkV95CHQPk="
+          "range": "bytes=13544-147776",
+          "checksum": "sha256-ikHyLbJncckYYd9lGp9gmLy9/QX4tXRDTbpg7jzUqh0="
         },
-        "checksum": "Q1Dc94e4JF2fG8/SX4PWCAtLjItu4="
+        "checksum": "Q1b51T0H+fE461J11lzmRLtrV5iwE="
       },
       {
         "name": "libmagic",
