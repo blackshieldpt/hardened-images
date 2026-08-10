@@ -1,0 +1,31 @@
+IMAGE        PINNED           LATEST           STATUS
+------       ------           ------           ------
+clickhouse   26.7.1.1315      26.7.3.19        BEHIND
+etcd         3.6.14           3.6.14           current
+mailpit      1.30.6           1.30.7           BEHIND
+manticore    28.4.4           28.6.6           BEHIND
+openbao      2.6.1            2.6.1            current
+redpanda     26.1.14          26.2.1           BEHIND
+versitygw    1.6.0            1.7.0            BEHIND
+zookeeper    3.9.5            3.9.5            current
+
+IMAGE        PINNED           LATEST           STATUS
+------       ------           ------           ------
+nginx        1.31             -                no versioned family (relock covers it)
+nginx-acme   1.31             -                no versioned family (relock covers it)
+node         22               -                pinned line (deliberate)
+node24       24               -                pinned line (deliberate)
+postgresql   18               18               current (postgresql)
+valkey       9.1              9.1              current (valkey)
+minio        0.20260717.120751 -                no versioned family (relock covers it)
+nats         2.14.1           -                no versioned family (relock covers it)
+python       3.14             3.14             current (python)
+python-sodium 3.14             3.14             current (python)
+go           1.26             1.26             current (go)
+kafka        4.3              4.3              current (kafka)
+
+PACKAGE      VERSION          AGE              STATUS
+-------      -------          ---              ------
+kafka-4.3    4.3.0-r1         68d              FROZEN (no rebuild in 68 days)
+
+Checked 20 image(s); 5 behind upstream; 1 frozen or unobtainable; 0 could not be checked.

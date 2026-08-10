@@ -1,0 +1,2 @@
+SKIP(clickhouse): pins an artifact sha256; re-fetch and re-hash by hand (see melange.yaml)
+- `clickhouse` 26.7.1.1315 -> 26.7.3.19
