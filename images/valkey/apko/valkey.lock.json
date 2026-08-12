@@ -61,22 +61,22 @@
       },
       {
         "name": "ld-linux",
-        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.43-r12.apk",
-        "version": "2.43-r12",
+        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.43-r13.apk",
+        "version": "2.43-r13",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13543",
-          "checksum": "sha1-b51T0H+fE461J11lzmRLtrV5iwE="
+          "range": "bytes=0-13894",
+          "checksum": "sha1-1r5jeZwjbaY6zH3ne5YLs8l/snc="
         },
         "data": {
-          "range": "bytes=13544-147776",
-          "checksum": "sha256-ikHyLbJncckYYd9lGp9gmLy9/QX4tXRDTbpg7jzUqh0="
+          "range": "bytes=13895-148125",
+          "checksum": "sha256-q9CKt6E5CknoVG1++3Ggasgiper58dhYbb7I6KKAZAU="
         },
-        "checksum": "Q1b51T0H+fE461J11lzmRLtrV5iwE="
+        "checksum": "Q11r5jeZwjbaY6zH3ne5YLs8l/snc="
       },
       {
         "name": "libgcc",
@@ -99,60 +99,60 @@
       },
       {
         "name": "glibc-locale-posix",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.43-r12.apk",
-        "version": "2.43-r12",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.43-r13.apk",
+        "version": "2.43-r13",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13513",
-          "checksum": "sha1-O9XpdUFc7GATK58W8J4zQA309ww="
+          "range": "bytes=0-13847",
+          "checksum": "sha1-CGPlUnu0Faw2u47/1gZyhEG6E4s="
         },
         "data": {
-          "range": "bytes=13514-90250",
-          "checksum": "sha256-bXWgPnTHLgFLbObRX+YR3zOs0SF5oN+D4NtHLJ5Jvh8="
+          "range": "bytes=13848-90588",
+          "checksum": "sha256-H7oYz7/ni/jF30u1vgbCWVrxJsSbIpVMp/o/eJXfzSg="
         },
-        "checksum": "Q1O9XpdUFc7GATK58W8J4zQA309ww="
+        "checksum": "Q1CGPlUnu0Faw2u47/1gZyhEG6E4s="
       },
       {
         "name": "glibc",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.43-r12.apk",
-        "version": "2.43-r12",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.43-r13.apk",
+        "version": "2.43-r13",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13736",
-          "checksum": "sha1-oeZlojKI5hEp87Doc/xNjZtqK38="
+          "range": "bytes=0-14085",
+          "checksum": "sha1-a0yBsX7dCvBm6DPj8TXOWNRLfgc="
         },
         "data": {
-          "range": "bytes=13737-3077928",
-          "checksum": "sha256-8sLLgajkiiQKFmzF5p13fd1+/KwjFpthugZdXHPFit8="
+          "range": "bytes=14086-3078266",
+          "checksum": "sha256-+B5nvgV68oQMvFdLImb5wt0Ke1mX3SvVfEEjN5EG5dU="
         },
-        "checksum": "Q1oeZlojKI5hEp87Doc/xNjZtqK38="
+        "checksum": "Q1a0yBsX7dCvBm6DPj8TXOWNRLfgc="
       },
       {
         "name": "posix-libc-utils-bin",
-        "url": "https://packages.wolfi.dev/os/x86_64/posix-libc-utils-bin-2.43-r12.apk",
-        "version": "2.43-r12",
+        "url": "https://packages.wolfi.dev/os/x86_64/posix-libc-utils-bin-2.43-r13.apk",
+        "version": "2.43-r13",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13605",
-          "checksum": "sha1-APflqm4bHBEwNHu0l9ngfpzDfqE="
+          "range": "bytes=0-13951",
+          "checksum": "sha1-TIu1TJXbg1pb5X7wa0apKVc4MlY="
         },
         "data": {
-          "range": "bytes=13606-105291",
-          "checksum": "sha256-rrmJ+3ZWensV6X438JRobcq76MfUdNSZdxIXNq+JNYk="
+          "range": "bytes=13952-105651",
+          "checksum": "sha256-F+d6zymcy3DmBsxVFRI6gVe1WhmYsoo+245BVxlYfWo="
         },
-        "checksum": "Q1APflqm4bHBEwNHu0l9ngfpzDfqE="
+        "checksum": "Q1TIu1TJXbg1pb5X7wa0apKVc4MlY="
       },
       {
         "name": "ncurses-terminfo-base",
@@ -213,22 +213,22 @@
       },
       {
         "name": "posix-libc-utils",
-        "url": "https://packages.wolfi.dev/os/x86_64/posix-libc-utils-2.43-r12.apk",
-        "version": "2.43-r12",
+        "url": "https://packages.wolfi.dev/os/x86_64/posix-libc-utils-2.43-r13.apk",
+        "version": "2.43-r13",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13562",
-          "checksum": "sha1-6P0zFKaWDq+gbdHKFbvN4OcYJdo="
+          "range": "bytes=0-13912",
+          "checksum": "sha1-MiIuG+dViuMYghZ0OtFKmJPOYqU="
         },
         "data": {
-          "range": "bytes=13563-17700",
-          "checksum": "sha256-7GBRHETw+N5tiMsO+RH6v8uKES40CSXLYy+Mn3XVz34="
+          "range": "bytes=13913-18048",
+          "checksum": "sha256-ZoUoNUekR3kvyEg69qhlRfO1RzEznoky9HIJYRh5WVo="
         },
-        "checksum": "Q16P0zFKaWDq+gbdHKFbvN4OcYJdo="
+        "checksum": "Q1MiIuG+dViuMYghZ0OtFKmJPOYqU="
       },
       {
         "name": "libcrypto3",
