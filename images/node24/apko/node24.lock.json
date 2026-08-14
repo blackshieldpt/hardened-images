@@ -327,41 +327,41 @@
       },
       {
         "name": "libcrypto3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.3-r3.apk",
-        "version": "3.6.3-r3",
+        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.3-r4.apk",
+        "version": "3.6.3-r4",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10990",
-          "checksum": "sha1-8czJwPp28PlmrUy6evlca3lfXlk="
+          "range": "bytes=0-11066",
+          "checksum": "sha1-q1tmKlM5V4hYJDAT4mFLNXfTWWs="
         },
         "data": {
-          "range": "bytes=10991-2439998",
-          "checksum": "sha256-Gtu+CyjMO2oH9qFjvJKo2t0zE0aDLG2dwtmDVnll8/4="
+          "range": "bytes=11067-2440291",
+          "checksum": "sha256-PiuIGCXSaU+bBWb7Rt3pX07C96fH1RTr6tjAH5fG8w4="
         },
-        "checksum": "Q18czJwPp28PlmrUy6evlca3lfXlk="
+        "checksum": "Q1q1tmKlM5V4hYJDAT4mFLNXfTWWs="
       },
       {
         "name": "libssl3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.3-r3.apk",
-        "version": "3.6.3-r3",
+        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.3-r4.apk",
+        "version": "3.6.3-r4",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-11000",
-          "checksum": "sha1-cfdB5BXNoGxB998AA6UNEUQzmG4="
+          "range": "bytes=0-11072",
+          "checksum": "sha1-M9icugKTo/ba2jkEhvIqVsM+I6Q="
         },
         "data": {
-          "range": "bytes=11001-524305",
-          "checksum": "sha256-VtGnoMNcs4UcJxBfFv47/vmpWT2kz+LXfzmLFrDzndQ="
+          "range": "bytes=11073-524372",
+          "checksum": "sha256-KxEyQDoGJz5m4sfmFhkIPZQIKu4/8uy+1ADalqU/Sd8="
         },
-        "checksum": "Q1cfdB5BXNoGxB998AA6UNEUQzmG4="
+        "checksum": "Q1M9icugKTo/ba2jkEhvIqVsM+I6Q="
       },
       {
         "name": "nodejs-24",
