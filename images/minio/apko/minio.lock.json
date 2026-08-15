@@ -61,41 +61,41 @@
       },
       {
         "name": "mc",
-        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r19.apk",
-        "version": "0.20250813.083541-r19",
+        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r20.apk",
+        "version": "0.20250813.083541-r20",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-6992",
-          "checksum": "sha1-GZDNwy0NQNdIMUcl7rgjspgX06Y="
+          "range": "bytes=0-6993",
+          "checksum": "sha1-v6KjbFRVaULSuA9N/koblTesavY="
         },
         "data": {
-          "range": "bytes=6993-12399183",
-          "checksum": "sha256-4joqFBQD2LGx+LYmfXY+89bI02hK+xan1ggG9rqlnlw="
+          "range": "bytes=6994-12420637",
+          "checksum": "sha256-UFS2bA1dmMF8VzLEst48Ut5LaM+xIoIM4TgPDCAopvw="
         },
-        "checksum": "Q1GZDNwy0NQNdIMUcl7rgjspgX06Y="
+        "checksum": "Q1v6KjbFRVaULSuA9N/koblTesavY="
       },
       {
         "name": "minio",
-        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260717.120751-r5.apk",
-        "version": "0.20260717.120751-r5",
+        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260717.120751-r6.apk",
+        "version": "0.20260717.120751-r6",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7304",
-          "checksum": "sha1-bhlHpQzh8afS1RtNQOa1nj9hQQE="
+          "range": "bytes=0-7347",
+          "checksum": "sha1-ijO6QwMzMs/tMk/Xo2U0oUma2nI="
         },
         "data": {
-          "range": "bytes=7305-41461318",
-          "checksum": "sha256-szDYkXcX/cX2ZTo3dOM/IXGoVKuFR20x6OzvvUNLcJ4="
+          "range": "bytes=7348-41526168",
+          "checksum": "sha256-0gfBPvncqjxVpUGD4TdZaIc+e77ZdWrf/MOMdcMuYZI="
         },
-        "checksum": "Q1bhlHpQzh8afS1RtNQOa1nj9hQQE="
+        "checksum": "Q1ijO6QwMzMs/tMk/Xo2U0oUma2nI="
       }
     ]
   }
