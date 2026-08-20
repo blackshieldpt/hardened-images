@@ -61,41 +61,41 @@
       },
       {
         "name": "mc",
-        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r20.apk",
-        "version": "0.20250813.083541-r20",
+        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r21.apk",
+        "version": "0.20250813.083541-r21",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-6993",
-          "checksum": "sha1-v6KjbFRVaULSuA9N/koblTesavY="
+          "range": "bytes=0-7011",
+          "checksum": "sha1-SfkHOiGHYSArsBJOemgQm7xgAm4="
         },
         "data": {
-          "range": "bytes=6994-12420637",
-          "checksum": "sha256-UFS2bA1dmMF8VzLEst48Ut5LaM+xIoIM4TgPDCAopvw="
+          "range": "bytes=7012-12420899",
+          "checksum": "sha256-oEegg5ts5zk8rpF9cOmggQ58YoFQzexma++0FmTyL3s="
         },
-        "checksum": "Q1v6KjbFRVaULSuA9N/koblTesavY="
+        "checksum": "Q1SfkHOiGHYSArsBJOemgQm7xgAm4="
       },
       {
         "name": "minio",
-        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260717.120751-r6.apk",
-        "version": "0.20260717.120751-r6",
+        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260717.120751-r8.apk",
+        "version": "0.20260717.120751-r8",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7347",
-          "checksum": "sha1-ijO6QwMzMs/tMk/Xo2U0oUma2nI="
+          "range": "bytes=0-7411",
+          "checksum": "sha1-/uv7TEhJ6JNRd99Qyb7JZ6KYj30="
         },
         "data": {
-          "range": "bytes=7348-41526168",
-          "checksum": "sha256-0gfBPvncqjxVpUGD4TdZaIc+e77ZdWrf/MOMdcMuYZI="
+          "range": "bytes=7412-41504872",
+          "checksum": "sha256-/WFyEM2Y4fX9ZqDZrCYZqVjKC2G69/WLxvbA8FNJAp8="
         },
-        "checksum": "Q1ijO6QwMzMs/tMk/Xo2U0oUma2nI="
+        "checksum": "Q1/uv7TEhJ6JNRd99Qyb7JZ6KYj30="
       }
     ]
   }
