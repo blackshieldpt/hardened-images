@@ -232,41 +232,41 @@
       },
       {
         "name": "ncurses-terminfo-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260815-r0.apk",
-        "version": "6.6.20260815-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260822-r0.apk",
+        "version": "6.6.20260822-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10345",
-          "checksum": "sha1-QfSrArGa3wpHUhL/3OLIlWodOLA="
+          "range": "bytes=0-10334",
+          "checksum": "sha1-iKIY37LU1f1y7lJjAupxZWoGaMA="
         },
         "data": {
-          "range": "bytes=10346-118136",
-          "checksum": "sha256-94VmBsGvvPAeGOI3lBlml62NN1wYMApUnj1ovcVI7Co="
+          "range": "bytes=10335-118486",
+          "checksum": "sha256-6VFIz0FYDZR+HiVlJtELtmxi/FZg9QAgVfZLC6cnXDE="
         },
-        "checksum": "Q1QfSrArGa3wpHUhL/3OLIlWodOLA="
+        "checksum": "Q1iKIY37LU1f1y7lJjAupxZWoGaMA="
       },
       {
         "name": "ncurses",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260815-r0.apk",
-        "version": "6.6.20260815-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260822-r0.apk",
+        "version": "6.6.20260822-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10496",
-          "checksum": "sha1-gn/XV1ycgCwqAncfALw5TA5CASs="
+          "range": "bytes=0-10474",
+          "checksum": "sha1-1/fKAErIQIutqqds8zwswQe3iMQ="
         },
         "data": {
-          "range": "bytes=10497-622079",
-          "checksum": "sha256-If2ejH5whFYe4d+4MU0Y5CgzWbYXohWDW0Q3JIQo43c="
+          "range": "bytes=10475-622274",
+          "checksum": "sha256-WIX8oABa2C3j9hfSA+zsfeQSaPUNGqGndKXujUpaFKE="
         },
-        "checksum": "Q1gn/XV1ycgCwqAncfALw5TA5CASs="
+        "checksum": "Q11/fKAErIQIutqqds8zwswQe3iMQ="
       },
       {
         "name": "readline",
