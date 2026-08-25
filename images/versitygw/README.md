@@ -10,7 +10,7 @@ apko. Pure-Go, static (CGO disabled).
 | Property   | Value |
 |------------|-------|
 | Build      | melange (from source) |
-| Version    | 1.6.0 |
+| Version    | 1.7.0 |
 | User       | versitygw (UID 65532) |
 | Shell      | none (distroless) |
 | License    | Apache-2.0 |
@@ -26,7 +26,7 @@ apko. Pure-Go, static (CGO disabled).
 ```bash
 docker run -d -p 7070:7070 -v vgwdata:/data \
   -e ROOT_ACCESS_KEY=admin -e ROOT_SECRET_KEY=change-me \
-  hub.blackshield.pt/test_images/versitygw:1.6.0
+  hub.blackshield.pt/test_images/versitygw:1.7.0
 ```
 
 The default command is `--health /_health posix /data` — the POSIX backend
@@ -44,7 +44,7 @@ different data path:
 ```bash
 docker run -d -p 7070:7070 -v vgwdata:/srv \
   -e ROOT_ACCESS_KEY=admin -e ROOT_SECRET_KEY=change-me \
-  hub.blackshield.pt/test_images/versitygw:1.6.0 --health /_health posix /srv
+  hub.blackshield.pt/test_images/versitygw:1.7.0 --health /_health posix /srv
 ```
 
 ## Dev variant

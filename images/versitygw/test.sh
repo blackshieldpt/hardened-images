@@ -13,7 +13,11 @@ assert_eq "health endpoint returns 200" "200" "$(http_code http://localhost:1707
 # curl (not http_code) since -f would mangle the non-2xx status.
 assert_eq "unauthenticated S3 request is forbidden" "403" \
     "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:17070/)"
-assert_contains "versitygw reports its version" "v1.6.0" \
+# From the tag rather than a literal, so a bump does not have to edit this line —
+# the tag comes from melange package.version, so this still catches a build whose
+# binary does not match the pin.
+ver="${IMAGE##*:}"; ver="${ver%-dev}"
+assert_contains "versitygw reports its version" "v${ver}" \
     "$(docker exec "$CONTAINER" /usr/bin/versitygw --version 2>&1)"
 # Authenticated (SigV4) round-trip from the host: create bucket, PUT + GET an
 # object, verify the body — proves the POSIX backend actually stores objects.
