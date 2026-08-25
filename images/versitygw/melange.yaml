@@ -1,7 +1,8 @@
 # Builds versitygw from source (versitygw isn't in Wolfi). Pure-Go, CGO disabled,
-# so the result is a static binary. v1.6.0 already carries current x/crypto
-# (v0.53.0) and x/net (v0.56.0), but its x/text v0.38.0 is affected by GO-2026-5970,
-# so that one is bumped below.
+# so the result is a static binary. v1.7.0 carries current x/crypto (v0.54.0),
+# x/net (v0.57.0) and x/text (v0.40.0), so it needs no dependency overrides — the
+# x/text bump v1.6.0 required for GO-2026-5970 is gone, and reinstating it would
+# now downgrade the module.
 package:
   name: versitygw-hardened
   version: 1.7.0
@@ -28,10 +29,6 @@ pipeline:
       repository: https://github.com/versity/versitygw
       tag: v${{package.version}}
       expected-commit: 8a3dbcf97d996ea4955426e6b8a76eb96d2cd92a
-  - name: Bump vulnerable Go dependencies
-    runs: |
-      go get golang.org/x/text@v0.39.0
-      go mod tidy
   - name: Compile static binary
     runs: |
       CGO_ENABLED=0 go build \
