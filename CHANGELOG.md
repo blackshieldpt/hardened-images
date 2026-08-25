@@ -6,6 +6,58 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-08-25
+
+The minor bump — rather than 0.3.1 — is because consumers pinning a floating
+`:<version>` tag must change it. Three images move:
+
+| image | old tag | new tag |
+|-------|---------|---------|
+| `mailpit` | `1.30.6` | `1.31.0` |
+| `openbao` | `2.6.1` | `2.6.2` |
+| `versitygw` | `1.6.0` | `1.7.0` |
+
+Immutable `:<version>-<commit>` pins and digests are unaffected.
+
+The bumps themselves are routine. What they exposed is not: two images were
+pinning Go dependencies *backwards*, and every automated bump PR was carrying
+files that do not belong in the repo.
+
+### Fixed
+- **`mailpit` and `versitygw` no longer downgrade their Go dependencies.** Both
+  melange builds carried a "bump vulnerable Go dependencies" step written when
+  upstream shipped modules behind the GO-2026 advisories. Upstream moved past
+  them; the pinned overrides did not, so `go get` had quietly turned from an
+  upgrade into a downgrade.
+  - `mailpit` was the live one: **at 1.30.6, already released, the step forced
+    x/crypto v0.52.0, x/net v0.55.0, x/text v0.39.0 and x/image v0.43.0 over
+    upstream's v0.54.0, v0.57.0, v0.40.0 and v0.44.0** — four modules pulled
+    backwards in a shipped image, under a header comment claiming the opposite.
+  - `versitygw` would have become the same at 1.7.0, which ships x/text v0.40.0
+    against the step's v0.39.0. Caught before the bump merged.
+  - Neither image needs overrides now: 1.31.0 and 1.7.0 both carry current
+    x/crypto, x/net and x/text upstream. The steps are gone rather than
+    re-pinned, so this cannot silently invert again — a future advisory gets a
+    fresh override with a reason attached.
+- **`check-updates` no longer commits its own scratch files into bump PRs.** The
+  step writes `report.txt`, `porcelain.tsv` and `manual.txt` into the repo root
+  and staged each bump with `git add -A`, so all four open automated PRs carried
+  the three files as new additions. Staging is now `git add -u`: a bump only ever
+  touches tracked files.
+- `versitygw`'s smoke test asserted a hardcoded `v1.6.0`, so any bump failed it
+  until someone edited the test by hand — which the automated PR does not do. It
+  now reads the expected version from the image tag, which comes from melange
+  `package.version`, keeping what the assertion is for: the built binary must
+  report the version the image pins.
+
+### Changed
+- `openbao` 2.6.1 -> 2.6.2. Its dependency overrides are left in place but are
+  now mostly redundant: 2.6.2 ships the `grpc` v1.82.1 the override forced
+  (GHSA-hrxh-6v49-42gf) and go-ntlmssp v0.1.1, leaving cel-go v0.28.1 -> v0.29.0
+  as the only one still raising a module.
+- `mailpit` 1.30.6 -> 1.31.0 and `versitygw` 1.6.0 -> 1.7.0, both built from
+  source as before.
+
 ## [0.3.0] - 2026-08-25
 
 The minor bump — rather than 0.2.1 — is because consumers pinning a floating
@@ -474,7 +526,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.6...v0.2.0
 [0.1.6]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.5...v0.1.6
