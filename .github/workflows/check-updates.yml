@@ -109,7 +109,10 @@ jobs:
               git checkout -q main; continue
             fi
 
-            git add -A
+            # -u, not -A: this step's own scratch files (report.txt, porcelain.tsv,
+            # manual.txt) sit in the repo root, and -A swept them into every bump
+            # commit. A bump only ever touches tracked files.
+            git add -u
             git commit -q -m "${image}: ${pinned} -> ${latest}" \
               -m "Opened automatically because upstream published ${latest}. The bump is applied but unverified — this PR's build, smoke test and scan are what decide whether it is good."
 
