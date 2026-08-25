@@ -2,7 +2,7 @@
   "version": "v1",
   "config": {
     "name": "images/go/apko/go.yaml",
-    "checksum": "sha256-LHi/5vBAXpfn1wyCyKX5O28L/lzY0RU4zRmrqwqHpfI="
+    "checksum": "sha256-FlRiN7GlbecqNiy4MsvsNoN5Y+bZAO9eoc89CTFOc40="
   },
   "contents": {
     "keyring": [
@@ -60,23 +60,23 @@
         "checksum": "Q1u3xyVyewNfx7ZzTDikWdOlY9Tt8="
       },
       {
-        "name": "go-1.26",
-        "url": "https://packages.wolfi.dev/os/x86_64/go-1.26-1.26.7-r0.apk",
-        "version": "1.26.7-r0",
+        "name": "go-1.27",
+        "url": "https://packages.wolfi.dev/os/x86_64/go-1.27-1.27.0-r1.apk",
+        "version": "1.27.0-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7899",
-          "checksum": "sha1-iFW3ASCY1Urt8SCasgi5O37G9UM="
+          "range": "bytes=0-7538",
+          "checksum": "sha1-x+VeuNGLWcI1xgnB1/CNpZ+mnOM="
         },
         "data": {
-          "range": "bytes=7900-57361600",
-          "checksum": "sha256-jJu36byyIKFoGupWrXeaRReL/4b1J+dUOWeNtgR8lAw="
+          "range": "bytes=7539-58952983",
+          "checksum": "sha256-XXHelgrp7RPyA4nWNzSRiWMEqmTlR0RnNryGQATsPvU="
         },
-        "checksum": "Q1iFW3ASCY1Urt8SCasgi5O37G9UM="
+        "checksum": "Q1x+VeuNGLWcI1xgnB1/CNpZ+mnOM="
       }
     ]
   }

@@ -1,5 +1,5 @@
-# Hardened Go (apko) — Wolfi go-1.26, non-root.
-# Keeps a shell: the go-1.26 package depends on bash (auto-dep).
+# Hardened Go (apko) — Wolfi go-1.27, non-root.
+# Keeps a shell: the go-1.27 package depends on bash (auto-dep).
 contents:
   repositories:
     - https://packages.wolfi.dev/os
@@ -7,7 +7,7 @@ contents:
     - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
   packages:
     - wolfi-baselayout
-    - go-1.26
+    - go-1.27
     - ca-certificates-bundle
 
 accounts:
@@ -45,7 +45,7 @@ paths:
 
 annotations:
   org.opencontainers.image.title: go
-  org.opencontainers.image.description: Hardened Go 1.26 built on Wolfi
+  org.opencontainers.image.description: Hardened Go 1.27 built on Wolfi
   org.opencontainers.image.vendor: Blackshield
   org.opencontainers.image.licenses: BSD-3-Clause
 
