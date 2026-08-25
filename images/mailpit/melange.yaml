@@ -1,6 +1,8 @@
 # Builds mailpit from source (instead of repackaging the upstream release binary),
-# so the bundled Go dependencies are current — golang.org/x/crypto, x/net, x/text
-# and x/image are bumped past the GO-2026 advisories shipped in the release binary.
+# so the bundled Go dependencies are whatever upstream's go.mod pins rather than
+# whatever was current when the release binary was cut. v1.31.0 carries x/crypto
+# v0.55.0, x/net v0.58.0, x/text v0.41.0 and x/image v0.45.0, all past the GO-2026
+# advisories, so no overrides are needed here.
 # Pure-Go (CGO disabled); the Vue UI is built with esbuild via npm
 # and embedded (server/embed.go: //go:embed ui -> server/ui/dist).
 package:
@@ -35,11 +37,6 @@ pipeline:
     runs: |
       npm ci
       npm run package
-  - name: Bump vulnerable Go dependencies
-    runs: |
-      go get golang.org/x/crypto@v0.52.0 golang.org/x/net@v0.55.0 \
-        golang.org/x/text@v0.39.0 golang.org/x/image@v0.43.0
-      go mod tidy
   - name: Compile static binary
     runs: |
       CGO_ENABLED=0 go build \
