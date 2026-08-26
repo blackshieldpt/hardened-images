@@ -42,22 +42,22 @@
       },
       {
         "name": "ca-certificates-bundle",
-        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20260413-r1.apk",
-        "version": "20260413-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20260611-r0.apk",
+        "version": "20260611-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8322",
-          "checksum": "sha1-u3xyVyewNfx7ZzTDikWdOlY9Tt8="
+          "range": "bytes=0-8320",
+          "checksum": "sha1-HLIi7sA8XWdEYUOh+ulVdeFReto="
         },
         "data": {
-          "range": "bytes=8323-137882",
-          "checksum": "sha256-FfsoSAq28t7qTE1H+hPbrozu3BjgGiACoDMkS37a2G0="
+          "range": "bytes=8321-116383",
+          "checksum": "sha256-X+gqYwyxmQhKrKmFiOi1xUS67N9lSdN1Z+0BTx0BSX0="
         },
-        "checksum": "Q1u3xyVyewNfx7ZzTDikWdOlY9Tt8="
+        "checksum": "Q1HLIi7sA8XWdEYUOh+ulVdeFReto="
       },
       {
         "name": "go-1.27",
