@@ -99,22 +99,22 @@
       },
       {
         "name": "libgcc",
-        "url": "https://packages.wolfi.dev/os/x86_64/libgcc-16.2.0-r0.apk",
-        "version": "16.2.0-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/libgcc-16.2.0-r1.apk",
+        "version": "16.2.0-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10563",
-          "checksum": "sha1-tCpwlcP4haBDjOFa3aV8fkGv0lE="
+          "range": "bytes=0-10547",
+          "checksum": "sha1-krF+IIJj8jk+4D2vdu0yg968QJg="
         },
         "data": {
-          "range": "bytes=10564-106145",
-          "checksum": "sha256-KzCw+4alCI3cqTpByvs92BsZ+aYLWTKhnzFYtTPfXTs="
+          "range": "bytes=10548-106133",
+          "checksum": "sha256-Csp39G+NFE8HFRCsqlYVReCxdyO69JYw0TFHQ40AH1U="
         },
-        "checksum": "Q1tCpwlcP4haBDjOFa3aV8fkGv0lE="
+        "checksum": "Q1krF+IIJj8jk+4D2vdu0yg968QJg="
       },
       {
         "name": "glibc-2.44",
@@ -194,22 +194,22 @@
       },
       {
         "name": "libstdc++",
-        "url": "https://packages.wolfi.dev/os/x86_64/libstdc++-16.2.0-r0.apk",
-        "version": "16.2.0-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/libstdc++-16.2.0-r1.apk",
+        "version": "16.2.0-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10567",
-          "checksum": "sha1-Xj+lAQjR8ILnOQcRu8B6vvaTWIU="
+          "range": "bytes=0-10552",
+          "checksum": "sha1-Gzz2sKOTKWmEe1Oih1l+g6LABMs="
         },
         "data": {
-          "range": "bytes=10568-1260681",
-          "checksum": "sha256-3qd9OqqrVTg4hFKXhuYWnoGiCXHAa11U6KJq58WzL5c="
+          "range": "bytes=10553-1260649",
+          "checksum": "sha256-oNlGntDK8AkIwKti7gSjSpuvQ6f2pCTNzTxRg9UECb8="
         },
-        "checksum": "Q1Xj+lAQjR8ILnOQcRu8B6vvaTWIU="
+        "checksum": "Q1Gzz2sKOTKWmEe1Oih1l+g6LABMs="
       },
       {
         "name": "libicu78",
@@ -365,41 +365,41 @@
       },
       {
         "name": "nodejs-24",
-        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-24-24.19.0-r0.apk",
-        "version": "24.19.0-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-24-24.20.0-r0.apk",
+        "version": "24.20.0-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8625",
-          "checksum": "sha1-7PeucO7JRClAhlOoRTAyZ6m2zT8="
+          "range": "bytes=0-8600",
+          "checksum": "sha1-SZiH5gJhO9OP2bnkq5V2BDU1syU="
         },
         "data": {
-          "range": "bytes=8626-29325647",
-          "checksum": "sha256-RWik1ZqRM5jTolL5T3iZCSI4MWdkFUp4cuYkPsVps3o="
+          "range": "bytes=8601-29506440",
+          "checksum": "sha256-3teXWxSp/cHPqjaqaf3lhh/3D+tQrCVq3xQ74XNx0KU="
         },
-        "checksum": "Q17PeucO7JRClAhlOoRTAyZ6m2zT8="
+        "checksum": "Q1SZiH5gJhO9OP2bnkq5V2BDU1syU="
       },
       {
         "name": "node-gyp",
-        "url": "https://packages.wolfi.dev/os/x86_64/node-gyp-13.0.1-r1.apk",
-        "version": "13.0.1-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/node-gyp-13.0.2-r0.apk",
+        "version": "13.0.2-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-2204",
-          "checksum": "sha1-PvNs1ILxOMrR493LUTNXL8Vo7k0="
+          "range": "bytes=0-2200",
+          "checksum": "sha1-//nsXXFkFLU3vSklSODHR1a7eCo="
         },
         "data": {
-          "range": "bytes=2205-1910497",
-          "checksum": "sha256-OPYqQDnsl+4xP5UBhkJOnAHRib3Vr54Q4EFgBWkksVg="
+          "range": "bytes=2201-1916026",
+          "checksum": "sha256-IFTWv6B9EOuWRe0hMMlyy+EubNe43oFtGKHZyw4uYos="
         },
-        "checksum": "Q1PvNs1ILxOMrR493LUTNXL8Vo7k0="
+        "checksum": "Q1//nsXXFkFLU3vSklSODHR1a7eCo="
       },
       {
         "name": "npm-12",
