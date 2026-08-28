@@ -21,8 +21,13 @@ assert_eq() {
     if [ "$2" = "$3" ]; then pass "$1"; else fail "$1 (expected='$2' actual='$3')"; fi
 }
 
+# Matched from a here-string, not through a pipe: this file sets `pipefail`, and
+# `grep -q` exits at the first match, SIGPIPEing its writer -- so `printf | grep -q`
+# returns non-zero *because the pattern matched*, and a passing assertion reports
+# as a failure. It only shows up once the haystack is long enough that the writer
+# is still going when grep exits, so it hides on short output and fires on long.
 assert_contains() {
-    if printf '%s' "$3" | grep -qE "$2"; then pass "$1"; else fail "$1 (pattern='$2' not found)"; fi
+    if grep -qE "$2" <<< "$3"; then pass "$1"; else fail "$1 (pattern='$2' not found)"; fi
 }
 
 assert_rc0() {

@@ -9,9 +9,14 @@ entirely on GitHub Actions.
 
 ## Images
 
-Published to **`ghcr.io/blackshieldpt/<image>`** — 20 images: nginx, nginx-acme, node, node24,
+Published to **`ghcr.io/blackshieldpt/<image>`** — 21 images: nginx, nginx-acme, node, node24,
 go, python, python-sodium, postgresql, valkey, minio, clickhouse, nats, openbao,
-manticore, mailpit, redpanda, kafka, zookeeper, etcd, versitygw.
+manticore, mailpit, redpanda, kafka, zookeeper, etcd, versitygw, static.
+
+`static` is the odd one out: a 215 kB base holding a filesystem skeleton and a CA
+trust store and nothing else, with no entrypoint. It is not runnable on its own —
+it is the `FROM` line for a statically linked binary (`CGO_ENABLED=0` Go, Rust
+against musl). See [`images/static/`](images/static/).
 
 Each build pushes three tags:
 
@@ -30,12 +35,12 @@ every rebuild and daily relock patch.
   at all; the exceptions are forced by upstream and documented in the image's own
   README: `clickhouse`, `nginx` and `postgresql` ship busybox (their
   entrypoints are shell scripts), `kafka`, `redpanda` and `zookeeper` ship bash +
-  busybox (`zkServer.sh` and `zkEnv.sh` are bash scripts), and
-  `go` and `valkey` get `/bin/bash` as an unavoidable transitive dependency
-  (`go-1.26` and `posix-libc-utils` both hard-depend on it). Most of these claims are
+  busybox (`zkServer.sh` and `zkEnv.sh` are bash scripts), and `valkey` gets
+  `/bin/bash` as an unavoidable transitive dependency (`posix-libc-utils`
+  hard-depends on it). Most of these claims are
   asserted in the image's own smoke test — `check_no_shell` for the shell-less ones,
   and the weaker property that is actually true for `valkey` and `zookeeper` — so they
-  cannot silently rot. Six do not yet assert it and can: `clickhouse`, `go`, `kafka`,
+  cannot silently rot. Five do not yet assert it and can: `clickhouse`, `kafka`,
   `nginx`, `postgresql` and `redpanda` only document their shell.
 - **SBOM** — CycloneDX + SPDX, attached as a cosign attestation, uploaded as a
   downloadable workflow artifact, and (optionally) pushed to Dependency-Track.

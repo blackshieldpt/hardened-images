@@ -69,6 +69,7 @@ jobs:
           - zookeeper
           - etcd
           - versitygw
+          - static
         variant: [prod, dev]
     env:
       SUF: ${{ matrix.variant == 'dev' && '-dev' || '' }}

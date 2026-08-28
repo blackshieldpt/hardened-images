@@ -1,5 +1,6 @@
 # Hardened Go (apko) — Wolfi go-1.27, non-root.
-# Keeps a shell: the go-1.27 package depends on bash (auto-dep).
+# Shell-less: go-1.26 pulled bash in as an auto-dep, go-1.27 does not. test.sh
+# asserts it with check_no_shell, so a reintroduced dependency fails the build.
 contents:
   repositories:
     - https://packages.wolfi.dev/os
