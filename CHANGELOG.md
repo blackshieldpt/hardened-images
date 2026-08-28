@@ -6,6 +6,53 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-08-28
+
+A new image rather than a bump, so minor. Nothing existing changes tag.
+
+### Added
+- **`static` — the minimal runtime base.** `wolfi-baselayout` and
+  `ca-certificates-bundle`, nonroot 65532, `/app` pre-created and owned by it,
+  no entrypoint: **215 kB**, two packages. It is not runnable on its own and is
+  not meant to be — it is the `FROM` line under a statically linked binary.
+
+  It fills a real gap. The smallest base published here was `go`, at 189 MB,
+  because it carries the Go toolchain — so every service built on a
+  `CGO_ENABLED=0` binary was shipping a compiler it never invokes to every
+  production node. Measured on a LogShield manager image: **239 MB -> 50 MB**,
+  and the base's package count drops from 23 to 2. Both scan clean today; the
+  durable win is 21 fewer packages generating future advisories to triage.
+
+  `static:1-dev` exists as usual (busybox, bash, `apk`, `curl`, `wget`, `jq`)
+  for debugging a static-based image, since the prod variant has no shell to
+  `docker exec` into.
+
+  Its `test.sh` cannot `docker run` or `docker exec` an image with no entrypoint
+  and no shell, so it exports the container rootfs and reads the tar listing from
+  the host, then compiles a `CGO_ENABLED=0` Go binary, builds a throwaway image
+  `FROM` it, and asserts the binary runs as UID 65532 and loads the system cert
+  pool — the property the image exists to provide.
+
+### Fixed
+- **`assert_contains` reported passing assertions as failures on long output.**
+  `scripts/test-lib.sh` sets `pipefail`, and the helper was
+  `printf '%s' "$haystack" | grep -qE "$pattern"`. `grep -q` exits at the first
+  match, which SIGPIPEs `printf`, so the pipeline returned non-zero *because the
+  pattern matched*. It is invisible on short output — the writer finishes before
+  grep exits — and fires once the haystack is long enough, which is why no
+  existing image test tripped it. Found while writing `static`'s test, where the
+  identical construct over a ~990-line rootfs listing reported the image's own CA
+  bundle, `/etc/passwd` and busybox as absent. Both now match from a here-string,
+  which is not a pipeline.
+- **`go` was documented as shipping `/bin/bash`; it does not.** The README's
+  shell-exception list still described `go-1.26`, where bash was a hard
+  dependency. `go-1.27` has no shell — verified against the published image (no
+  `/bin/sh`, no `/bin/bash`), and `images/go/test.sh` has been asserting it with
+  `check_no_shell` all along. `go` is removed from both the bash-exception list
+  and the list of images that "only document" their shell (six -> five), and the
+  contradicting comment at the top of `images/go/apko/go.yaml` — which claimed
+  the image keeps a shell — is corrected.
+
 ## [0.4.0] - 2026-08-25
 
 The minor bump — rather than 0.3.1 — is because consumers pinning a floating
@@ -526,7 +573,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.1.6...v0.2.0
