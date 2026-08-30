@@ -194,41 +194,41 @@
       },
       {
         "name": "ncurses-terminfo-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260822-r0.apk",
-        "version": "6.6.20260822-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260829-r0.apk",
+        "version": "6.6.20260829-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10334",
-          "checksum": "sha1-iKIY37LU1f1y7lJjAupxZWoGaMA="
+          "range": "bytes=0-10342",
+          "checksum": "sha1-cpfF6KWLmhb+ZDCaTLZTIP9TjIw="
         },
         "data": {
-          "range": "bytes=10335-118486",
-          "checksum": "sha256-6VFIz0FYDZR+HiVlJtELtmxi/FZg9QAgVfZLC6cnXDE="
+          "range": "bytes=10343-118535",
+          "checksum": "sha256-uODfs0s9MEM05x2zMJfvOCBQm7Y8ofsyKEAcT9mJ+hE="
         },
-        "checksum": "Q1iKIY37LU1f1y7lJjAupxZWoGaMA="
+        "checksum": "Q1cpfF6KWLmhb+ZDCaTLZTIP9TjIw="
       },
       {
         "name": "ncurses",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260822-r0.apk",
-        "version": "6.6.20260822-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260829-r0.apk",
+        "version": "6.6.20260829-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10474",
-          "checksum": "sha1-1/fKAErIQIutqqds8zwswQe3iMQ="
+          "range": "bytes=0-10486",
+          "checksum": "sha1-1GxAuUNOioK58Tlu2NBnugStNLw="
         },
         "data": {
-          "range": "bytes=10475-622274",
-          "checksum": "sha256-WIX8oABa2C3j9hfSA+zsfeQSaPUNGqGndKXujUpaFKE="
+          "range": "bytes=10487-622307",
+          "checksum": "sha256-zDj1PycqTEHUrjg1DpPbYUlh7jsDrlJJeUbvy07P8bg="
         },
-        "checksum": "Q11/fKAErIQIutqqds8zwswQe3iMQ="
+        "checksum": "Q11GxAuUNOioK58Tlu2NBnugStNLw="
       },
       {
         "name": "bash",

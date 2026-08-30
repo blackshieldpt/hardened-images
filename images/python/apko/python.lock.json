@@ -213,41 +213,41 @@
       },
       {
         "name": "ncurses-terminfo-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260822-r0.apk",
-        "version": "6.6.20260822-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260829-r0.apk",
+        "version": "6.6.20260829-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10334",
-          "checksum": "sha1-iKIY37LU1f1y7lJjAupxZWoGaMA="
+          "range": "bytes=0-10342",
+          "checksum": "sha1-cpfF6KWLmhb+ZDCaTLZTIP9TjIw="
         },
         "data": {
-          "range": "bytes=10335-118486",
-          "checksum": "sha256-6VFIz0FYDZR+HiVlJtELtmxi/FZg9QAgVfZLC6cnXDE="
+          "range": "bytes=10343-118535",
+          "checksum": "sha256-uODfs0s9MEM05x2zMJfvOCBQm7Y8ofsyKEAcT9mJ+hE="
         },
-        "checksum": "Q1iKIY37LU1f1y7lJjAupxZWoGaMA="
+        "checksum": "Q1cpfF6KWLmhb+ZDCaTLZTIP9TjIw="
       },
       {
         "name": "ncurses",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260822-r0.apk",
-        "version": "6.6.20260822-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260829-r0.apk",
+        "version": "6.6.20260829-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10474",
-          "checksum": "sha1-1/fKAErIQIutqqds8zwswQe3iMQ="
+          "range": "bytes=0-10486",
+          "checksum": "sha1-1GxAuUNOioK58Tlu2NBnugStNLw="
         },
         "data": {
-          "range": "bytes=10475-622274",
-          "checksum": "sha256-WIX8oABa2C3j9hfSA+zsfeQSaPUNGqGndKXujUpaFKE="
+          "range": "bytes=10487-622307",
+          "checksum": "sha256-zDj1PycqTEHUrjg1DpPbYUlh7jsDrlJJeUbvy07P8bg="
         },
-        "checksum": "Q11/fKAErIQIutqqds8zwswQe3iMQ="
+        "checksum": "Q11GxAuUNOioK58Tlu2NBnugStNLw="
       },
       {
         "name": "readline",
@@ -365,41 +365,41 @@
       },
       {
         "name": "libexpat1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libexpat1-2.8.3-r0.apk",
-        "version": "2.8.3-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/libexpat1-2.8.3-r1.apk",
+        "version": "2.8.3-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8290",
-          "checksum": "sha1-rYpLU3va57pFjMzLjqyGkCwgAnQ="
+          "range": "bytes=0-8289",
+          "checksum": "sha1-BlXDO6eYK6n41TASh2+Oe0ewQTM="
         },
         "data": {
-          "range": "bytes=8291-111331",
-          "checksum": "sha256-Xlpd9n5NLCqwQF1bbVZKY6Ba6LnAYhj67aa09CqnbAg="
+          "range": "bytes=8290-111330",
+          "checksum": "sha256-7SOvpAtxWC9AcsfinFWDyYpsaVsT8Nld7yRsafAkOyk="
         },
-        "checksum": "Q1rYpLU3va57pFjMzLjqyGkCwgAnQ="
+        "checksum": "Q1BlXDO6eYK6n41TASh2+Oe0ewQTM="
       },
       {
         "name": "libuuid",
-        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.2-r3.apk",
-        "version": "2.42.2-r3",
+        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.2-r4.apk",
+        "version": "2.42.2-r4",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8563",
-          "checksum": "sha1-pms+1bXDk0H01cRFiUgbTk+X9Ic="
+          "range": "bytes=0-8545",
+          "checksum": "sha1-efCFFEt0liDNLyeihsZvfdilWpw="
         },
         "data": {
-          "range": "bytes=8564-63098",
-          "checksum": "sha256-Y7wEE4OSx8JVo2Vo2XKK+QsS8klVZXtObABSaC7d5N8="
+          "range": "bytes=8546-63090",
+          "checksum": "sha256-cK0JquCOJMlQf1C0F6h9i2BzzUBpFdzTz5trbuT+vmU="
         },
-        "checksum": "Q1pms+1bXDk0H01cRFiUgbTk+X9Ic="
+        "checksum": "Q1efCFFEt0liDNLyeihsZvfdilWpw="
       },
       {
         "name": "py3-pip-wheel",
