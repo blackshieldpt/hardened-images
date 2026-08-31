@@ -174,25 +174,6 @@
         "checksum": "Q1Oy7OIfn/R4JD2rpKBR7FvEBLky8="
       },
       {
-        "name": "libuv",
-        "url": "https://packages.wolfi.dev/os/x86_64/libuv-1.52.1-r1.apk",
-        "version": "1.52.1-r1",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-6293",
-          "checksum": "sha1-ZlEHBy7u7Se1JgwURofQ2cuppn0="
-        },
-        "data": {
-          "range": "bytes=6294-128835",
-          "checksum": "sha256-/1FtLApl6ohZxfoVIa/zmqOolDw109aZjeBUL9FXwBw="
-        },
-        "checksum": "Q1ZlEHBy7u7Se1JgwURofQ2cuppn0="
-      },
-      {
         "name": "c-ares",
         "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.8-r1.apk",
         "version": "1.34.8-r1",
@@ -269,6 +250,25 @@
         "checksum": "Q1c8CRVs2O8/y3XKMA1ObmUMg6QAY="
       },
       {
+        "name": "libuv",
+        "url": "https://packages.wolfi.dev/os/x86_64/libuv-1.52.1-r2.apk",
+        "version": "1.52.1-r2",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-7088",
+          "checksum": "sha1-kaOVgntsbg5n5YZqAvy6Qpmxs8U="
+        },
+        "data": {
+          "range": "bytes=7089-132485",
+          "checksum": "sha256-i4XzW+8W18R3XdmZyXl6xjl7vr10SCYkZ/9DOsGYws8="
+        },
+        "checksum": "Q1kaOVgntsbg5n5YZqAvy6Qpmxs8U="
+      },
+      {
         "name": "libbrotlidec1",
         "url": "https://packages.wolfi.dev/os/x86_64/libbrotlidec1-1.2.0-r4.apk",
         "version": "1.2.0-r4",
@@ -308,22 +308,22 @@
       },
       {
         "name": "zlib",
-        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3.2-r4.apk",
-        "version": "1.3.2-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3.2-r5.apk",
+        "version": "1.3.2-r5",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9127",
-          "checksum": "sha1-uur/HAJCSzF/hyt+ffNYqiqGYAs="
+          "range": "bytes=0-9139",
+          "checksum": "sha1-qPZxfUBePihZDSWpoquifWM2YhA="
         },
         "data": {
-          "range": "bytes=9128-73248",
-          "checksum": "sha256-t35y9rhtwo05Lya7W99+zKvNIDde4vCmx+XTNgozvAc="
+          "range": "bytes=9140-73262",
+          "checksum": "sha256-7fhweX1UVJRTfCfbqR0NrHxUvNZHmLO9FgKYdyileNo="
         },
-        "checksum": "Q1uur/HAJCSzF/hyt+ffNYqiqGYAs="
+        "checksum": "Q1qPZxfUBePihZDSWpoquifWM2YhA="
       },
       {
         "name": "libcrypto3",

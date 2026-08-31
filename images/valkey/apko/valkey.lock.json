@@ -270,41 +270,41 @@
       },
       {
         "name": "valkey-9.1",
-        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.1-9.1.1-r1.apk",
-        "version": "9.1.1-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.1-9.1.1-r2.apk",
+        "version": "9.1.1-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-6812",
-          "checksum": "sha1-5LV66RdbU937CUwVyewOw5f6UFY="
+          "range": "bytes=0-6811",
+          "checksum": "sha1-jlvKWDtPMclqwzWMvq7GRDW6wGg="
         },
         "data": {
-          "range": "bytes=6813-2304375",
-          "checksum": "sha256-1hII76n6nX/+OqAK8ibvIRx5QoBoWuJVpEXPruUlHSc="
+          "range": "bytes=6812-2298861",
+          "checksum": "sha256-TGrdFtqZWn9zCLHhWRG/6iS52ObSLYZj6oi1KDMkLug="
         },
-        "checksum": "Q15LV66RdbU937CUwVyewOw5f6UFY="
+        "checksum": "Q1jlvKWDtPMclqwzWMvq7GRDW6wGg="
       },
       {
         "name": "valkey-9.1-cli",
-        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.1-cli-9.1.1-r1.apk",
-        "version": "9.1.1-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.1-cli-9.1.1-r2.apk",
+        "version": "9.1.1-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-6818",
-          "checksum": "sha1-gCbBQjJ40y3odrgYrN8Pda/HAug="
+          "range": "bytes=0-6817",
+          "checksum": "sha1-A9+CwArBcf4UsTDJl4zZyg5/WM4="
         },
         "data": {
-          "range": "bytes=6819-687532",
-          "checksum": "sha256-uus8pmtlK5ztm5YJp1PvmQq/s88mZc3vsUCupJ1EZSI="
+          "range": "bytes=6818-686704",
+          "checksum": "sha256-FvcMeafl0aa308tpXElhe7p/k5g+FWTDUpJmglscAqg="
         },
-        "checksum": "Q1gCbBQjJ40y3odrgYrN8Pda/HAug="
+        "checksum": "Q1A9+CwArBcf4UsTDJl4zZyg5/WM4="
       }
     ]
   }
