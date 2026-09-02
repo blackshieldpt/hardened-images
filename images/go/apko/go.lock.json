@@ -61,22 +61,22 @@
       },
       {
         "name": "go-1.27",
-        "url": "https://packages.wolfi.dev/os/x86_64/go-1.27-1.27.0-r1.apk",
-        "version": "1.27.0-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/go-1.27-1.27.1-r0.apk",
+        "version": "1.27.1-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7538",
-          "checksum": "sha1-x+VeuNGLWcI1xgnB1/CNpZ+mnOM="
+          "range": "bytes=0-7529",
+          "checksum": "sha1-By/5PzK50rZmS0Bk+yvfMxwRJIM="
         },
         "data": {
-          "range": "bytes=7539-58952983",
-          "checksum": "sha256-XXHelgrp7RPyA4nWNzSRiWMEqmTlR0RnNryGQATsPvU="
+          "range": "bytes=7530-58967049",
+          "checksum": "sha256-JRo6HVniBHY/KEbFWJnDRKX401UscmVRVgTJXbJSEC8="
         },
-        "checksum": "Q1x+VeuNGLWcI1xgnB1/CNpZ+mnOM="
+        "checksum": "Q1By/5PzK50rZmS0Bk+yvfMxwRJIM="
       }
     ]
   }

@@ -441,22 +441,22 @@
       },
       {
         "name": "py3-pip-wheel",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3-pip-wheel-26.2.1-r0.apk",
-        "version": "26.2.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/py3-pip-wheel-26.2.1-r1.apk",
+        "version": "26.2.1-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-12667",
-          "checksum": "sha1-gQS+ehIS8zQ88Ng2NSaEijR1clI="
+          "range": "bytes=0-12955",
+          "checksum": "sha1-30O2w5swvmYPk6T8A63zIcm/mVs="
         },
         "data": {
-          "range": "bytes=12668-1816390",
-          "checksum": "sha256-ej4LPj7g1gK7ItNg5VK29GcFzYmX4nJtzbFJ1AwsNkE="
+          "range": "bytes=12956-1817188",
+          "checksum": "sha256-EkTdvLT3sFErT2idw7qSHJHdk4ezGVYsfR1iIcnpdgI="
         },
-        "checksum": "Q1gQS+ehIS8zQ88Ng2NSaEijR1clI="
+        "checksum": "Q130O2w5swvmYPk6T8A63zIcm/mVs="
       },
       {
         "name": "libcrypto3",
