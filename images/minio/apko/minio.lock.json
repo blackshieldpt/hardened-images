@@ -61,41 +61,41 @@
       },
       {
         "name": "mc",
-        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r21.apk",
-        "version": "0.20250813.083541-r21",
+        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r22.apk",
+        "version": "0.20250813.083541-r22",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7011",
-          "checksum": "sha1-SfkHOiGHYSArsBJOemgQm7xgAm4="
+          "range": "bytes=0-7014",
+          "checksum": "sha1-2rp3ERWLV5oStfqhGAbWEbjuwr8="
         },
         "data": {
-          "range": "bytes=7012-12420899",
-          "checksum": "sha256-oEegg5ts5zk8rpF9cOmggQ58YoFQzexma++0FmTyL3s="
+          "range": "bytes=7015-12420893",
+          "checksum": "sha256-wZF5flj/Y8nxpvIjq2YYO8tymnVOukc1xRpmtVn4AdA="
         },
-        "checksum": "Q1SfkHOiGHYSArsBJOemgQm7xgAm4="
+        "checksum": "Q12rp3ERWLV5oStfqhGAbWEbjuwr8="
       },
       {
         "name": "minio",
-        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260717.120751-r10.apk",
-        "version": "0.20260717.120751-r10",
+        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260717.120751-r11.apk",
+        "version": "0.20260717.120751-r11",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7408",
-          "checksum": "sha1-eGYMAXEAEYjJZBstddUayRmDjbg="
+          "range": "bytes=0-7421",
+          "checksum": "sha1-VS+FY+SomLePYFJXBmpw6SnhsKc="
         },
         "data": {
-          "range": "bytes=7409-41021022",
-          "checksum": "sha256-ryxztzEKuhVzPYinE4ANm687bvqUFY0RPfmsEJEW2XQ="
+          "range": "bytes=7422-41076830",
+          "checksum": "sha256-MgK54Htr3mlqx9krFUtrtfD528m9SoYMlHr6XwMVcus="
         },
-        "checksum": "Q1eGYMAXEAEYjJZBstddUayRmDjbg="
+        "checksum": "Q1VS+FY+SomLePYFJXBmpw6SnhsKc="
       }
     ]
   }

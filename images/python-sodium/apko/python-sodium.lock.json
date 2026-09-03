@@ -308,22 +308,22 @@
       },
       {
         "name": "libzstd1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libzstd1-1.5.7-r9.apk",
-        "version": "1.5.7-r9",
+        "url": "https://packages.wolfi.dev/os/x86_64/libzstd1-1.5.7-r10.apk",
+        "version": "1.5.7-r10",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7540",
-          "checksum": "sha1-ZWx/get7ZprnjK/F7hfzoy0t+xo="
+          "range": "bytes=0-7612",
+          "checksum": "sha1-9gFljHREFrRAG5xjzxB9UzRCS2o="
         },
         "data": {
-          "range": "bytes=7541-639455",
-          "checksum": "sha256-9UCBOCAsjS+/OHoLt5sivfwxvc8o6O+7icIHWpK62ww="
+          "range": "bytes=7613-639524",
+          "checksum": "sha256-2SPzV0LwhnriAKLjlxdY1SvKvI4TTMqAl0W9d8I0B48="
         },
-        "checksum": "Q1ZWx/get7ZprnjK/F7hfzoy0t+xo="
+        "checksum": "Q19gFljHREFrRAG5xjzxB9UzRCS2o="
       },
       {
         "name": "xz",
@@ -422,8 +422,8 @@
       },
       {
         "name": "libuuid",
-        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.2-r4.apk",
-        "version": "2.42.2-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.3-r0.apk",
+        "version": "2.42.3-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
@@ -431,13 +431,13 @@
         },
         "control": {
           "range": "bytes=0-8545",
-          "checksum": "sha1-efCFFEt0liDNLyeihsZvfdilWpw="
+          "checksum": "sha1-cNCtelNz5X03Nh4yamayLxH5cbg="
         },
         "data": {
-          "range": "bytes=8546-63090",
-          "checksum": "sha256-cK0JquCOJMlQf1C0F6h9i2BzzUBpFdzTz5trbuT+vmU="
+          "range": "bytes=8546-63097",
+          "checksum": "sha256-4Wdt8pEnbxDxXSNyVVNig4+6Nl7e2voLgtqk0PegM84="
         },
-        "checksum": "Q1efCFFEt0liDNLyeihsZvfdilWpw="
+        "checksum": "Q1cNCtelNz5X03Nh4yamayLxH5cbg="
       },
       {
         "name": "py3-pip-wheel",
@@ -460,79 +460,79 @@
       },
       {
         "name": "libcrypto3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.4-r1.apk",
-        "version": "3.6.4-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.4-r2.apk",
+        "version": "3.6.4-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10988",
-          "checksum": "sha1-AS7hkShpvfLcPzwr8EgYRClJF78="
+          "range": "bytes=0-10459",
+          "checksum": "sha1-v2z5nWIRKAO2cNHiBVgJpPK0Ztc="
         },
         "data": {
-          "range": "bytes=10989-2440891",
-          "checksum": "sha256-gZOwR11y4PAvPdK4E1NImD2LrE7JsnYLXVzhvWxGcIU="
+          "range": "bytes=10460-2431476",
+          "checksum": "sha256-A1Yd/hzG2mjGhtRx1ySXEahfr00fI5h743dUg8qI8hk="
         },
-        "checksum": "Q1AS7hkShpvfLcPzwr8EgYRClJF78="
+        "checksum": "Q1v2z5nWIRKAO2cNHiBVgJpPK0Ztc="
       },
       {
         "name": "libssl3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.4-r1.apk",
-        "version": "3.6.4-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.4-r2.apk",
+        "version": "3.6.4-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10998",
-          "checksum": "sha1-WYGe2cHTcWcJzolR8dKILoZK0WU="
+          "range": "bytes=0-10462",
+          "checksum": "sha1-NC1pA6UYIe9prKEpvhJ8rdbZD3Y="
         },
         "data": {
-          "range": "bytes=10999-524646",
-          "checksum": "sha256-lhcwXzykWUafncPn+WiS3AHMqU1UTTwoTWIydmaJMw4="
+          "range": "bytes=10463-524119",
+          "checksum": "sha256-sdhDlRw9CylV0jw/XjUzA4luOjiLYdqppLxwPS970e8="
         },
-        "checksum": "Q1WYGe2cHTcWcJzolR8dKILoZK0WU="
+        "checksum": "Q1NC1pA6UYIe9prKEpvhJ8rdbZD3Y="
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.7-r4.apk",
-        "version": "3.14.7-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.7-r6.apk",
+        "version": "3.14.7-r6",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14361",
-          "checksum": "sha1-glxJjQLPQq7a4OLQcbcCXhpbMp0="
+          "range": "bytes=0-14471",
+          "checksum": "sha1-LKYI9/BZ1RwdnE2AoqvY7OoKUUo="
         },
         "data": {
-          "range": "bytes=14362-12971603",
-          "checksum": "sha256-zXHjZ3qVr7ybsAmfN6pZ7YhsnjXjhjCtbzCNQDtonQo="
+          "range": "bytes=14472-13004701",
+          "checksum": "sha256-r9aTrcOFhZ2GSNg6O9rzIpLoc2gpCzhqk8EdNWHQ/Bk="
         },
-        "checksum": "Q1glxJjQLPQq7a4OLQcbcCXhpbMp0="
+        "checksum": "Q1LKYI9/BZ1RwdnE2AoqvY7OoKUUo="
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.7-r4.apk",
-        "version": "3.14.7-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.7-r6.apk",
+        "version": "3.14.7-r6",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14186",
-          "checksum": "sha1-cYsfB2EtssHUCiH6P/D7q0SCF14="
+          "range": "bytes=0-14305",
+          "checksum": "sha1-0ED77Q8wmFDshd5q0Cy1vJud0k8="
         },
         "data": {
-          "range": "bytes=14187-15926",
-          "checksum": "sha256-IFp5NWNoIN3r3NQL92JFKGozknvFNgKGA+EKfKOKmNM="
+          "range": "bytes=14306-16042",
+          "checksum": "sha256-8wEVLZttjxHMHYcXW0Wyt67xKob9WmW4ilrJuI0ak5Y="
         },
-        "checksum": "Q1cYsfB2EtssHUCiH6P/D7q0SCF14="
+        "checksum": "Q10ED77Q8wmFDshd5q0Cy1vJud0k8="
       },
       {
         "name": "ttf-dejavu",
