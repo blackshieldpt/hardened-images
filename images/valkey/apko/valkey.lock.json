@@ -137,41 +137,41 @@
       },
       {
         "name": "libcrypto3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.4-r2.apk",
-        "version": "3.6.4-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.4-r3.apk",
+        "version": "3.6.4-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10459",
-          "checksum": "sha1-v2z5nWIRKAO2cNHiBVgJpPK0Ztc="
+          "range": "bytes=0-13376",
+          "checksum": "sha1-0bj9tsdkuuPmjw6cZdFGPJ2lJ7U="
         },
         "data": {
-          "range": "bytes=10460-2431476",
-          "checksum": "sha256-A1Yd/hzG2mjGhtRx1ySXEahfr00fI5h743dUg8qI8hk="
+          "range": "bytes=13377-2434391",
+          "checksum": "sha256-UIOtPwRLmEMXKDpcdJixXmJvAKsFiDV3gRa53s+r7bk="
         },
-        "checksum": "Q1v2z5nWIRKAO2cNHiBVgJpPK0Ztc="
+        "checksum": "Q10bj9tsdkuuPmjw6cZdFGPJ2lJ7U="
       },
       {
         "name": "libssl3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.4-r2.apk",
-        "version": "3.6.4-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.4-r3.apk",
+        "version": "3.6.4-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10462",
-          "checksum": "sha1-NC1pA6UYIe9prKEpvhJ8rdbZD3Y="
+          "range": "bytes=0-13379",
+          "checksum": "sha1-tGfOVIDDCCFY1XRS13k8BizGcTM="
         },
         "data": {
-          "range": "bytes=10463-524119",
-          "checksum": "sha256-sdhDlRw9CylV0jw/XjUzA4luOjiLYdqppLxwPS970e8="
+          "range": "bytes=13380-527030",
+          "checksum": "sha256-fkz23G+/j51revHq3wYAsP3mujyoxec+2e6dYVxrOlw="
         },
-        "checksum": "Q1NC1pA6UYIe9prKEpvhJ8rdbZD3Y="
+        "checksum": "Q1tGfOVIDDCCFY1XRS13k8BizGcTM="
       },
       {
         "name": "posix-libc-utils-bin-2.44",
