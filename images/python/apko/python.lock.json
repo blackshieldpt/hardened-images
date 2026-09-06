@@ -194,41 +194,41 @@
       },
       {
         "name": "ncurses-terminfo-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260829-r1.apk",
-        "version": "6.6.20260829-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20260905-r0.apk",
+        "version": "6.6.20260905-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10339",
-          "checksum": "sha1-yLXN6KS2NVjfDV40n0K2TvSwu2s="
+          "range": "bytes=0-10398",
+          "checksum": "sha1-fWEpEvwg5Xq8AOuEMXBCt2AeeHY="
         },
         "data": {
-          "range": "bytes=10340-118480",
-          "checksum": "sha256-wdYBzb3ess6TZEuHybz5iQrqK5Qwdq4imjSvfXAfNJw="
+          "range": "bytes=10399-118552",
+          "checksum": "sha256-er5DHQEP1V6YAhGCJ0dLF9Wo7rhuPjv1IZKLB5geivc="
         },
-        "checksum": "Q1yLXN6KS2NVjfDV40n0K2TvSwu2s="
+        "checksum": "Q1fWEpEvwg5Xq8AOuEMXBCt2AeeHY="
       },
       {
         "name": "ncurses",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260829-r1.apk",
-        "version": "6.6.20260829-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20260905-r0.apk",
+        "version": "6.6.20260905-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10477",
-          "checksum": "sha1-P+G3qBhluVd7S622hGG+sBOUlzQ="
+          "range": "bytes=0-10552",
+          "checksum": "sha1-GofkKfduL4/lZ/vZQWtLiClet3E="
         },
         "data": {
-          "range": "bytes=10478-622269",
-          "checksum": "sha256-I1MWw5vVe/gZH6/G/VXVwKjvbIMcLNt/erEm1dxudrI="
+          "range": "bytes=10553-622768",
+          "checksum": "sha256-Ob/ZFrkHr0MGvZywZO7jNqFQD+hbPwXDeKV4r7TDeqk="
         },
-        "checksum": "Q1P+G3qBhluVd7S622hGG+sBOUlzQ="
+        "checksum": "Q1GofkKfduL4/lZ/vZQWtLiClet3E="
       },
       {
         "name": "readline",
@@ -460,22 +460,22 @@
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.7-r6.apk",
-        "version": "3.14.7-r6",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.7-r7.apk",
+        "version": "3.14.7-r7",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14471",
-          "checksum": "sha1-LKYI9/BZ1RwdnE2AoqvY7OoKUUo="
+          "range": "bytes=0-14528",
+          "checksum": "sha1-R90rumsgEWrlg7ZAjiYmC3KoyTc="
         },
         "data": {
-          "range": "bytes=14472-13004701",
-          "checksum": "sha256-r9aTrcOFhZ2GSNg6O9rzIpLoc2gpCzhqk8EdNWHQ/Bk="
+          "range": "bytes=14529-13001775",
+          "checksum": "sha256-k2lK7Rcj6KhOp5mBoPaz1ljEkelNGGLtMap4h7ZVdUU="
         },
-        "checksum": "Q1LKYI9/BZ1RwdnE2AoqvY7OoKUUo="
+        "checksum": "Q1R90rumsgEWrlg7ZAjiYmC3KoyTc="
       },
       {
         "name": "py3.14-setuptools",
@@ -536,22 +536,22 @@
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.7-r6.apk",
-        "version": "3.14.7-r6",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.7-r7.apk",
+        "version": "3.14.7-r7",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14305",
-          "checksum": "sha1-0ED77Q8wmFDshd5q0Cy1vJud0k8="
+          "range": "bytes=0-14354",
+          "checksum": "sha1-kVorVd6KzYU2vpQQ/QeG5wjhL4Y="
         },
         "data": {
-          "range": "bytes=14306-16042",
-          "checksum": "sha256-8wEVLZttjxHMHYcXW0Wyt67xKob9WmW4ilrJuI0ak5Y="
+          "range": "bytes=14355-16094",
+          "checksum": "sha256-s2AneI6MxPYQaXuZioQ0s4WwxqzY/Zk15cEV0YR57yY="
         },
-        "checksum": "Q10ED77Q8wmFDshd5q0Cy1vJud0k8="
+        "checksum": "Q1kVorVd6KzYU2vpQQ/QeG5wjhL4Y="
       }
     ]
   }
