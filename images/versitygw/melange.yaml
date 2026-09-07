@@ -5,7 +5,7 @@
 # now downgrade the module.
 package:
   name: versitygw-hardened
-  version: 1.7.0
+  version: 1.8.0
   epoch: 0
   description: "Versity S3 Gateway (built from source)"
   copyright:
@@ -28,7 +28,7 @@ pipeline:
     with:
       repository: https://github.com/versity/versitygw
       tag: v${{package.version}}
-      expected-commit: 8a3dbcf97d996ea4955426e6b8a76eb96d2cd92a
+      expected-commit: fd04bc1df2656298577b82667a4195c77f8c7563
   - name: Compile static binary
     runs: |
       CGO_ENABLED=0 go build \
