@@ -365,22 +365,22 @@
       },
       {
         "name": "nodejs-24",
-        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-24-24.20.0-r2.apk",
-        "version": "24.20.0-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-24-24.21.0-r0.apk",
+        "version": "24.21.0-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8664",
-          "checksum": "sha1-Tum+jLysWKRfrgz88+fvgU4dcdo="
+          "range": "bytes=0-8667",
+          "checksum": "sha1-v+djLLlMhRrKe4taTZdZTJo2RT4="
         },
         "data": {
-          "range": "bytes=8665-29534560",
-          "checksum": "sha256-RSpbPvIztKTIs9JoUe+q2mY93SumfNdYvcIPjqRk/fQ="
+          "range": "bytes=8668-29576376",
+          "checksum": "sha256-gUMp1UyXWufaUHIp3klzS9lMUFcgn0ywpYwSLg2NavU="
         },
-        "checksum": "Q1Tum+jLysWKRfrgz88+fvgU4dcdo="
+        "checksum": "Q1v+djLLlMhRrKe4taTZdZTJo2RT4="
       },
       {
         "name": "node-gyp",
