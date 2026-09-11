@@ -136,42 +136,61 @@
         "checksum": "Q1qqZd/YKWGCTn1dNn9h9NYOArbI0="
       },
       {
-        "name": "libcrypto3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.4-r4.apk",
-        "version": "3.6.4-r4",
+        "name": "openssl-provider-legacy-allowed",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-provider-legacy-allowed-4.0.2-r1.apk",
+        "version": "4.0.2-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13392",
-          "checksum": "sha1-wJBPnRRqWoaS+LKAhfMZLbQGsMs="
+          "range": "bytes=0-8008",
+          "checksum": "sha1-TEZUzOmXaPtABHPFPb7AvvYtZIU="
         },
         "data": {
-          "range": "bytes=13393-2434409",
-          "checksum": "sha256-IQf2phb5kPn+4AnM2ANXdHmwOeIYQRsn9TrUKOsByZY="
+          "range": "bytes=8009-106273",
+          "checksum": "sha256-KJuAx7LrbSbRt7K2LjiXZIHEXXyOJxQ5wpLmO6n7yDI="
         },
-        "checksum": "Q1wJBPnRRqWoaS+LKAhfMZLbQGsMs="
+        "checksum": "Q1TEZUzOmXaPtABHPFPb7AvvYtZIU="
+      },
+      {
+        "name": "libcrypto3",
+        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.4-r5.apk",
+        "version": "3.6.4-r5",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-13767",
+          "checksum": "sha1-1UkMMlw4dE7yOtcp2uPgAwm7Fdw="
+        },
+        "data": {
+          "range": "bytes=13768-2434844",
+          "checksum": "sha256-xLs/fUl1xrNihe2+hHdXfVcVyqS9S1OjYolDiXW6HC8="
+        },
+        "checksum": "Q11UkMMlw4dE7yOtcp2uPgAwm7Fdw="
       },
       {
         "name": "libssl3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.4-r4.apk",
-        "version": "3.6.4-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.4-r5.apk",
+        "version": "3.6.4-r5",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13398",
-          "checksum": "sha1-L7rk18ncK/rwFDxVDVeXnJ4h8fk="
+          "range": "bytes=0-13766",
+          "checksum": "sha1-/Si3CXBwEN3IGord9F8stBPpgq4="
         },
         "data": {
-          "range": "bytes=13399-527056",
-          "checksum": "sha256-lcSEnGfd3ygTYp9h1zVSO4djHYZB+Mo4BXHV57q7K3Q="
+          "range": "bytes=13767-527422",
+          "checksum": "sha256-3nyqlKrYAa+ripvG/rjDZWD7QVzIXqfPeSZFOUNhXUI="
         },
-        "checksum": "Q1L7rk18ncK/rwFDxVDVeXnJ4h8fk="
+        "checksum": "Q1/Si3CXBwEN3IGord9F8stBPpgq4="
       },
       {
         "name": "posix-libc-utils-bin-2.44",
