@@ -403,22 +403,22 @@
       },
       {
         "name": "libuuid",
-        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.3-r2.apk",
-        "version": "2.42.3-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.3-r3.apk",
+        "version": "2.42.3-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9021",
-          "checksum": "sha1-qzLVmS4W+J/4czf7p14FYXcnFCI="
+          "range": "bytes=0-12173",
+          "checksum": "sha1-sFLOlpvFD95lgFTZ46MwqCifxbI="
         },
         "data": {
-          "range": "bytes=9022-30362",
-          "checksum": "sha256-u5KGs8H+DmoWIc0aKhbjec/5UjFU/OwsFd0Q6h5sxzU="
+          "range": "bytes=12174-33415",
+          "checksum": "sha256-w5TdjBeqkst2DHMA7Sw9pl8l7man82a5J4l4A390ZOo="
         },
-        "checksum": "Q1qzLVmS4W+J/4czf7p14FYXcnFCI="
+        "checksum": "Q1sFLOlpvFD95lgFTZ46MwqCifxbI="
       },
       {
         "name": "openssl-provider-legacy-allowed",
