@@ -288,25 +288,6 @@
         "checksum": "Q1gTMms7l/MTY1Dnuh1jjqSBnpBPw="
       },
       {
-        "name": "zlib",
-        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3.2-r5.apk",
-        "version": "1.3.2-r5",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-9139",
-          "checksum": "sha1-qPZxfUBePihZDSWpoquifWM2YhA="
-        },
-        "data": {
-          "range": "bytes=9140-73262",
-          "checksum": "sha256-7fhweX1UVJRTfCfbqR0NrHxUvNZHmLO9FgKYdyileNo="
-        },
-        "checksum": "Q1qPZxfUBePihZDSWpoquifWM2YhA="
-      },
-      {
         "name": "libnghttp2-14",
         "url": "https://packages.wolfi.dev/os/x86_64/libnghttp2-14-1.70.0-r3.apk",
         "version": "1.70.0-r3",
@@ -324,6 +305,25 @@
           "checksum": "sha256-HWBD0LJ1rjYkcamCyS8tOggrs/KQly59VPHzX9QdPfk="
         },
         "checksum": "Q1PnYQzy51DAZ0LPOPfyYr/eoxlQw="
+      },
+      {
+        "name": "zlib",
+        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3.2-r6.apk",
+        "version": "1.3.2-r6",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-9222",
+          "checksum": "sha1-O5G3UIuEeU+HbPRisN5yolyI4gQ="
+        },
+        "data": {
+          "range": "bytes=9223-73341",
+          "checksum": "sha256-RH7KjD+ws4+Yj5r/aSyouz+ZQ29BSco7WyDTjkSKmvg="
+        },
+        "checksum": "Q1O5G3UIuEeU+HbPRisN5yolyI4gQ="
       },
       {
         "name": "openssl-provider-legacy-allowed",
