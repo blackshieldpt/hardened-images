@@ -137,60 +137,60 @@
       },
       {
         "name": "openssl-provider-legacy-allowed",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-provider-legacy-allowed-4.0.2-r2.apk",
-        "version": "4.0.2-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-provider-legacy-allowed-4.0.2-r3.apk",
+        "version": "4.0.2-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8162",
-          "checksum": "sha1-NYZWA4zSaAqnjouc8IFIUZKtKxE="
+          "range": "bytes=0-8282",
+          "checksum": "sha1-Jm7EJ/sB9CAnojsPDL16ARn8vfM="
         },
         "data": {
-          "range": "bytes=8163-125476",
-          "checksum": "sha256-Y+vdzSGpPm5lS92+nY+sB7JDZvxZrzspDKpGwecoNko="
+          "range": "bytes=8283-125658",
+          "checksum": "sha256-9oy6b9ld515TjG32XKeXgxha8E2fjj+YXJc7b433IW0="
         },
-        "checksum": "Q1NYZWA4zSaAqnjouc8IFIUZKtKxE="
+        "checksum": "Q1Jm7EJ/sB9CAnojsPDL16ARn8vfM="
       },
       {
         "name": "libcrypto3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.4-r6.apk",
-        "version": "3.6.4-r6",
+        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.4-r7.apk",
+        "version": "3.6.4-r7",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13779",
-          "checksum": "sha1-IoyC/MvWdWq6yKb1C/28OwlNvnw="
+          "range": "bytes=0-13794",
+          "checksum": "sha1-8bOcmz6ubdjizBF3rw6WIyA4c6Q="
         },
         "data": {
-          "range": "bytes=13780-2434872",
-          "checksum": "sha256-a1xlp62tQAIQp3nVTpqOGxeAR6Lk8ZquU91yg0PzUXo="
+          "range": "bytes=13795-2434910",
+          "checksum": "sha256-XPGF/iOiJL5xddzVN2srCYyoNH6s2UOQSTSSjtcA22g="
         },
-        "checksum": "Q1IoyC/MvWdWq6yKb1C/28OwlNvnw="
+        "checksum": "Q18bOcmz6ubdjizBF3rw6WIyA4c6Q="
       },
       {
         "name": "libssl3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.4-r6.apk",
-        "version": "3.6.4-r6",
+        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.4-r7.apk",
+        "version": "3.6.4-r7",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13782",
-          "checksum": "sha1-XuS827dcjozuXjskEFa3/g8pskM="
+          "range": "bytes=0-13794",
+          "checksum": "sha1-HBRFgXGqFfDzmmdqJv/A++IF8lc="
         },
         "data": {
-          "range": "bytes=13783-527438",
-          "checksum": "sha256-NDthov0Xi5wxReipVUBSTBJdn7GzYBInMSxw0Vd2PGc="
+          "range": "bytes=13795-527448",
+          "checksum": "sha256-RAAFZ4t9ZN8G3Eiv7lush+QV8nisa4J/ebi1orCarEM="
         },
-        "checksum": "Q1XuS827dcjozuXjskEFa3/g8pskM="
+        "checksum": "Q1HBRFgXGqFfDzmmdqJv/A++IF8lc="
       },
       {
         "name": "posix-libc-utils-bin-2.44",
