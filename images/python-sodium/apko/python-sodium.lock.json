@@ -517,41 +517,41 @@
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.7_git20260917-r3.apk",
-        "version": "3.14.7_git20260917-r3",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.7_git20260918-r0.apk",
+        "version": "3.14.7_git20260918-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-15079",
-          "checksum": "sha1-ZRxoDLTv9jbDe3a3l9eeTlHYxIk="
+          "range": "bytes=0-15085",
+          "checksum": "sha1-lFaVcdLaKoHck8WrZ86zqlwnlSI="
         },
         "data": {
-          "range": "bytes=15080-13015289",
-          "checksum": "sha256-p478FeGBV/2nz4eSJRjFM80TBsEWyvWhwQtAMqdHADQ="
+          "range": "bytes=15086-13013033",
+          "checksum": "sha256-hR3r6jkKeEgd4S6TNSoFd7yHRFKUBVKj91PD1hzhIWY="
         },
-        "checksum": "Q1ZRxoDLTv9jbDe3a3l9eeTlHYxIk="
+        "checksum": "Q1lFaVcdLaKoHck8WrZ86zqlwnlSI="
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.7_git20260917-r3.apk",
-        "version": "3.14.7_git20260917-r3",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.7_git20260918-r0.apk",
+        "version": "3.14.7_git20260918-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14908",
-          "checksum": "sha1-EcvGL6SAMezh3dJnrr2EczMoAOI="
+          "range": "bytes=0-14904",
+          "checksum": "sha1-o4bXAhyGk8hfKrtAaDmMAivK6xY="
         },
         "data": {
-          "range": "bytes=14909-16659",
-          "checksum": "sha256-pj1qAN7ca+b2L29a85f8cN6EN+3ZHqXrpUPeg4NQI+0="
+          "range": "bytes=14905-16653",
+          "checksum": "sha256-0+unG/QJJLB8vITPrfSFr0srgTpejvStTI+iFeP0rGI="
         },
-        "checksum": "Q1EcvGL6SAMezh3dJnrr2EczMoAOI="
+        "checksum": "Q1o4bXAhyGk8hfKrtAaDmMAivK6xY="
       },
       {
         "name": "ttf-dejavu",
