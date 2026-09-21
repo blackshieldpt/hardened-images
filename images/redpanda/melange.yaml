@@ -4,7 +4,7 @@
 # are needed for it. entrypoint.sh/redpanda.yaml are read from images/redpanda via --source-dir.
 package:
   name: redpanda-hardened
-  version: 26.1.14
+  version: 26.2.2
   epoch: 0
   description: "Redpanda streaming data platform (broker repackaged, rpk from source)"
   copyright:
@@ -15,7 +15,7 @@ package:
 
 vars:
   token: nzc4ZYQK3WRGd9sy
-  deb_sha256: ae146b319e4bb45bde0605ce25fd9031c4dd107d6a21225bf247dfc5dd9a3a66
+  deb_sha256: e6e93bc152e4b99faf4a7dfbb87b39197483832642cb5354f905b680b4363b87
 
 environment:
   contents:
@@ -48,6 +48,10 @@ pipeline:
       # The C++ broker is repackaged from the deb above; rpk is the Go CLI that
       # carried the GO-2026 x/crypto/x/net criticals, so rebuild just it from
       # source (sparse checkout of src/go/rpk) with the deps bumped.
+      # These are floor pins and go stale silently — grpc v1.82.1 was clean when it
+      # was written and by 26.2.2 it was both behind what upstream pinned (1.83.0)
+      # and carrying GHSA-2v4p-qf9q-27wj / GHSA-vp52-pcj8-j9qc. Raise any of them
+      # whenever the scan names the pinned version.
       # docker/docker is deliberately not bumped: the advisories point at 29.3.1,
       # but docker/docker publishes no v29 module path (it moved to moby/moby), so
       # go get can't reach it. It is only linked for `rpk container` (local dev
@@ -59,9 +63,11 @@ pipeline:
       git fetch --depth 1 origin v${{package.version}}
       git checkout FETCH_HEAD
       cd src/go/rpk
-      go get golang.org/x/crypto@v0.53.0 golang.org/x/net@v0.56.0 \
-        golang.org/x/text@v0.39.0 github.com/klauspost/compress@v1.18.7 \
-        google.golang.org/grpc@v1.82.1
+      # Raised together, not one at a time: grpc v1.84.0 requires x/net >= v0.57.0,
+      # so bumping grpc alone fails with "requires golang.org/x/net@v0.57.0".
+      go get golang.org/x/crypto@v0.57.0 golang.org/x/net@v0.59.0 \
+        golang.org/x/text@v0.42.0 github.com/klauspost/compress@v1.18.7 \
+        google.golang.org/grpc@v1.84.0
       go mod tidy
       VER=github.com/redpanda-data/redpanda/src/go/rpk/pkg/cli/version
       CONT=github.com/redpanda-data/redpanda/src/go/rpk/pkg/cli/container/containerutil
