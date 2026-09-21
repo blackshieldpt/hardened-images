@@ -6,6 +6,42 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Changed
+- **`kafka` no longer comes from Wolfi's frozen package: 7 High + 14 Medium -> 1
+  High + 2 Medium**, the three being the unfixable glibc findings every image
+  carries. `kafka-4.3` stopped being rebuilt on 2026-06-02 at `4.3.0-r1`, and the
+  whole Kafka/ZooKeeper family in public Wolfi stops on that date.
+
+  Every finding was a **bundled jar**, none in Kafka's own code — so building from
+  source would have reproduced all of them: upstream's `dependencies.gradle` pins
+  jackson 2.21.2, jetty 12.0.34 and jline 3.30.4 at 4.3.0 *and* 4.3.1. The image
+  therefore repackages Apache's binary distribution (sha256 pinned, cross-checked
+  against the SHA-512 Apache publishes) and changes the jars:
+
+  - **Connect removed** — 25 jars (`connect-*`, `jetty-*`, `jersey-*`,
+    `swagger-annotations`) and the dead `connect-*.sh` launchers with them. This
+    is a broker image; its entrypoint starts `kafka-server-start.sh` and nothing
+    else. Clears all three jetty findings outright. **Behaviour change**: the
+    image can no longer start Connect, where before it would have started and been
+    useless.
+  - **15 jars replaced**, each sha256-pinned: jackson 2.21.2 -> 2.21.5 (9 jars),
+    jline 3.30.4 -> 3.30.14, log4j2 2.25.4 -> 2.25.5 (4 jars), lz4-java
+    1.10.2 -> 1.11.1. `jackson-annotations` stays at 2.21 — it tracks the minor
+    line only, publishes no patch releases, and carries no findings.
+
+  Each swap names the version it replaces and fails the build if upstream has
+  moved on, so a Kafka bump cannot silently turn a replacement into a downgrade —
+  the one failure mode a patched-jar image cannot detect by scanning, since the
+  scan would simply look clean. The Connect removal asserts jars matched before
+  and none survive after. `test.sh` re-asserts the patched set against the running
+  image and round-trips an lz4-compressed record, since creating a topic is
+  metadata only and never touches the swapped jars.
+- **`kafka` was also a patch release behind without anything noticing.** Its pin
+  named the Wolfi *line* (`4.3`), so upstream's 4.3.1 never registered as drift
+  and the image sat on 4.3.0. The version now lives in
+  `images/kafka/melange.yaml`, which puts it in `check-updates`' from-source
+  table, where 4.3.1 would have been caught the day it shipped.
+
 ## [0.6.1] - 2026-09-21
 
 Follow-up to v0.6.0, from what publishing it exposed: five images were published

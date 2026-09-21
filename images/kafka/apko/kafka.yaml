@@ -1,5 +1,12 @@
-# Hardened Kafka (apko) — Wolfi kafka-4.3 (KRaft mode), bash + openjdk-17 (auto-dep).
+# Hardened Kafka (apko) — upstream distribution repackaged by images/kafka/melange.yaml
+# (KRaft mode), bash + openjdk-17.
 # Keeps bash: the Kafka start/storage scripts and the bootstrap entrypoint are shell scripts.
+#
+# The JVM is named here rather than arriving as a dependency. Wolfi's kafka-4.3
+# used to pull it in; kafka-hardened replaced that package, and default-jvm is the
+# load-bearing one — it provides the /usr/lib/jvm/default-jvm symlink JAVA_HOME
+# points at, without which the JRE lands in java-17-openjdk/ and the start scripts
+# cannot find java.
 contents:
   repositories:
     - https://packages.wolfi.dev/os
@@ -9,8 +16,9 @@ contents:
     - wolfi-baselayout
     - bash
     - busybox
-    - kafka-4.3
-    - kafka-config
+    - openjdk-17-jre
+    - openjdk-17-default-jvm
+    - kafka-hardened
     - ca-certificates-bundle
 
 accounts:
