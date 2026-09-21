@@ -6,6 +6,61 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-09-21
+
+Every image that pins an upstream version is back on its current release, and no
+image carries a Critical. `versitygw` and `zookeeper` had been failing the scan
+gate — and therefore not publishing at all — for at least three days.
+
+### Fixed
+- **`versitygw` and `zookeeper` were blocking the daily build, and had been since
+  at least 2026-09-18.** The scan gate failed on Criticals neither image could
+  clear without an upstream bump, and because the gate runs before the push, those
+  two images stopped publishing entirely while the other 19 kept going. The red X
+  on `build` read as "CI is broken", not as "two images are frozen on CVEs", so
+  nothing chased it. Both are fixed by the version bumps below.
+- **`make scan` scanned whatever the local docker daemon happened to hold.** The
+  scanners got a bare image reference, so a locally built copy of the same tag
+  shadowed the registry — a July build of `python-sodium` scanned as 4 Criticals
+  that the published image does not have. The source is now explicit:
+  `SCAN_SOURCE=docker` (default, the image `make build` just loaded) or
+  `SCAN_SOURCE=registry` to audit what is actually published. CI was never
+  affected — it scans what it just built, which is what the gate is for.
+
+### Changed
+- **Every from-source/repackaged image is back on its current upstream**, and the
+  Criticals went with it:
+
+  | Image | Was | Now | Effect |
+  |---|---|---|---|
+  | `versitygw` | 1.7.0 | **1.8.0** | 3 Critical + 7 High -> 0. All ten were `amqp091-go` v1.12.0; 1.8.0 pins v1.14.0 |
+  | `zookeeper` | 3.9.5 | **3.9.6** | 1 Critical + 4 High -> 1 High (unfixed glibc). netty 4.1.137.Final clears GHSA-c4c3-7fpv-j4q5 |
+  | `manticore` | 28.4.4 | **29.9.0** | 4 Critical + 18 High -> 1 High (unfixed glibc) |
+  | `clickhouse` | 26.7.1.1315 | **26.7.14.3** | down to the unfixed glibc findings |
+  | `redpanda` | 26.1.14 | **26.2.2** | 6 High -> 3 High (grpc, docker/docker, glibc — none with a reachable fix) |
+  | `mailpit` | 1.31.0 | **1.31.2** | clean, stays clean |
+
+- **`zookeeper` no longer carries a VEX waiver.** 3.9.6 pins jline 3.30.14, which
+  fixes CVE-2026-56740 and CVE-2026-56741 — the two Telnet advisories
+  `images/zookeeper/vex.openvex.json` waived on 3.25.1. The file is deleted; the
+  repo's only remaining exceptions are the global ones in `vex/`.
+- **Go dependency floor pins raised where they had gone stale.** `grpc` v1.82.1 was
+  clean when it was pinned and is not any more (GHSA-2v4p-qf9q-27wj,
+  GHSA-vp52-pcj8-j9qc, both High); `openbao`, `nginx-acme` and `redpanda` now pin
+  v1.84.0, and `openbao` adds `moby/go-archive` v0.3.0 and `otel/sdk` v1.45.0.
+  `etcd` gained a bump step it deliberately did not have — applied to all three
+  modules in lockstep so the `replace` directives stay consistent.
+  GHSA-2v4p-qf9q-27wj survives everywhere: it has no released fix yet, only a
+  1.85.0-dev commit. In `redpanda` the whole floor set had to move together —
+  grpc v1.84.0 requires x/net >= v0.57.0, so bumping grpc alone failed the build.
+
+  Every image above was rebuilt, smoke-tested and rescanned locally. **No image
+  carries a Critical.** What is left is: `CVE-2026-19499` in glibc (no fix
+  published), `GHSA-2v4p-qf9q-27wj` in grpc (no released fix), and
+  `GO-2026-4887` in `docker/docker`, which `redpanda` links for `rpk container`
+  and cannot reach — the advisory points at a v29 module path that does not
+  exist.
+
 ## [0.5.0] - 2026-08-28
 
 A new image rather than a bump, so minor. Nothing existing changes tag.
@@ -573,7 +628,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.2.0...v0.3.0
