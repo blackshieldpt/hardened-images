@@ -7,7 +7,7 @@ Wolfi-based hardened Manticore Search image, built with melange by repackaging s
 | Property   | Value |
 |------------|-------|
 | Build      | melange (upstream bundle .deb) |
-| Version    | 28.4.4 |
+| Version    | 29.9.0 |
 | User       | manticore (UID 65532) |
 | Shell      | none (distroless) |
 | Image size | ~285 MB |
@@ -23,7 +23,7 @@ Wolfi-based hardened Manticore Search image, built with melange by repackaging s
 ## Usage
 
 ```bash
-docker run -d -p 9306:9306 -p 9308:9308 -v mtcdata:/var/lib/manticore hub.blackshield.pt/test_images/manticore:28.4.4
+docker run -d -p 9306:9306 -p 9308:9308 -v mtcdata:/var/lib/manticore hub.blackshield.pt/test_images/manticore:29.9.0
 ```
 
 ## Dev variant

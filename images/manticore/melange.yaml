@@ -3,15 +3,15 @@
 # manticore.conf is read from images/manticore via --source-dir.
 package:
   name: manticore-hardened
-  version: 28.4.4
+  version: 29.9.0
   epoch: 0
   description: "Manticore Search daemon (upstream bundle deb repackaged)"
   copyright:
     - license: GPL-3.0-or-later
 
 vars:
-  deb: "manticore_28.4.4-26071006-f63d06ecb_amd64.deb"
-  sha256: 719ee83dd8615765a88ceca3b7e74b365460d9881752183966b2f15508869edc
+  deb: "manticore_29.9.0-26091108-58e88d5ab_amd64.deb"
+  sha256: 2d783d6f955cc6aca16f225c10da527e5bbd3e14fd29c439b04953657c43a12d
 
 environment:
   contents:
@@ -66,7 +66,7 @@ pipeline:
       # the version (plus a build id), so bumping package.version without bumping
       # deb — or vice versa — would otherwise ship an image whose tag lies about
       # its contents, with nothing to catch it. searchd --version prints e.g.
-      # "Manticore 28.4.4 f63d06ecb@26071006", which ties both together.
+      # "Manticore 29.9.0 58e88d5ab@26091108", which ties both together.
       # The previous check here was `searchd --help ... || true`, which asserted nothing.
       "${{targets.destdir}}/usr/bin/searchd" --version | grep -q "Manticore ${{package.version}} "
       "${{targets.destdir}}/usr/bin/indexer" --help >/dev/null
