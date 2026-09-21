@@ -6,6 +6,13 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-09-21
+
+Follow-up to v0.6.0, from what publishing it exposed: five images were published
+unsigned by a transient OIDC failure, and the bump PR that would have fixed
+zookeeper had been sitting unbuilt all along. No image contents change except
+etcd's.
+
 ### Added
 - **`check-updates` now reports stale Go floor pins.** Several images carry
   `go get mod@vX.Y.Z` overrides because that version fixed a CVE, and nothing
@@ -678,7 +685,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.1...HEAD
+[0.6.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.3.0...v0.4.0
