@@ -6,6 +6,17 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Fixed
+- **A flaky OIDC token endpoint could leave an image published but unsigned.**
+  `scripts/sign.sh` called `cosign sign`/`attest` once each, and the signing step
+  runs *after* the push — so when GitHub's ambient OIDC endpoint answered with
+  something that was not JSON (`fetching ambient OIDC credentials: invalid
+  character 'u' looking for beginning of value`), the job failed with the image
+  already in the registry and no signature on it. That is precisely the state the
+  signature exists to rule out. It hit 5 of 42 jobs on the v0.6.0 build; a plain
+  re-run signed all five. The cosign calls now retry 3 times with backoff, like
+  the curl and apt calls elsewhere in the repo.
+
 ## [0.6.0] - 2026-09-21
 
 Every image that pins an upstream version is back on its current release, and no

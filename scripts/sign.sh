@@ -34,12 +34,37 @@ else
     echo "==> Keyless signing (ambient OIDC)"
 fi
 
+# Keyless signing depends on two services that are not ours: GitHub's OIDC token
+# endpoint and Fulcio. Both flake, and a single failure used to fail the job
+# *after* the push had already succeeded, leaving an image published but
+# unsigned -- exactly the state the signature exists to rule out. Five of 42 jobs
+# died this way on v0.6.0 with "fetching ambient OIDC credentials: invalid
+# character 'u' looking for beginning of value": the token endpoint answered with
+# something that was not JSON. A plain re-run signed all five.
+#
+# So retry, the way curl and apt are already retried elsewhere here. Deliberately
+# NOT idempotent-blind: cosign is happy to attach a second signature, so a retry
+# after a *partial* success costs an extra signature layer, not a broken image.
+retry_cosign() {
+    local attempt
+    for attempt in 1 2 3; do
+        "$@" && return 0
+        echo "WARNING: ${1} ${2} failed (attempt ${attempt}/3)" >&2
+        # An `[ ... ] && sleep` here would be the loop body's last command, so on
+        # the final attempt its false test trips set -e and the script exits
+        # before the ERROR line below is ever printed.
+        if [ "$attempt" -lt 3 ]; then sleep $((attempt * 5)); fi
+    done
+    echo "ERROR: ${1} ${2} failed after 3 attempts" >&2
+    return 1
+}
+
 echo "==> Signing ${DIGEST}"
-cosign sign --yes ${COSIGN_ARGS[@]+"${COSIGN_ARGS[@]}"} "${DIGEST}"
+retry_cosign cosign sign --yes ${COSIGN_ARGS[@]+"${COSIGN_ARGS[@]}"} "${DIGEST}"
 
 if [ -f "${REPORT_DIR}/sbom-cyclonedx${SUF}.json" ]; then
     echo "==> Attaching SBOM attestation"
-    cosign attest --yes ${COSIGN_ARGS[@]+"${COSIGN_ARGS[@]}"} \
+    retry_cosign cosign attest --yes ${COSIGN_ARGS[@]+"${COSIGN_ARGS[@]}"} \
         --predicate "${REPORT_DIR}/sbom-cyclonedx${SUF}.json" \
         --type cyclonedx \
         "${DIGEST}"
@@ -47,7 +72,7 @@ fi
 
 if [ -f "${REPORT_DIR}/provenance${SUF}.json" ]; then
     echo "==> Attaching SLSA provenance attestation"
-    cosign attest --yes ${COSIGN_ARGS[@]+"${COSIGN_ARGS[@]}"} \
+    retry_cosign cosign attest --yes ${COSIGN_ARGS[@]+"${COSIGN_ARGS[@]}"} \
         --predicate "${REPORT_DIR}/provenance${SUF}.json" \
         --type slsaprovenance1 \
         "${DIGEST}"
