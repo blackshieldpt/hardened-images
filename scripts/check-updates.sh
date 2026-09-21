@@ -6,11 +6,11 @@
 # package.version in their melange.yaml that nothing checks. Every one of them had
 # drifted — manticore by three major lines — before this existed.
 #
-# This only *detects* drift. It deliberately does not open bump PRs: each image
-# pins a different artifact (a deb filename plus sha256, a tgz sha256, a git
-# expected-commit, sometimes a build-id in the filename), so an automated bump
-# would have to fetch and hash per-image and would be far more fragile than the
-# thing it is protecting. A human bumps; this makes sure they know to.
+# This script only *detects* drift. Opening the bump PR is the workflow's job
+# (.github/workflows/check-updates.yml), and it only bumps what it can derive
+# mechanically — the version pin, the lockfile, a git expected-commit. It cannot
+# bump an image that pins a deb filename plus sha256 or a tgz sha256, because
+# that needs a fetch-and-hash per image; those are listed for a human instead.
 #
 # Exit codes are distinct on purpose: "something is behind" and "this script
 # broke" must not look alike to CI. Filing a half-finished table as an

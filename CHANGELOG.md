@@ -6,7 +6,29 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Added
+- **A failing build on `main` now opens an issue naming the images.** A red X on a
+  scheduled run reads as "CI is broken" and gets ignored — but the scan gate runs
+  *before* the push, so a failing job means that image **stopped publishing** and
+  its tags are frozen at the last good build. `versitygw` and `zookeeper` sat like
+  that for three days in plain sight. The `report-failure` job posts the failing
+  job names and the run URL, and comments on the same issue on later failures
+  rather than opening one per run.
+
 ### Fixed
+- **Bump PRs never ran their checks.** `check-updates` opens them with
+  `GITHUB_TOKEN`, and GitHub does not start workflow runs for events raised by its
+  own token — the run is created and parks at `action_required` forever. Four bump
+  PRs reached this repo unverified that way, including a `zookeeper` 3.9.6 bump
+  that would have failed its own build. The PR body blamed a missing deploy key,
+  which was never the cause and cannot be: the PR event is the problem, not the
+  push. `build` now also triggers on `auto-update/**`, which *is* pushed with the
+  deploy key and does trigger, so every bump branch gets a real build, smoke test
+  and scan; the PR body links to that run.
+- **Publishing is now gated on `main`, not on "not a pull request".** Those were
+  the same thing until `auto-update/**` could trigger the workflow. They are not
+  any more, and leaving it would have published images built from unreviewed bump
+  branches. One `PUBLISH` expression now gates all nine push/sign/attest steps.
 - **A flaky OIDC token endpoint could leave an image published but unsigned.**
   `scripts/sign.sh` called `cosign sign`/`attest` once each, and the signing step
   runs *after* the push — so when GitHub's ambient OIDC endpoint answered with

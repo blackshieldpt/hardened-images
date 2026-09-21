@@ -141,12 +141,27 @@ jobs:
             review rather than just a green build.
 
           Opened by the \`check-updates\` workflow."
-              if [ "$HAS_KEY" != "true" ]; then
+              # The PR's own checks do NOT run: `gh pr create` here authenticates as
+              # GITHUB_TOKEN, and GitHub does not start workflow runs for events its
+              # own token raises — the run is created but parks at `action_required`.
+              # That is not fixable from inside this job, so the build is triggered
+              # by the branch push instead (build.yml runs on `auto-update/**`), which
+              # uses the deploy key and does trigger. Point the reader at that run.
+              if [ "$HAS_KEY" = "true" ]; then
                 body="${body}
 
-          > **CI will not start on its own here.** \`RELOCK_DEPLOY_KEY\` is not configured, so
-          > this branch was pushed with \`GITHUB_TOKEN\`, and GitHub does not trigger workflows
-          > for those pushes. Push an empty commit, or close and reopen the PR, to run checks."
+          > **Check the branch's own build, not this PR's checks.** A PR opened by
+          > \`GITHUB_TOKEN\` cannot start its own workflow run — any run shown here stays at
+          > *action_required*. The real build, smoke test and scan run on the
+          > \`${branch}\` push:
+          > ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions?query=branch%3A${branch}"
+              else
+                body="${body}
+
+          > **Nothing has built this.** \`RELOCK_DEPLOY_KEY\` is not configured, so this branch
+          > was pushed with \`GITHUB_TOKEN\` and GitHub does not trigger workflows for those
+          > pushes — neither the branch build nor this PR's checks will start. Push an empty
+          > commit to run them."
               fi
               gh pr create --base main --head "$branch" \
                 --title "${image}: ${pinned} -> ${latest}" --body "$body" \

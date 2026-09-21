@@ -6,7 +6,13 @@ on:
       - '**.md'
       - 'LICENSE'
   push:
-    branches: [main]
+    # auto-update/** is how the bump branches get a build at all. The PR that
+    # check-updates opens is created with GITHUB_TOKEN, and GitHub does not start
+    # workflow runs for its own token's events — those runs sit at
+    # `action_required` forever, which is why four bump PRs reached this repo
+    # unverified. The branch push uses the deploy key, so it does trigger.
+    # Nothing publishes from these branches; see PUBLISH below.
+    branches: [main, 'auto-update/**']
     paths-ignore:
       - '**.md'
       - 'LICENSE'
@@ -28,6 +34,13 @@ permissions:
   attestations: write    # actions/attest-build-provenance (SLSA L3)
 
 env:
+  # Publish only from main. Every push-triggered run builds, smoke-tests and
+  # scans; only main's also pushes, signs and attests. Before auto-update/**
+  # could trigger this workflow, "not a pull_request" was the same thing as
+  # "main" — it is not any more, and getting this wrong would publish an image
+  # from an unreviewed bump branch.
+  PUBLISH: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+
   # Every tool is pinned. syft/grype/trivy used to install whatever `main` served
   # at the moment each job ran, which meant CI silently drifted and could differ
   # from what developers run locally — a stale local grype is how a Critical in
@@ -182,7 +195,7 @@ jobs:
       # ---- Publish: push + sign + attest, only off PRs ----
       - name: Detect optional integrations
         id: cfg
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ env.PUBLISH == 'true' }}
         env:
           MIRROR_REGISTRY: ${{ secrets.MIRROR_REGISTRY }}
           DTRACK_URL: ${{ secrets.DTRACK_URL }}
@@ -191,7 +204,7 @@ jobs:
           [ -n "$DTRACK_URL" ] && echo "dtrack=true" >> "$GITHUB_OUTPUT" || echo "dtrack=false" >> "$GITHUB_OUTPUT"
 
       - name: Log in to GHCR
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ env.PUBLISH == 'true' }}
         uses: docker/login-action@v4
         with:
           registry: ghcr.io
@@ -199,7 +212,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Log in to mirror
-        if: ${{ github.event_name != 'pull_request' && steps.cfg.outputs.mirror == 'true' }}
+        if: ${{ env.PUBLISH == 'true' && steps.cfg.outputs.mirror == 'true' }}
         uses: docker/login-action@v4
         with:
           registry: ${{ secrets.MIRROR_REGISTRY }}
@@ -207,26 +220,26 @@ jobs:
           password: ${{ secrets.MIRROR_PASSWORD }}
 
       - name: Push (GHCR + mirror)
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ env.PUBLISH == 'true' }}
         env:
           MIRROR_REGISTRY: ${{ secrets.MIRROR_REGISTRY }}
           MIRROR_PREFIX: ${{ secrets.MIRROR_PREFIX }}
         run: make push IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
 
       - name: Keyless sign + attest SBOM/provenance (cosign)
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ env.PUBLISH == 'true' }}
         run: make sign IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
 
       - name: Resolve pushed digest
         id: img
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ env.PUBLISH == 'true' }}
         run: |
           ref="$(cat reports/${{ matrix.image }}/digest${SUF}.txt)"
           echo "name=${ref%@*}"   >> "$GITHUB_OUTPUT"
           echo "digest=${ref#*@}" >> "$GITHUB_OUTPUT"
 
       - name: SLSA build provenance (L3)
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ env.PUBLISH == 'true' }}
         uses: actions/attest-build-provenance@v3
         with:
           subject-name: ${{ steps.img.outputs.name }}
@@ -240,7 +253,7 @@ jobs:
         # each cosign call internally (timeout on the leaf process, so a hung
         # fetch is actually killed); non-blocking — consumers verify with the
         # tlog (README).
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ env.PUBLISH == 'true' }}
         continue-on-error: true
         env:
           VERIFY_IGNORE_TLOG: "1"
@@ -249,8 +262,58 @@ jobs:
             || echo "::warning::post-publish verify failed or timed out (image is already signed)"
 
       - name: Upload SBOM to Dependency-Track
-        if: ${{ github.event_name != 'pull_request' && steps.cfg.outputs.dtrack == 'true' }}
+        if: ${{ env.PUBLISH == 'true' && steps.cfg.outputs.dtrack == 'true' }}
         env:
           DTRACK_URL: ${{ secrets.DTRACK_URL }}
           DTRACK_API_KEY: ${{ secrets.DTRACK_API_KEY }}
         run: make upload-sbom IMAGE=${{ matrix.image }} VARIANT=${{ matrix.variant }}
+
+  # A red X on a scheduled build reads as "CI is broken" and gets ignored. It is
+  # not: the scan gate runs BEFORE the push, so a failing job means that image
+  # stopped publishing and its tag is quietly frozen at the last good build.
+  # versitygw and zookeeper sat like that for three days — the signal existed the
+  # whole time and looked like noise. This turns it into an issue that names the
+  # images, and updates the same issue rather than opening one per run.
+  report-failure:
+    needs: build
+    if: ${{ failure() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      actions: read
+    steps:
+      - name: Open or update the build-failure issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          TITLE="build: main is failing"
+
+          # Name the images, not just the run. "3 jobs failed" sends someone to the
+          # Actions tab; "versitygw (prod), zookeeper (prod)" is already the answer.
+          failed="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/jobs" \
+            --paginate -q '.jobs[] | select(.conclusion=="failure") | .name' | sort | sed 's/^/- /')"
+          [ -n "$failed" ] || failed="- (no failed job reported; the run itself failed)"
+
+          body="$(printf '%s\n\n%s\n\n%s\n\n%s\n' \
+            "Run: ${RUN_URL}" \
+            "Failing jobs:" \
+            "${failed}" \
+            "The scan gate runs before the push, so each failing image is **not publishing** — its tags stay frozen at the last good build until this is fixed. Check which step failed: a \`Scan\` failure is a real finding needing a bump or a justified waiver, while a failure in \`Keyless sign\` or later is usually transient and a re-run clears it.")"
+
+          # No `| head -1`: this runs under pipefail, and head exiting early
+          # SIGPIPEs gh, which would fail the step on the success path. jq picks
+          # the first match instead.
+          existing="$(gh issue list --state open --search "\"${TITLE}\" in:title" \
+            --json number,title \
+            --jq "[.[] | select(.title == \"${TITLE}\") | .number] | first // empty")"
+
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$body"
+            echo "Updated issue #${existing}"
+          else
+            gh issue create --title "$TITLE" --body "$body"
+          fi
