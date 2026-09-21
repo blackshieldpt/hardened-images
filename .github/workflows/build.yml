@@ -287,6 +287,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -euo pipefail
@@ -294,7 +295,12 @@ jobs:
 
           # Name the images, not just the run. "3 jobs failed" sends someone to the
           # Actions tab; "versitygw (prod), zookeeper (prod)" is already the answer.
-          failed="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/jobs" \
+          # Scoped to THIS attempt. /runs/{id}/jobs returns only the latest
+          # attempt, so on a re-run it reports the jobs that have since passed and
+          # this lands an issue saying "no failed job reported" while the run is
+          # red. Re-runs are the common case here: the transient signing failures
+          # are cleared that way.
+          failed="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/attempts/${RUN_ATTEMPT}/jobs" \
             --paginate -q '.jobs[] | select(.conclusion=="failure") | .name' | sort | sed 's/^/- /')"
           [ -n "$failed" ] || failed="- (no failed job reported; the run itself failed)"
 
