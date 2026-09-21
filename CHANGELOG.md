@@ -6,6 +6,12 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-09-21
+
+`kafka` leaves Wolfi's frozen package, which clears the last findings in this repo
+that had an available fix. Minor rather than patch: the image drops Kafka Connect
+and its tag moves 4.3 -> 4.3.1.
+
 ### Fixed
 - **`report-failure` could not file its issue.** The job checks nothing out — it
   needs nothing from the repo — so `gh issue` had no git remote to infer from and
@@ -728,7 +734,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.1...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.4.0...v0.5.0
