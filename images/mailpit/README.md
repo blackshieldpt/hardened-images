@@ -7,7 +7,7 @@ Wolfi-based hardened Mailpit image, built with melange by repackaging the upstre
 | Property   | Value |
 |------------|-------|
 | Build      | melange (upstream static release binary) |
-| Version    | 1.30.0 |
+| Version    | 1.31.2 |
 | User       | mailpit (UID 65532) |
 | Shell      | none (distroless) |
 | Image size | ~27 MB |
@@ -22,7 +22,7 @@ Wolfi-based hardened Mailpit image, built with melange by repackaging the upstre
 ## Usage
 
 ```bash
-docker run -d -p 1025:1025 -p 8025:8025 hub.blackshield.pt/test_images/mailpit:1.30.0
+docker run -d -p 1025:1025 -p 8025:8025 hub.blackshield.pt/test_images/mailpit:1.31.2
 ```
 
 ## Dev variant

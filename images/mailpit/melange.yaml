@@ -1,13 +1,13 @@
 # Builds mailpit from source (instead of repackaging the upstream release binary),
 # so the bundled Go dependencies are whatever upstream's go.mod pins rather than
-# whatever was current when the release binary was cut. v1.31.0 carries x/crypto
-# v0.55.0, x/net v0.58.0, x/text v0.41.0 and x/image v0.45.0, all past the GO-2026
+# whatever was current when the release binary was cut. v1.31.2 carries x/crypto
+# v0.57.0, x/net v0.59.0, x/text v0.42.0 and x/image v0.46.0, all past the GO-2026
 # advisories, so no overrides are needed here.
 # Pure-Go (CGO disabled); the Vue UI is built with esbuild via npm
 # and embedded (server/embed.go: //go:embed ui -> server/ui/dist).
 package:
   name: mailpit-hardened
-  version: 1.31.0
+  version: 1.31.2
   epoch: 0
   description: "Mailpit SMTP testing server (built from source, patched deps)"
   copyright:
@@ -32,7 +32,7 @@ pipeline:
     with:
       repository: https://github.com/axllent/mailpit
       tag: v${{package.version}}
-      expected-commit: 311fe2c532627c60562bd36499e8ad0584ae7e6f
+      expected-commit: 8e4973ec4f11ebf4e61fd5e34941634d46f01017
   - name: Build the embedded web UI
     runs: |
       npm ci
