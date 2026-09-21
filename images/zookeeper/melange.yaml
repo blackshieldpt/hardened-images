@@ -8,16 +8,17 @@
 # same date, so there is no newer line to move to either.
 #
 # Every one of those CVEs is in a bundled jar, not in ZooKeeper's own code, so a
-# plain source build at 3.9.5 would reproduce them: upstream's pom pins netty
-# 4.1.130 and logback 1.3.15, both *older* than what the frozen apk already
-# shipped. The dependency overrides below are the actual fix, and the build asserts
-# them (see the last pipeline step) so a future bump cannot silently drop back to
-# upstream's vulnerable versions.
+# plain source build would reproduce them unless the jars are pinned forward.
+# 3.9.6 fixed most of that upstream (netty 4.1.137.Final, jackson 2.22.2, jline
+# 3.30.14); logback is the one that still regressed, to 1.3.15. The dependency
+# overrides below are the actual fix, and the build asserts them (see the last
+# pipeline step) so a future bump cannot silently drop back to upstream's
+# vulnerable versions.
 #
 # zoo.cfg is read from images/zookeeper via --source-dir.
 package:
   name: zookeeper-hardened
-  version: 3.9.5
+  version: 3.9.6
   epoch: 0
   description: "Apache ZooKeeper (built from source, patched bundled dependencies) + hardened config"
   copyright:
@@ -41,24 +42,30 @@ pipeline:
     with:
       repository: https://github.com/apache/zookeeper
       tag: release-${{package.version}}
-      expected-commit: 293c895a8d966a3ecb92872be4a1daf87d725da2
+      expected-commit: a355171b081b5b60749db8f19cca1528b0df936f
 
   - name: Build the binary assembly with patched dependencies
     runs: |
       export JAVA_HOME=/usr/lib/jvm/default-jvm
-      # netty:   4.1.136.Final is the first release fixing CVE-2026-59901
-      #          (netty-codec); upstream's own branch-3.9 only reached 4.1.135.
-      # jackson: 2.18.9 fixes CVE-2026-54515 and CVE-2026-59889.
-      # logback: 1.5.37 fixes CVE-2026-10532, and is exactly the bump upstream
-      #          made on branch-3.9 (ZOOKEEPER-5057), so it is upstream-validated.
-      #          slf4j stays at the pom's 2.0.13, which is what that bump pairs with.
+      # netty:   4.1.137.Final fixes CVE-2026-59901 (netty-codec) and the Critical
+      #          GHSA-c4c3-7fpv-j4q5 (netty-handler). 3.9.6 pins exactly this, so
+      #          the override no longer moves anything — it is kept so the
+      #          assertion below still names a version we have checked.
+      # jackson: 2.22.2, which is what 3.9.6 pins; it supersedes the 2.18.9 we
+      #          carried on 3.9.5 for CVE-2026-54515 and CVE-2026-59889.
+      # logback: 1.5.37 fixes CVE-2026-10532. Still a real override: 3.9.6's pom
+      #          went back to 1.3.15. slf4j stays at the pom's 2.0.13, which is
+      #          what that bump pairs with.
+      # jline:   no override needed — 3.9.6 pins 3.30.14, which fixes the two
+      #          Telnet advisories (CVE-2026-56740/56741) that images/zookeeper/
+      #          vex.openvex.json used to waive on 3.25.1. That waiver is gone.
       # The property is spelled logback-version, unlike the other two.
       #
       # An override upstream has since overtaken would be a silent DOWNGRADE: the
       # assertions at the end of this file only check that the version named here
       # is what shipped, so a 3.9.6 pinning netty above ours would pass them while
       # losing patches. Refuse to build in that case instead.
-      for spec in netty.version:4.1.136.Final jackson.version:2.18.9 \
+      for spec in netty.version:4.1.137.Final jackson.version:2.22.2 \
                   logback-version:1.5.37; do
           prop="${spec%%:*}"; want="${spec##*:}"
           have="$(sed -nE "s|^[[:space:]]*<${prop}>([^<]+)</${prop}>.*|\1|p" pom.xml | head -1)"
@@ -71,8 +78,8 @@ pipeline:
       # -C fails on a checksum mismatch instead of warning. Maven has no go.sum
       # equivalent, so this is the only integrity check on the dependency graph.
       mvn -B -ntp -C -DskipTests \
-        -Dnetty.version=4.1.136.Final \
-        -Djackson.version=2.18.9 \
+        -Dnetty.version=4.1.137.Final \
+        -Djackson.version=2.22.2 \
         -Dlogback-version=1.5.37 \
         -pl zookeeper-assembly -am package
 
@@ -124,8 +131,8 @@ pipeline:
       lib="${{targets.destdir}}/usr/share/java/zookeeper/lib"
       test -f "$lib/zookeeper-${{package.version}}.jar"
       test -f "$lib/zookeeper-jute-${{package.version}}.jar"
-      for jar in netty-codec-4.1.136.Final netty-handler-4.1.136.Final \
-                 jackson-databind-2.18.9 jackson-core-2.18.9 \
+      for jar in netty-codec-4.1.137.Final netty-handler-4.1.137.Final \
+                 jackson-databind-2.22.2 jackson-core-2.22.2 \
                  logback-core-1.5.37 logback-classic-1.5.37; do
           test -f "$lib/${jar}.jar" || { echo "MISSING: ${jar}.jar" >&2; exit 1; }
       done

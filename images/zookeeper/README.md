@@ -9,7 +9,7 @@ source](#why-from-source) — and a standalone `zoo.cfg` shipped in the same pac
 | Property   | Value |
 |------------|-------|
 | Build      | melange (ZooKeeper from source) + apko |
-| Version    | 3.9.5 |
+| Version    | 3.9.6 |
 | User       | zookeeper (UID 65532) |
 | Shell      | bash + busybox |
 | Image size | ~225 MB |
@@ -23,7 +23,7 @@ source](#why-from-source) — and a standalone `zoo.cfg` shipped in the same pac
 ## Usage
 
 ```bash
-docker run -d -p 2181:2181 -v zkdata:/var/lib/zookeeper/data hub.blackshield.pt/test_images/zookeeper:3.9.5
+docker run -d -p 2181:2181 -v zkdata:/var/lib/zookeeper/data hub.blackshield.pt/test_images/zookeeper:3.9.6
 ```
 
 ## Dev variant
@@ -53,13 +53,13 @@ whole Kafka/ZooKeeper package family in public Wolfi stops on that date, so no p
 change could help.
 
 Every one of those CVEs is in a bundled jar rather than in ZooKeeper itself, so
-building 3.9.5 unchanged would have reproduced them — upstream's pom pins netty and
-logback *older* than the frozen apk shipped. The build therefore overrides them:
+building unchanged would reproduce them unless the jars are pinned forward. 3.9.6
+caught up on most of that; logback is the one it regressed. The build pins:
 
-| Dependency | Upstream 3.9.5 | Shipped here | Why |
+| Dependency | Upstream 3.9.6 | Shipped here | Why |
 |---|---|---|---|
-| netty | 4.1.130.Final | **4.1.136.Final** | CVE-2026-59901 (netty-codec); upstream's `branch-3.9` only reached 4.1.135 |
-| jackson | 2.15.2 | **2.18.9** | CVE-2026-54515, CVE-2026-59889 |
+| netty | 4.1.137.Final | **4.1.137.Final** | upstream now matches; pinned so the assertion still names a checked version. Fixes CVE-2026-59901 and GHSA-c4c3-7fpv-j4q5 (netty-handler, Critical) |
+| jackson | 2.22.2 | **2.22.2** | upstream now matches; supersedes the 2.18.9 carried on 3.9.5 |
 | logback | 1.3.15 | **1.5.37** | CVE-2026-10532; the same bump upstream made in ZOOKEEPER-5057 |
 
 The melange build asserts these exact jars are the ones installed, and the smoke test
@@ -89,7 +89,7 @@ to upstream's pinned versions and reintroduce the CVEs.
   `lib/` but cannot load, since Jetty and `javax.servlet-api` are gone. They carry no
   findings today; they are dead weight worth removing if the metrics provider is
   never coming back.
-- Two JLine advisories are waived in `vex.openvex.json`: they are Telnet-server flaws
-  in a module bundled inside the `jline` uber-jar, and ZooKeeper uses JLine only for
-  `zkCli.sh` line editing. The fix is jline 4.2.1, an API break for `zkCli`.
+- The two JLine Telnet advisories (CVE-2026-56740/56741) that 3.9.5 waived in
+  `vex.openvex.json` are fixed upstream: 3.9.6 pins jline 3.30.14. The waiver file is
+  gone — the image carries no VEX exceptions.
 - `zkCli.sh` and `zkServer.sh` are under `/usr/share/java/zookeeper/bin/`.
