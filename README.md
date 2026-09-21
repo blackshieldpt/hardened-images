@@ -122,6 +122,15 @@ make sbom   IMAGE=valkey
 make lock   IMAGE=valkey   # re-resolve + update images/valkey/apko/valkey.lock.json
 ```
 
+`make scan` reads the image from the local docker daemon — the one `make build`
+just loaded. To scan what is actually **published** instead, set
+`SCAN_SOURCE=registry`; a stale local copy of the same tag would otherwise shadow
+the registry and the gate would judge an image nobody is running:
+
+```sh
+SCAN_SOURCE=registry make scan IMAGE=valkey
+```
+
 apk-native images build from the **committed** `images/<name>/apko/<name>.lock.json`;
 melange images resolve fresh each build. To update an apk-native image's
 dependencies (e.g. pick up Wolfi CVE patches), run `make lock IMAGE=<name>` and

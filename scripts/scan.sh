@@ -15,6 +15,19 @@ SUF="$(variant_suffix "$VARIANT")"
 VERSION="$(resolve_version "$IMAGE")"
 
 FULL_TAG="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:${VERSION}${SUF}"
+
+# What gets scanned. The build loads the image it just built into the local
+# docker daemon, so that is what the gate must look at (default). A bare
+# reference lets the scanners pick the source themselves, which locally means a
+# months-old daemon copy of the same tag silently shadows the registry — the gate
+# then passes or fails on an image nobody is running. Say which one we mean.
+#   SCAN_SOURCE=docker    (default) the freshly built local image
+#   SCAN_SOURCE=registry  what is actually published, for auditing
+case "${SCAN_SOURCE:-docker}" in
+    docker)   GRYPE_REF="docker:${FULL_TAG}"; TRIVY_ARGS=(--image-src docker) ;;
+    registry) GRYPE_REF="registry:${FULL_TAG}"; TRIVY_ARGS=(--image-src remote) ;;
+    *) echo "ERROR: SCAN_SOURCE='${SCAN_SOURCE}' is not docker or registry" >&2; exit 2 ;;
+esac
 REPORT_DIR="${ROOT_DIR}/reports/${IMAGE}"
 
 mkdir -p "$REPORT_DIR"
@@ -33,11 +46,11 @@ done
 
 FAILED=0
 
-echo "==> Scanning ${FULL_TAG}"
+echo "==> Scanning ${GRYPE_REF}"
 
 echo "--- Grype ---"
-grype "${FULL_TAG}" -o json > "${REPORT_DIR}/grype${SUF}.json" 2>/dev/null || true
-if ! grype "${FULL_TAG}" ${VEX_ARGS[@]+"${VEX_ARGS[@]}"} --fail-on "${SEVERITY_THRESHOLD}" -o table 2>&1 | tee "${REPORT_DIR}/grype${SUF}.txt"; then
+grype "${GRYPE_REF}" -o json > "${REPORT_DIR}/grype${SUF}.json" 2>/dev/null || true
+if ! grype "${GRYPE_REF}" ${VEX_ARGS[@]+"${VEX_ARGS[@]}"} --fail-on "${SEVERITY_THRESHOLD}" -o table 2>&1 | tee "${REPORT_DIR}/grype${SUF}.txt"; then
     echo "WARNING: Grype found unwaived vulnerabilities at or above ${SEVERITY_THRESHOLD}"
     FAILED=1
 fi
@@ -56,8 +69,8 @@ case "${SEVERITY_THRESHOLD}" in
     LOW)      TRIVY_SEVERITIES="LOW,MEDIUM,HIGH,CRITICAL" ;;
     *) echo "ERROR: SEVERITY_THRESHOLD='${SEVERITY_THRESHOLD}' is not one of CRITICAL/HIGH/MEDIUM/LOW" >&2; exit 2 ;;
 esac
-trivy image --format json -o "${REPORT_DIR}/trivy${SUF}.json" "${FULL_TAG}" 2>/dev/null || true
-if ! trivy image ${VEX_ARGS[@]+"${VEX_ARGS[@]}"} --severity "${TRIVY_SEVERITIES}" --exit-code 1 "${FULL_TAG}" 2>&1 | tee "${REPORT_DIR}/trivy${SUF}.txt"; then
+trivy image "${TRIVY_ARGS[@]}" --format json -o "${REPORT_DIR}/trivy${SUF}.json" "${FULL_TAG}" 2>/dev/null || true
+if ! trivy image "${TRIVY_ARGS[@]}" ${VEX_ARGS[@]+"${VEX_ARGS[@]}"} --severity "${TRIVY_SEVERITIES}" --exit-code 1 "${FULL_TAG}" 2>&1 | tee "${REPORT_DIR}/trivy${SUF}.txt"; then
     echo "WARNING: Trivy found unwaived vulnerabilities at or above ${SEVERITY_THRESHOLD}"
     FAILED=1
 fi
