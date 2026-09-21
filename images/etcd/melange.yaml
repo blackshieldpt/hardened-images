@@ -48,8 +48,18 @@ pipeline:
     runs: |
       # Lockstep across the three modules — bumping one alone breaks the others.
       # A floor pin, not a ceiling: raise it whenever the scan names this version.
+      # gorilla/websocket v1.4.2 carries GHSA-w67g-5rqw-f597 (Medium), fixed in
+      # 1.5.3; the otel modules carry GHSA-8wmf-6v46-5gfg (Low), fixed in 1.45.0.
+      # otel's modules are version-locked to each other, so sdk and the two
+      # otlptrace modules move together or the build fails on a mismatch.
       for dir in server etcdctl etcdutl; do
-        ( cd "$dir" && GOFLAGS=-mod=mod go get google.golang.org/grpc@v1.84.0 && go mod tidy )
+        ( cd "$dir" && GOFLAGS=-mod=mod go get \
+            google.golang.org/grpc@v1.84.0 \
+            github.com/gorilla/websocket@v1.5.3 \
+            go.opentelemetry.io/otel/sdk@v1.45.0 \
+            go.opentelemetry.io/otel/exporters/otlp/otlptrace@v1.45.0 \
+            go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc@v1.45.0 \
+          && go mod tidy )
       done
   - name: Build etcd, etcdctl and etcdutl
     runs: |

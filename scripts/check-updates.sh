@@ -283,6 +283,64 @@ if [ -d "$APKINDEX_CACHE" ] && [ -f "${APKINDEX_CACHE}/APKINDEX" ]; then
     done < "${APKINDEX_CACHE}/declared"
 fi
 
+## ---------------------------------------------------------------------------
+## Go dependency floor pins. Several images carry `go get mod@vX.Y.Z` lines that
+## override what upstream's go.mod resolves, because that version fixed a CVE.
+## Nothing checked them, and they rot exactly the way the version pins above do:
+## a pin that was clean when written stops being clean without the file changing.
+## grpc v1.82.1 was pinned as the fix for one advisory and by the time anyone
+## looked it carried two more, in four images at once.
+##
+## Reported as INFO, never as drift: these are floors, not targets. "Newer exists"
+## is not by itself a reason to move — the scan is. So this never opens a bump PR
+## and never changes the exit code; it tells you which pin to look at when a
+## finding names one.
+
+if command -v curl >/dev/null; then
+    gopins="$(mktemp)"
+    # Only real `go get` invocations and their backslash continuations. Prose in
+    # the surrounding comments mentions module@version too, and matching that
+    # would report a pin nothing actually applies.
+    for mel in images/*/melange.yaml; do
+        image="$(basename "$(dirname "$mel")")"
+        awk -v img="$image" '
+            /^[[:space:]]*#/            { next }
+            /go get/                    { cap = 1 }
+            cap {
+                line = $0
+                while (match(line, /[a-z0-9.-]+\.[a-z]+\/[A-Za-z0-9._\/-]+@v[0-9][A-Za-z0-9.+-]*/)) {
+                    print img "\t" substr(line, RSTART, RLENGTH)
+                    line = substr(line, RSTART + RLENGTH)
+                }
+                if ($0 !~ /\\[[:space:]]*$/) { cap = 0 }
+            }
+        ' "$mel" >> "$gopins"
+    done
+
+    if [ -s "$gopins" ]; then
+        [ "$PORCELAIN" = 1 ] || { echo; row IMAGE MODULE PINNED STATUS; row ------ ------ ------ ------; }
+        while IFS="$(printf '\t')" read -r image spec; do
+            mod="${spec%@*}"; pin="${spec##*@}"
+            # The module proxy lowercases uppercase path elements as !x, so
+            # github.com/Azure/... is github.com/!azure/... — querying the literal
+            # path 404s and the pin would silently never be checked.
+            esc="$(printf '%s' "$mod" | sed 's/\([A-Z]\)/!\L\1/g')"
+            latest="$(curl -sSfL --retry 3 --retry-all-errors --max-time 30 \
+                "https://proxy.golang.org/${esc}/@latest" 2>/dev/null \
+                | sed -n 's/.*"Version":"\([^"]*\)".*/\1/p')" || true
+            if [ -z "$latest" ]; then
+                row "$image" "$mod" "$pin" "could not query proxy.golang.org"
+                continue
+            fi
+            if [ "$pin" != "$latest" ] && \
+               [ "$(printf '%s\n%s\n' "$pin" "$latest" | sort -V | tail -1)" = "$latest" ]; then
+                row "$image" "$mod" "$pin" "INFO: ${latest} available (floor pin — move it only if the scan asks)"
+            fi
+        done < "$gopins"
+    fi
+    rm -f "$gopins"
+fi
+
 if [ "$PORCELAIN" = 0 ]; then
     echo
     echo "Checked ${FOUND} image(s); ${BEHIND} behind upstream; ${FROZEN} frozen or unobtainable; ${ERRORS} could not be checked."

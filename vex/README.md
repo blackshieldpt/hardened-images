@@ -42,6 +42,14 @@ Both Grype and Trivy consume these automatically:
 Only `not_affected` and `fixed` statuses suppress a finding. `affected` and
 `under_investigation` do **not** — they leave the gate failing, by design.
 
+## Findings that cannot be fixed at all
+
+A finding with no published fix is not a waiver candidate — there is nothing to
+assert about it beyond "still true". Those live in
+[`KNOWN-UNFIXED.md`](KNOWN-UNFIXED.md), which suppresses nothing and exists only so
+the same findings are not re-investigated on every read. Waive a finding here only
+when the product genuinely is not affected.
+
 ## Hygiene
 
 - One CVE per statement; keep `impact_statement` specific and dated.

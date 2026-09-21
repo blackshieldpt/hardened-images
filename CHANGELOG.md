@@ -7,6 +7,18 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 ## [Unreleased]
 
 ### Added
+- **`check-updates` now reports stale Go floor pins.** Several images carry
+  `go get mod@vX.Y.Z` overrides because that version fixed a CVE, and nothing
+  checked them — so they rot exactly like a version pin. `grpc` v1.82.1 was pinned
+  as the fix for one advisory and by the time anyone looked it carried two more,
+  in four images at once. Reported as INFO, never as drift: these are floors, not
+  targets, so it opens no bump PR and does not change the exit code. "Newer
+  exists" is not a reason to move a floor; the scan is.
+- **`vex/KNOWN-UNFIXED.md`**, a dated register of findings no bump can clear
+  (glibc `CVE-2026-19499`, grpc `GHSA-2v4p-qf9q-27wj`, docker/docker
+  `GO-2026-4887`). It waives nothing and suppresses nothing — an OpenVEX
+  statement would have to claim the product is not affected, which is false. It
+  exists so the same three are not re-investigated on every scan read.
 - **A failing build on `main` now opens an issue naming the images.** A red X on a
   scheduled run reads as "CI is broken" and gets ignored — but the scan gate runs
   *before* the push, so a failing job means that image **stopped publishing** and
@@ -29,6 +41,11 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   the same thing until `auto-update/**` could trigger the workflow. They are not
   any more, and leaving it would have published images built from unreviewed bump
   branches. One `PUBLISH` expression now gates all nine push/sign/attest steps.
+- **etcd's remaining fixable findings are gone.** `gorilla/websocket` v1.4.2
+  (GHSA-w67g-5rqw-f597, Medium) and the three otel modules (GHSA-8wmf-6v46-5gfg,
+  Low) join the existing lockstep bump — otel's modules are version-locked to each
+  other, so `sdk` and both `otlptrace` modules move together. etcd now reports
+  only the unfixable grpc advisory.
 - **A flaky OIDC token endpoint could leave an image published but unsigned.**
   `scripts/sign.sh` called `cosign sign`/`attest` once each, and the signing step
   runs *after* the push — so when GitHub's ambient OIDC endpoint answered with
