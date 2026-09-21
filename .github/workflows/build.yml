@@ -313,13 +313,19 @@ jobs:
           # No `| head -1`: this runs under pipefail, and head exiting early
           # SIGPIPEs gh, which would fail the step on the success path. jq picks
           # the first match instead.
-          existing="$(gh issue list --state open --search "\"${TITLE}\" in:title" \
+          # --repo on every gh issue call: this job does not check the repo out
+          # (it needs nothing from it), and without a git remote `gh issue` exits
+          # with "fatal: not a git repository". `gh api` above is unaffected
+          # because its path is explicit. Checking out ~40 MB to give gh a remote
+          # to infer would be the wrong fix.
+          existing="$(gh issue list --repo "$GITHUB_REPOSITORY" \
+            --state open --search "\"${TITLE}\" in:title" \
             --json number,title \
             --jq "[.[] | select(.title == \"${TITLE}\") | .number] | first // empty")"
 
           if [ -n "$existing" ]; then
-            gh issue comment "$existing" --body "$body"
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "$body"
             echo "Updated issue #${existing}"
           else
-            gh issue create --title "$TITLE" --body "$body"
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITLE" --body "$body"
           fi

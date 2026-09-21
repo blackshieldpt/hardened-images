@@ -6,6 +6,13 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Fixed
+- **`report-failure` could not file its issue.** The job checks nothing out — it
+  needs nothing from the repo — so `gh issue` had no git remote to infer from and
+  exited with `fatal: not a git repository`. It now passes `--repo` explicitly on
+  every call. Caught the first time a build actually failed, which is the only way
+  this job runs at all.
+
 ### Changed
 - **`kafka` no longer comes from Wolfi's frozen package: 7 High + 14 Medium -> 1
   High + 2 Medium**, the three being the unfixable glibc findings every image
