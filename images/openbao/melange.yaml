@@ -38,11 +38,21 @@ pipeline:
       expected-commit: dd9c19c37a878cf4a81b18efb8d6f0599c7da923
   - name: Bump vulnerable Go dependencies
     runs: |
-      # grpc carries GHSA-hrxh-6v49-42gf (High); cel-go and go-ntlmssp carry
-      # Mediums. Unlike etcd, openbao is a single module, so a bump here does not
-      # desynchronise sibling go.mod files.
+      # grpc carries GHSA-hrxh-6v49-42gf and GHSA-vp52-pcj8-j9qc (High), fixed by
+      # v1.83.1; GHSA-2v4p-qf9q-27wj (High) has no released fix at all — grype
+      # names a 1.85.0-dev commit — so v1.84.0 is simply the least-stale release
+      # and that finding is expected to survive the scan; moby/go-archive
+      # carries GHSA-hfg8-hc9c-6c3h (High), fixed in 0.3.0; cel-go and go-ntlmssp
+      # carry Mediums. Unlike etcd, openbao is a single module, so a bump here does
+      # not desynchronise sibling go.mod files.
+      #
+      # These pins go stale silently — a version that was clean when written stops
+      # being clean without anything here changing. They are floor pins, not
+      # ceilings: raise them whenever the scan reports the pinned version.
       GOFLAGS=-mod=mod go get \
-        google.golang.org/grpc@v1.82.1 \
+        google.golang.org/grpc@v1.84.0 \
+        github.com/moby/go-archive@v0.3.0 \
+        go.opentelemetry.io/otel/sdk@v1.45.0 \
         github.com/google/cel-go@v0.29.0 \
         github.com/Azure/go-ntlmssp@v0.1.1
       go mod tidy

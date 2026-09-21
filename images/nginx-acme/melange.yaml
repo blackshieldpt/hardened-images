@@ -77,14 +77,18 @@ pipeline:
 
   # Same treatment versitygw gets: patch what the scan would flag, at the version
   # we build, rather than waiting for upstream to cut a release. lego 5.3.1 pulls
-  # grpc v1.82.0 through its Google Cloud DNS provider, and grype flags
-  # GHSA-hrxh-6v49-42gf (High, "gRPC-Go: xDS RBAC and HTTP/2 Vulnerabilities"),
-  # fixed in v1.82.1. The repo's gate gates on CRITICAL, so this would have
-  # shipped a known High into an internet-facing image without failing anything.
+  # grpc through its Google Cloud DNS provider, and grype flags GHSA-hrxh-6v49-42gf,
+  # GHSA-2v4p-qf9q-27wj and GHSA-vp52-pcj8-j9qc (all High, gRPC-Go xDS/HTTP/2), the
+  # last fixed only in v1.83.2. The repo's gate gates on CRITICAL, so these would
+  # ship a known High into an internet-facing image without failing anything.
+  #
+  # This pin goes stale silently: v1.82.1 was clean when it was written and is not
+  # any more. It is a floor, not a ceiling — raise it whenever the scan names the
+  # pinned version.
   - name: Bump vulnerable Go dependencies
     runs: |
       cd lego-src
-      go get google.golang.org/grpc@v1.82.1
+      go get google.golang.org/grpc@v1.84.0
       go mod tidy
 
   - name: Compile lego (static, no cgo)

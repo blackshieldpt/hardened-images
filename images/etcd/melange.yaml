@@ -35,12 +35,22 @@ pipeline:
       repository: https://github.com/etcd-io/etcd
       tag: v${{package.version}}
       expected-commit: fc04cf702b0a46c2fd85547a2be05705b100a496
-  # No dependency bumping here, unlike mailpit/versitygw. etcd is a multi-module
-  # repo where etcdctl and etcdutl require server via replace directives, so
-  # bumping a dep in server alone makes their go.mod inconsistent and the build
-  # fails with "updates to go.mod needed". The only finding left after moving to
-  # source is GO-2026-5158 in otel (Medium, risk 0.1); chasing it across three
-  # modules on every bump costs more than it buys.
+  # etcd is a multi-module repo where etcdctl and etcdutl require server via
+  # replace directives, so bumping a dep in server alone makes their go.mod
+  # inconsistent and the build fails with "updates to go.mod needed". That is why
+  # there was no bump step here — but v3.6.14 ships grpc v1.82.1, which now carries
+  # GHSA-2v4p-qf9q-27wj and GHSA-vp52-pcj8-j9qc (both High). v1.84.0 clears the
+  # second; the first has no released fix yet (grype names a 1.85.0-dev commit), so
+  # it survives the scan here and in openbao, nginx-acme and redpanda alike.
+  # The bump is therefore applied to all three modules in lockstep, which keeps the
+  # replace directives consistent. GO-2026-5158 in otel (Medium, risk 0.1) is left.
+  - name: Bump vulnerable Go dependencies
+    runs: |
+      # Lockstep across the three modules — bumping one alone breaks the others.
+      # A floor pin, not a ceiling: raise it whenever the scan names this version.
+      for dir in server etcdctl etcdutl; do
+        ( cd "$dir" && GOFLAGS=-mod=mod go get google.golang.org/grpc@v1.84.0 && go mod tidy )
+      done
   - name: Build etcd, etcdctl and etcdutl
     runs: |
       # Three separate Go modules, mirroring upstream scripts/build_lib.sh. The
