@@ -1,11 +1,13 @@
 # Builds versitygw from source (versitygw isn't in Wolfi). Pure-Go, CGO disabled,
-# so the result is a static binary. v1.7.0 carries current x/crypto (v0.54.0),
-# x/net (v0.57.0) and x/text (v0.40.0), so it needs no dependency overrides — the
-# x/text bump v1.6.0 required for GO-2026-5970 is gone, and reinstating it would
-# now downgrade the module.
+# so the result is a static binary. v1.8.0 carries current x/crypto (v0.55.0),
+# x/net (v0.58.0) and x/text (v0.41.0), so it needs no dependency overrides.
+#
+# The 1.7.0 -> 1.8.0 bump is also the fix for amqp091-go: 1.7.0 pinned v1.12.0,
+# which carries 3 Critical and 7 High advisories, all fixed in 1.13.0. 1.8.0
+# pins v1.14.0.
 package:
   name: versitygw-hardened
-  version: 1.7.0
+  version: 1.8.0
   epoch: 0
   description: "Versity S3 Gateway (built from source)"
   copyright:
@@ -28,7 +30,7 @@ pipeline:
     with:
       repository: https://github.com/versity/versitygw
       tag: v${{package.version}}
-      expected-commit: 8a3dbcf97d996ea4955426e6b8a76eb96d2cd92a
+      expected-commit: fd04bc1df2656298577b82667a4195c77f8c7563
   - name: Compile static binary
     runs: |
       CGO_ENABLED=0 go build \
