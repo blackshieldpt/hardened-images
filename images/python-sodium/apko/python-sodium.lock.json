@@ -403,22 +403,22 @@
       },
       {
         "name": "libexpat1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libexpat1-2.8.4-r0.apk",
-        "version": "2.8.4-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/libexpat1-2.8.5-r0.apk",
+        "version": "2.8.5-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8363",
-          "checksum": "sha1-zaR4zn94bGZYbmf26kqWfqSH/nc="
+          "range": "bytes=0-8456",
+          "checksum": "sha1-ENblxdz9v/S21ko27YObba0KxnQ="
         },
         "data": {
-          "range": "bytes=8364-110999",
-          "checksum": "sha256-vyFsZGPMgh97GvZjBQwl1fukBjFfwRzjj/lMlt/nX1g="
+          "range": "bytes=8457-111147",
+          "checksum": "sha256-WKHY/e09n3q1YbgFEfwA2on5nTMyA5kNNnKVlXl0u2c="
         },
-        "checksum": "Q1zaR4zn94bGZYbmf26kqWfqSH/nc="
+        "checksum": "Q1ENblxdz9v/S21ko27YObba0KxnQ="
       },
       {
         "name": "py3-pip-wheel",
