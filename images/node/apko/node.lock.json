@@ -231,25 +231,6 @@
         "checksum": "Q1c8CRVs2O8/y3XKMA1ObmUMg6QAY="
       },
       {
-        "name": "libuv",
-        "url": "https://packages.wolfi.dev/os/x86_64/libuv-1.52.1-r2.apk",
-        "version": "1.52.1-r2",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-7088",
-          "checksum": "sha1-kaOVgntsbg5n5YZqAvy6Qpmxs8U="
-        },
-        "data": {
-          "range": "bytes=7089-132485",
-          "checksum": "sha256-i4XzW+8W18R3XdmZyXl6xjl7vr10SCYkZ/9DOsGYws8="
-        },
-        "checksum": "Q1kaOVgntsbg5n5YZqAvy6Qpmxs8U="
-      },
-      {
         "name": "c-ares",
         "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.8-r2.apk",
         "version": "1.34.8-r2",
@@ -267,6 +248,25 @@
           "checksum": "sha256-iIAjx7/pf5Fy819/JqU+vaHvqRAXmOvNoQnETy7In74="
         },
         "checksum": "Q1M53X3tDg872zxH5dhmDT1xFLykg="
+      },
+      {
+        "name": "libuv",
+        "url": "https://packages.wolfi.dev/os/x86_64/libuv-1.53.0-r0.apk",
+        "version": "1.53.0-r0",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-7197",
+          "checksum": "sha1-i9+U3koHHdm144haQW6gnhpAF3E="
+        },
+        "data": {
+          "range": "bytes=7198-136307",
+          "checksum": "sha256-WUhoPnzk4yAiZhtofcRqxUzonIhgN1tdw5p/d2bnkQ4="
+        },
+        "checksum": "Q1i9+U3koHHdm144haQW6gnhpAF3E="
       },
       {
         "name": "libbrotlidec1",
