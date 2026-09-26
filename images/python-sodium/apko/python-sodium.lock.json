@@ -441,22 +441,22 @@
       },
       {
         "name": "libuuid",
-        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.3-r5.apk",
-        "version": "2.42.3-r5",
+        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.4-r0.apk",
+        "version": "2.42.4-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-12332",
-          "checksum": "sha1-ci/+xsuLakmz8k9gLoHzddNWfhs="
+          "range": "bytes=0-12176",
+          "checksum": "sha1-Z33H4kleklOdSEEQXYwk0G2KPmg="
         },
         "data": {
-          "range": "bytes=12333-33574",
-          "checksum": "sha256-qUR7ALQHT+YqC2RhFUgUzF+DRR53qlslotCtAcOyr0Y="
+          "range": "bytes=12177-33421",
+          "checksum": "sha256-tHoufKJsP/tffQDUQVManVhNqgX+Tew2/QGGUqeFUBQ="
         },
-        "checksum": "Q1ci/+xsuLakmz8k9gLoHzddNWfhs="
+        "checksum": "Q1Z33H4kleklOdSEEQXYwk0G2KPmg="
       },
       {
         "name": "openssl-provider-legacy-allowed",
@@ -650,22 +650,22 @@
       },
       {
         "name": "ttf-dejavu",
-        "url": "https://packages.wolfi.dev/os/x86_64/ttf-dejavu-2.37-r8.apk",
-        "version": "2.37-r8",
+        "url": "https://packages.wolfi.dev/os/x86_64/ttf-dejavu-2.37-r9.apk",
+        "version": "2.37-r9",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-3151",
-          "checksum": "sha1-f2tyhPMMzhfRI92hWpaH5smdCT8="
+          "range": "bytes=0-8328",
+          "checksum": "sha1-VJRLri3y5VtmjWz9j/KRnZ6r3qk="
         },
         "data": {
-          "range": "bytes=3152-10274658",
-          "checksum": "sha256-AIH3TUwC7fO390XB5sd6ZzK8EzHaG7w73EeEkvDp9Jc="
+          "range": "bytes=8329-10305344",
+          "checksum": "sha256-Y012CDtJeelLgGR0def9W73hCsUle9oL9IKGWNFev3c="
         },
-        "checksum": "Q1f2tyhPMMzhfRI92hWpaH5smdCT8="
+        "checksum": "Q1VJRLri3y5VtmjWz9j/KRnZ6r3qk="
       }
     ]
   }
