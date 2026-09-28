@@ -11,7 +11,7 @@
 # code is invisible to both.
 package:
   name: etcd-hardened
-  version: 3.6.14
+  version: 3.6.15
   epoch: 0
   description: "etcd distributed key-value store (built from source)"
   copyright:
@@ -34,7 +34,7 @@ pipeline:
     with:
       repository: https://github.com/etcd-io/etcd
       tag: v${{package.version}}
-      expected-commit: fc04cf702b0a46c2fd85547a2be05705b100a496
+      expected-commit: a3346427fbe6e456e9b6d6e429346481c6be7c71
   # etcd is a multi-module repo where etcdctl and etcdutl require server via
   # replace directives, so bumping a dep in server alone makes their go.mod
   # inconsistent and the build fails with "updates to go.mod needed". That is why
