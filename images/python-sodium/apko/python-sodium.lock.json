@@ -536,79 +536,79 @@
       },
       {
         "name": "openssl-4.0-libcrypto",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libcrypto-4.0.2-r2.apk",
-        "version": "4.0.2-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libcrypto-4.0.3-r0.apk",
+        "version": "4.0.3-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13299",
-          "checksum": "sha1-BZ4+UCUNixlXE3r729appshsa/M="
+          "range": "bytes=0-14064",
+          "checksum": "sha1-LDvYoezVwq9vBD4if/pbfiha5GE="
         },
         "data": {
-          "range": "bytes=13300-2393797",
-          "checksum": "sha256-CMZADRFraQ0GGHbYxWKLNw/yvBx1e68ATjC5d81hPZs="
+          "range": "bytes=14065-2396556",
+          "checksum": "sha256-2UVL/670/8b4IfiQuV3Z0UpKQr+q/KXRmCiNI8bTkqk="
         },
-        "checksum": "Q1BZ4+UCUNixlXE3r729appshsa/M="
+        "checksum": "Q1LDvYoezVwq9vBD4if/pbfiha5GE="
       },
       {
         "name": "openssl-4.0-libssl",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.2-r2.apk",
-        "version": "4.0.2-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.3-r0.apk",
+        "version": "4.0.3-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13277",
-          "checksum": "sha1-I3kDhnXCcCGE6MdRruOA4MPiQeI="
+          "range": "bytes=0-14039",
+          "checksum": "sha1-AnfP+inzDlD81NdZ+MBOB6IpKxc="
         },
         "data": {
-          "range": "bytes=13278-567446",
-          "checksum": "sha256-whUow3bSXo6vLU1FBTzVUvwiwVMEMHIl9EGr7wiuc08="
+          "range": "bytes=14040-570113",
+          "checksum": "sha256-UMELehKKjK+sqHwLUpO/MtBbhOL/Y6W8yF2LCEKZgfc="
         },
-        "checksum": "Q1I3kDhnXCcCGE6MdRruOA4MPiQeI="
+        "checksum": "Q1AnfP+inzDlD81NdZ+MBOB6IpKxc="
       },
       {
         "name": "libcrypto3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.4-r8.apk",
-        "version": "3.6.4-r8",
+        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.5-r0.apk",
+        "version": "3.6.5-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13925",
-          "checksum": "sha1-2ZPpghzJZR2uuEkPFmHURE8pmeg="
+          "range": "bytes=0-14707",
+          "checksum": "sha1-JQSHa5I7GijqUJkH3HNfDsJypBA="
         },
         "data": {
-          "range": "bytes=13926-2435037",
-          "checksum": "sha256-v+PTsS+ZDXM4S8ZFrA11HdLQi7uSBzFZhPxXZlI8dkE="
+          "range": "bytes=14708-2440800",
+          "checksum": "sha256-Uc7RhHTKipwsVjoQiTSTzOdEBnasUdNIPZ0+a4KxKhE="
         },
-        "checksum": "Q12ZPpghzJZR2uuEkPFmHURE8pmeg="
+        "checksum": "Q1JQSHa5I7GijqUJkH3HNfDsJypBA="
       },
       {
         "name": "libssl3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.4-r8.apk",
-        "version": "3.6.4-r8",
+        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.5-r0.apk",
+        "version": "3.6.5-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13937",
-          "checksum": "sha1-NGYfqxis9rdhBgnTtCBLNaHom6w="
+          "range": "bytes=0-14715",
+          "checksum": "sha1-FKTaBYdI21/rqkJINGpjsajmaok="
         },
         "data": {
-          "range": "bytes=13938-527591",
-          "checksum": "sha256-5LJVOzDtbSW/HSmyhb21EO1OCeilKlsgfZ0EhXBr7LI="
+          "range": "bytes=14716-533579",
+          "checksum": "sha256-1jGaCXnryTvpYhpJGKW1CiWP/nbV9EEFmq2Enphc70k="
         },
-        "checksum": "Q1NGYfqxis9rdhBgnTtCBLNaHom6w="
+        "checksum": "Q1FKTaBYdI21/rqkJINGpjsajmaok="
       },
       {
         "name": "python-3.14-base",
