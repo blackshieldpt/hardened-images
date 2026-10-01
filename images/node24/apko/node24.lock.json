@@ -174,23 +174,42 @@
         "checksum": "Q1Hg59cAy8AgyswFzw9eUYSpES/oE="
       },
       {
-        "name": "icu78-data-full",
-        "url": "https://packages.wolfi.dev/os/x86_64/icu78-data-full-78.3-r3.apk",
-        "version": "78.3-r3",
+        "name": "c-ares",
+        "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.8-r2.apk",
+        "version": "1.34.8-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8416",
-          "checksum": "sha1-Flg2tUuuzHR5fj5j0eZzAls2rz0="
+          "range": "bytes=0-7989",
+          "checksum": "sha1-M53X3tDg872zxH5dhmDT1xFLykg="
         },
         "data": {
-          "range": "bytes=8417-14027386",
-          "checksum": "sha256-HKpVH6hdDddyVt8FL2IANFUHa6jr3x6ZPQwTVeNql5c="
+          "range": "bytes=7990-157871",
+          "checksum": "sha256-iIAjx7/pf5Fy819/JqU+vaHvqRAXmOvNoQnETy7In74="
         },
-        "checksum": "Q1Flg2tUuuzHR5fj5j0eZzAls2rz0="
+        "checksum": "Q1M53X3tDg872zxH5dhmDT1xFLykg="
+      },
+      {
+        "name": "icu78-data-full",
+        "url": "https://packages.wolfi.dev/os/x86_64/icu78-data-full-78.3-r4.apk",
+        "version": "78.3-r4",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-10460",
+          "checksum": "sha1-M2e+/1RvbhepGmmNgiOthCWPbYw="
+        },
+        "data": {
+          "range": "bytes=10461-14031219",
+          "checksum": "sha256-fccSLM8/imnnNEVfhkd/8D1XF7kie9dT/BjhYgwvYU8="
+        },
+        "checksum": "Q1M2e+/1RvbhepGmmNgiOthCWPbYw="
       },
       {
         "name": "libstdc++",
@@ -213,41 +232,22 @@
       },
       {
         "name": "libicu78",
-        "url": "https://packages.wolfi.dev/os/x86_64/libicu78-78.3-r3.apk",
-        "version": "78.3-r3",
+        "url": "https://packages.wolfi.dev/os/x86_64/libicu78-78.3-r4.apk",
+        "version": "78.3-r4",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8518",
-          "checksum": "sha1-c8CRVs2O8/y3XKMA1ObmUMg6QAY="
+          "range": "bytes=0-10558",
+          "checksum": "sha1-OwqgciyTxRn7l6Y6Vw6fqCq3WuA="
         },
         "data": {
-          "range": "bytes=8519-3152197",
-          "checksum": "sha256-143F3oI6ccFiABfChX+65n+nJ1jVQjkncyBn2aXuRjU="
+          "range": "bytes=10559-3154329",
+          "checksum": "sha256-Wi5uGw46WL0Evoi/OvBz64ztTyRNraNTYjUg++l4N9Y="
         },
-        "checksum": "Q1c8CRVs2O8/y3XKMA1ObmUMg6QAY="
-      },
-      {
-        "name": "c-ares",
-        "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.8-r2.apk",
-        "version": "1.34.8-r2",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-7989",
-          "checksum": "sha1-M53X3tDg872zxH5dhmDT1xFLykg="
-        },
-        "data": {
-          "range": "bytes=7990-157871",
-          "checksum": "sha256-iIAjx7/pf5Fy819/JqU+vaHvqRAXmOvNoQnETy7In74="
-        },
-        "checksum": "Q1M53X3tDg872zxH5dhmDT1xFLykg="
+        "checksum": "Q1OwqgciyTxRn7l6Y6Vw6fqCq3WuA="
       },
       {
         "name": "libuv",
@@ -460,22 +460,22 @@
       },
       {
         "name": "npm-12",
-        "url": "https://packages.wolfi.dev/os/x86_64/npm-12-12.1.0-r1.apk",
-        "version": "12.1.0-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/npm-12-12.2.0-r0.apk",
+        "version": "12.2.0-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8326",
-          "checksum": "sha1-A05fdkpDQSuL2QXmWwDRk/oW5gM="
+          "range": "bytes=0-8317",
+          "checksum": "sha1-KxmaPMvUDKXk7bMuZ+xb2IAyask="
         },
         "data": {
-          "range": "bytes=8327-2214313",
-          "checksum": "sha256-LsUbqWVgbs0y/b/rxNDGrFsRBmOmNwBBjJmGSaRtG/U="
+          "range": "bytes=8318-2216190",
+          "checksum": "sha256-0QYQO1CyNIbblzdgHwd1pZtdLnFrpGmnISYfl8tr0CU="
         },
-        "checksum": "Q1A05fdkpDQSuL2QXmWwDRk/oW5gM="
+        "checksum": "Q1KxmaPMvUDKXk7bMuZ+xb2IAyask="
       }
     ]
   }
