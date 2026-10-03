@@ -101,9 +101,12 @@ pipeline:
               echo "expected ${artifact}-${old}.jar in the distribution; upstream has moved — recheck the advisory before bumping" >&2
               exit 1
           }
-          curl -fsSL --retry 5 --retry-all-errors \
-            "https://repo1.maven.org/maven2/$(echo "$group" | tr . /)/${artifact}/${new}/${artifact}-${new}.jar" \
-            -o "${lib}/${artifact}-${new}.jar"
+          # Maven Central has answered CI runners with a 403 that outlasts the
+          # retries, so fall back to Google's mirror of it. The sha256 check below
+          # is what we trust, not the host, so a second source costs nothing.
+          path="$(echo "$group" | tr . /)/${artifact}/${new}/${artifact}-${new}.jar"
+          curl -fsSL --retry 5 --retry-all-errors "https://repo1.maven.org/maven2/${path}" -o "${lib}/${artifact}-${new}.jar" ||
+            curl -fsSL --retry 5 --retry-all-errors "https://maven-central.storage-download.googleapis.com/maven2/${path}" -o "${lib}/${artifact}-${new}.jar"
           echo "${sum}  ${lib}/${artifact}-${new}.jar" | sha256sum -c -
           rm -f "${lib}/${artifact}-${old}.jar"
       done <<'EOF'
