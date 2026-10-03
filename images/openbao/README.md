@@ -1,16 +1,20 @@
 # Hardened OpenBao
 
-Wolfi-based hardened [OpenBao](https://openbao.org) image (the open-source,
+Wolfi-based hardened [OpenBao](https://openbao.org) 2.6 image (the open-source,
 Vault-compatible secrets manager), built from upstream source with melange (pure
 Go, CGO disabled) and assembled with apko. The same melange package ships the
 single-node hardened config.
+
+**This image stays on 2.6.** OpenBao 2.7 removed the `file` storage backend this
+image's config uses, so 2.7 ships separately as [`openbao27`](../openbao27/) with
+raft storage. Moving a deployment across means migrating its data (see that README).
 
 ## Details
 
 | Property   | Value |
 |------------|-------|
 | Build      | melange (OpenBao source, CGO disabled) + apko |
-| Version    | 2.6.1 |
+| Version    | 2.6.4 |
 | User       | openbao (UID 65532) |
 | Shell      | none (distroless) |
 | License    | MPL-2.0 |
@@ -26,7 +30,7 @@ single-node hardened config.
 
 ```bash
 docker run -d -p 8200:8200 -v baodata:/openbao/data \
-  hub.blackshield.pt/test_images/openbao:2.6.1
+  hub.blackshield.pt/test_images/openbao:2.6.4
 ```
 
 The default command is `server -config=/etc/openbao/openbao.hcl` (single-node
@@ -46,7 +50,7 @@ Override the shipped config by bind-mounting your own at
 ```bash
 docker run -d -p 8200:8200 \
   -v "$PWD/my-openbao.hcl:/etc/openbao/openbao.hcl:ro" -v baodata:/openbao/data \
-  hub.blackshield.pt/test_images/openbao:2.6.1
+  hub.blackshield.pt/test_images/openbao:2.6.4
 ```
 
 ## Dev variant
@@ -82,6 +86,12 @@ even while sealed/uninitialized).
   melange build asserts this). Built without the `ui` build tag — the web UI needs
   a Node toolchain to generate and is surface this image has no use for; the server
   is otherwise identical.
+- Scanners cannot judge OpenBao's own CVEs in this image: the 2.6 module path has
+  no `/v2`, so the binary records a v0.0.0 pseudo-version and advisories match
+  it wrongly in both directions (five false positives are waived in
+  `vex.openvex.json`). Track OpenBao's release notes; the image follows 2.6.x
+  patch releases, and `check-updates` watches `v2.6.` tags only, so it will not
+  flag the 2.6 line going end-of-life.
 - Not built from Wolfi's `openbao` package: that is capped at 2.5.4-r2 and Wolfi's
   advisory data names fixes (2.5.5-r2, 2.6.1-r0) that were never published to the
   public repo. 2.6.1 is what those advisories point at for CVE-2026-56852.

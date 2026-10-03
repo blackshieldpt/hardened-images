@@ -1,0 +1,154 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/blackshieldpt/hardened-images/images/openbao/vex-0001",
+  "author": "Blackshield Security <security@blackshield.pt>",
+  "timestamp": "2026-10-03T00:00:00Z",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2024-8185"
+      },
+      "products": [
+        {
+          "@id": "ghcr.io/blackshieldpt/openbao:latest",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/openbao/openbao"
+            }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/openbao:latest-dev",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/openbao/openbao"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/openbao/openbao"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "2026-10-03: fixed upstream in OpenBao 2.0.3; this image builds a later 2.6 release (package.version in images/openbao/melange.yaml). Reported only by trivy --detection-priority comprehensive, which reads the bao binary's main-module version: the 2.6 module path has no /v2 suffix, so Go cannot stamp the v2.6.x tag and records a v0.0.0 pseudo-version, which compares below every fixed version. Delete with the openbao (2.6) image."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2024-9180"
+      },
+      "products": [
+        {
+          "@id": "ghcr.io/blackshieldpt/openbao:latest",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/openbao/openbao"
+            }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/openbao:latest-dev",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/openbao/openbao"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/openbao/openbao"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "2026-10-03: fixed upstream in OpenBao 2.0.3; this image builds a later 2.6 release (package.version in images/openbao/melange.yaml). Reported only by trivy --detection-priority comprehensive, which reads the bao binary's main-module version: the 2.6 module path has no /v2 suffix, so Go cannot stamp the v2.6.x tag and records a v0.0.0 pseudo-version, which compares below every fixed version. Delete with the openbao (2.6) image."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2025-59043"
+      },
+      "products": [
+        {
+          "@id": "ghcr.io/blackshieldpt/openbao:latest",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/openbao/openbao"
+            }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/openbao:latest-dev",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/openbao/openbao"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/openbao/openbao"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "2026-10-03: fixed upstream in OpenBao 2.4.1; this image builds a later 2.6 release (package.version in images/openbao/melange.yaml). Reported only by trivy --detection-priority comprehensive, which reads the bao binary's main-module version: the 2.6 module path has no /v2 suffix, so Go cannot stamp the v2.6.x tag and records a v0.0.0 pseudo-version, which compares below every fixed version. Delete with the openbao (2.6) image."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2025-64761"
+      },
+      "products": [
+        {
+          "@id": "ghcr.io/blackshieldpt/openbao:latest",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/openbao/openbao"
+            }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/openbao:latest-dev",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/openbao/openbao"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/openbao/openbao"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "2026-10-03: fixed upstream in OpenBao 2.4.4; this image builds a later 2.6 release (package.version in images/openbao/melange.yaml). Reported only by trivy --detection-priority comprehensive, which reads the bao binary's main-module version: the 2.6 module path has no /v2 suffix, so Go cannot stamp the v2.6.x tag and records a v0.0.0 pseudo-version, which compares below every fixed version. Delete with the openbao (2.6) image."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-45808"
+      },
+      "products": [
+        {
+          "@id": "ghcr.io/blackshieldpt/openbao:latest",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/openbao/openbao"
+            }
+          ]
+        },
+        {
+          "@id": "ghcr.io/blackshieldpt/openbao:latest-dev",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/openbao/openbao"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/openbao/openbao"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "2026-10-03: fixed upstream in OpenBao 2.5.4; this image builds a later 2.6 release (package.version in images/openbao/melange.yaml). Reported only by trivy --detection-priority comprehensive, which reads the bao binary's main-module version: the 2.6 module path has no /v2 suffix, so Go cannot stamp the v2.6.x tag and records a v0.0.0 pseudo-version, which compares below every fixed version. Delete with the openbao (2.6) image."
+    }
+  ]
+}
