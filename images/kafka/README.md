@@ -63,8 +63,8 @@ therefore to repackage the upstream distribution and change the jars:
 | Jar | Upstream 4.3.1 | Shipped here | Why |
 |---|---|---|---|
 | jetty (10 jars), jersey (6), swagger | 12.0.34 / 3.1.10 | **removed** | Connect-only; see below. Clears GHSA-2fvj-hgj9-j2gr (High) and two Mediums |
-| jackson (9 jars) | 2.21.2 | **2.21.5** | GHSA-j3rv-43j4-c7qm, GHSA-rmj7-2vxq-3g9f, GHSA-r7wm-3cxj-wff9 (High) + 7 Mediums |
-| jline | 3.30.4 | **3.30.14** | CVE-2026-56740, CVE-2026-56741 (High) |
+| jackson (9 jars) | 2.21.2 | **2.21.7** | GHSA-j3rv-43j4-c7qm, GHSA-rmj7-2vxq-3g9f, GHSA-r7wm-3cxj-wff9, GHSA-7hhh-6rmp-j9qf, GHSA-p6pp-m3f8-5c89, GHSA-cxp5-3px4-pw24, GHSA-q4xh-88c3-wmh7, GHSA-wv8q-qhhj-9h54 (High) + 9 Mediums |
+| jline | 3.30.4 | **3.30.17** | CVE-2026-56740, CVE-2026-56741, GHSA-r2xf-8xr9-62gw (High) + 2 Mediums |
 | log4j2 (4 jars) | 2.25.4 | **2.25.5** | GHSA-qv9r-c865-cp47 |
 | lz4-java | 1.10.2 | **1.11.1** | GHSA-xx22-p4ch-683r. Note the coordinate is `at.yawk.lz4`, the maintained fork — `org.lz4` stops at 1.8.1 |
 

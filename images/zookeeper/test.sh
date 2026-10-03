@@ -28,7 +28,7 @@ assert_contains "server reports version ${VER}" "version ${VER//./\\.}" \
 
 # This image exists to carry patched bundled jars. If a rebuild silently reverts to
 # upstream's pinned versions, the CVEs come back with no other visible signal.
-for jar in netty-codec-4.1.137.Final jackson-databind-2.22.2 logback-core-1.5.37; do
+for jar in netty-codec-4.1.137.Final jackson-databind-2.22.3 jline-3.30.17-jdk8 logback-core-1.5.37; do
     assert_rc0 "patched jar present: ${jar}" \
         docker exec "$CONTAINER" test -f "${LIB}/${jar}.jar"
 done

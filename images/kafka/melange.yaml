@@ -107,16 +107,16 @@ pipeline:
           echo "${sum}  ${lib}/${artifact}-${new}.jar" | sha256sum -c -
           rm -f "${lib}/${artifact}-${old}.jar"
       done <<'EOF'
-      com.fasterxml.jackson.core jackson-core 2.21.2 2.21.5 b64b5874162b503a0e58a8f7758266e8dd9f91bf49e3a59ae0b5f47589a231b7
-      com.fasterxml.jackson.core jackson-databind 2.21.2 2.21.5 507418c0fafd38b2b2cfb704521630da613a8e4cc8381195a6f418017883e2c0
-      com.fasterxml.jackson.dataformat jackson-dataformat-csv 2.21.2 2.21.5 b278bd22805093e1b3e31c9ad7fa2773d3ac9e250da8cb566bd914334cc51a96
-      com.fasterxml.jackson.dataformat jackson-dataformat-yaml 2.21.2 2.21.5 c26143ac5503fd545bd5e9063f45a2499be89971559875e47cc868ef9359d10b
-      com.fasterxml.jackson.datatype jackson-datatype-jdk8 2.21.2 2.21.5 c8b1a0d14ffb3f8f8a1f182856c8803a3ee1d7c1aeb68dfee08f22d934ce108f
-      com.fasterxml.jackson.jakarta.rs jackson-jakarta-rs-base 2.21.2 2.21.5 07f11f2e46153b3e8d27bf6ff8f874b31bf781bf46bef69434355623a67cac5d
-      com.fasterxml.jackson.jakarta.rs jackson-jakarta-rs-json-provider 2.21.2 2.21.5 c176333dd1edb820698fd3376e6f376919e3b6a208b37d112ce32192e9e787d6
-      com.fasterxml.jackson.module jackson-module-blackbird 2.21.2 2.21.5 6e1aac3aed140a3defec385083bba339d52eebb3f940582f03f64ad43ef3c433
-      com.fasterxml.jackson.module jackson-module-jakarta-xmlbind-annotations 2.21.2 2.21.5 5cb2cc2bf59faccf412ed6cba8588724b23c6145e5bda8d5ebee26db6d4dd12a
-      org.jline jline 3.30.4 3.30.14 15731604f27ce9045eeb977f9760d766ffa1a53734b9adb31a6e493ec76bc3a2
+      com.fasterxml.jackson.core jackson-core 2.21.2 2.21.7 8c5623b98f32d5f7e1287ff61ed50e08ab7b11381e991fff89327faabba42261
+      com.fasterxml.jackson.core jackson-databind 2.21.2 2.21.7 1290c2795e93e8a6861a6c4d9ff0d844d32f5ea178362cb2721edf5561e828b1
+      com.fasterxml.jackson.dataformat jackson-dataformat-csv 2.21.2 2.21.7 588050148497158cabdc05c0ae3a7e123194a486b8c62745778fc6239f9b085e
+      com.fasterxml.jackson.dataformat jackson-dataformat-yaml 2.21.2 2.21.7 df2b3e6a194181dc067b7211d750926b4ae9e4f3c892a0005b8219a9b59be681
+      com.fasterxml.jackson.datatype jackson-datatype-jdk8 2.21.2 2.21.7 b8f62f98363ed9aa259b3a479a64fcbe7e081158a8bec6733972e900d12f4e47
+      com.fasterxml.jackson.jakarta.rs jackson-jakarta-rs-base 2.21.2 2.21.7 202b61a95e735d01ae03e411b8f6ae1245bbf19c87d4746c0204579f5c2e456b
+      com.fasterxml.jackson.jakarta.rs jackson-jakarta-rs-json-provider 2.21.2 2.21.7 32473ee172e0c181ba63688ee4a94349de77de05bd4279d0846a9515a56bb0fe
+      com.fasterxml.jackson.module jackson-module-blackbird 2.21.2 2.21.7 b41fb816cbaa5f2393136cf1c525e0d9a9f9bcea14207a09e8e703df53351596
+      com.fasterxml.jackson.module jackson-module-jakarta-xmlbind-annotations 2.21.2 2.21.7 76054ca6e252e7142fec9c0e9a146bd8c43cde13dddf2d1cdaecd9db981c2ddc
+      org.jline jline 3.30.4 3.30.17 32ca18a3b5c742bc8a7b42af61ad9b3320dab525361b793ea9e3cb361e292c1d
       org.apache.logging.log4j log4j-1.2-api 2.25.4 2.25.5 4dd812dc5a6343f542a9e0046b1ec78ecf10bdd5a8c15745101cdd8b9aa24974
       org.apache.logging.log4j log4j-api 2.25.4 2.25.5 64777f73ea0b3104c04eb82befbdccc30a425a19e83ad06cb2f93aa303511863
       org.apache.logging.log4j log4j-core 2.25.4 2.25.5 050c4f85deb48b055e9c041ac39043fbb79ce477841a11a1eb2969c86c6a0072
@@ -138,7 +138,7 @@ pipeline:
       # Every replaced jar, by exact name. test.sh asserts the same set against
       # the running image, so neither a bump nor a refactor can quietly restore a
       # vulnerable jar.
-      for jar in jackson-core-2.21.5 jackson-databind-2.21.5 jline-3.30.14 \
+      for jar in jackson-core-2.21.7 jackson-databind-2.21.7 jline-3.30.17 \
                  log4j-core-2.25.5 log4j-api-2.25.5 lz4-java-1.11.1; do
           test -f "$lib/${jar}.jar" || { echo "MISSING: ${jar}.jar" >&2; exit 1; }
       done

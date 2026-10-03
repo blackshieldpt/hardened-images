@@ -33,7 +33,7 @@ assert_contains "record round-trips (lz4)" "hardened-images-probe" \
 
 # The patched jars, asserted against the running image. melange asserts the same
 # set at build time; this is the half that cannot be satisfied by a stale package.
-for jar in jackson-databind-2.21.5 jackson-core-2.21.5 jline-3.30.14 \
+for jar in jackson-databind-2.21.7 jackson-core-2.21.7 jline-3.30.17 \
            log4j-core-2.25.5 lz4-java-1.11.1; do
     assert_rc0 "patched jar present: $jar" \
         docker exec "$CONTAINER" test -f "/usr/lib/kafka/libs/${jar}.jar"
