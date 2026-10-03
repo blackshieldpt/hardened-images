@@ -3,7 +3,7 @@
 A register of findings that the scan reports, that are **real**, and that no
 version bump can currently clear. They are not waived: no VEX statement suppresses
 them, they appear in every scan report, and the gate still counts them. This file
-exists so the same three findings are not re-investigated from scratch every time
+exists so the same findings are not re-investigated from scratch every time
 someone reads a scan.
 
 A finding belongs here only when the fix does not exist — not when it exists and is
@@ -15,12 +15,13 @@ not an entry.
 
 | Finding | Where | Why it cannot be fixed | Re-check when |
 |---|---|---|---|
-| `CVE-2026-19499` (High), `CVE-2026-19542`, `CVE-2026-89092` (Medium) | glibc, in every image that carries it | No fixed version published in Wolfi. The daily relock picks up a patched glibc the moment one exists. | Wolfi publishes a glibc rebuild naming these |
-| `GHSA-2v4p-qf9q-27wj` (High) | `google.golang.org/grpc`, in etcd, nginx-acme, openbao, redpanda, minio | No released fix. Grype names `1.85.0-dev.0.20260825072537-93e31b48545e` — a pre-release commit, not a version anything should pin. v1.84.0 is the newest release and is what the floor pins name. | grpc cuts a release ≥ 1.85.0 |
+| `CVE-2026-8674`, `CVE-2026-86805`, `CVE-2026-89092` (Medium), `CVE-2026-95818` (Low) | glibc, in every image that carries it | No fixed version published in Wolfi. The daily relock picks up a patched glibc the moment one exists. | Wolfi publishes a glibc rebuild naming these |
+| `CVE-2025-15367`, `CVE-2026-87910` (Medium) | `python-3.14`, in python and python-sodium | No fixed version published in Wolfi; 3.14.8 is the newest. | Wolfi publishes a python-3.14 naming these |
+| `CVE-2026-90781`, `CVE-2026-96674`, `CVE-2026-96675` (Medium) | `alsa-lib`, pulled in by the JRE in kafka and zookeeper | No fixed version published in Wolfi. | Wolfi publishes an alsa-lib rebuild naming these |
 | `GO-2026-4887` (High) | `github.com/docker/docker` v28.5.2, in redpanda's `rpk` | The advisory points at 29.3.1, but `docker/docker` publishes no v29 module path — it moved to `moby/moby` — so `go get` cannot reach it. Only linked for `rpk container`, which builds local dev clusters and is never run by this broker image. | rpk drops the dependency, or docker/docker publishes a v29 module path |
 
 `scripts/check-updates.sh` reports the Wolfi side of this independently: a package
 whose advisory data names a fix that was never published shows up as
 `UNOBTAINABLE FIX`, and one that has stopped being rebuilt as `FROZEN`.
 
-Last reviewed: 2026-09-21.
+Last reviewed: 2026-10-03.
