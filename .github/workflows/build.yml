@@ -66,6 +66,7 @@ jobs:
           - nginx-acme
           - node
           - node24
+          - node26
           - go
           - python
           - python-sodium
@@ -75,6 +76,7 @@ jobs:
           - clickhouse
           - nats
           - openbao
+          - openbao27
           - manticore
           - mailpit
           - redpanda
@@ -116,8 +118,8 @@ jobs:
           done
 
           # Tools live in a cached directory on PATH rather than /usr/local/bin,
-          # so a warm cache needs no network at all. This matrix runs 38 jobs and
-          # each used to fetch five tools independently — ~190 unpinned downloads
+          # so a warm cache needs no network at all. This matrix runs 46 jobs and
+          # each used to fetch five tools independently — ~230 unpinned downloads
           # per run, any one of which could fail the job it belonged to. That is
           # exactly how a `trivy not found` error failed a build whose code was
           # fine. Downloads now retry, and on a warm cache there are none.

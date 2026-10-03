@@ -126,8 +126,8 @@ done
 ## valkey-9.1 was a week old. That is the same rot as the from-source pins, one
 ## level up.
 ##
-## A line pin is often deliberate — `node` exists to track 22 and `node24` to
-## track 24, so "newer line available" is not drift for them. Mark those in
+## A line pin is often deliberate — `node` exists to track 22, `node24` 24 and
+## `node26` 26, so "newer line available" is not drift for them. Mark those in
 ## config.env with a trailing `# pinned-line` and they are reported as pinned
 ## rather than behind.
 
