@@ -14,7 +14,10 @@ package:
     no-depends: true
 
 vars:
-  token: nzc4ZYQK3WRGd9sy
+  # Redpanda shut dl.redpanda.com down on 2026-09-28 and moved its apt repo to
+  # linux.pkg.redpanda.com. The pool filename there embeds an opaque id that only
+  # the index knows: dists/redpanda-apt/main/binary-amd64/Packages, Filename field.
+  deb: redpanda_26.2.2-1_amd64_6fee28dde2e61eb42c10b416e14f5aa8.deb
   deb_sha256: e6e93bc152e4b99faf4a7dfbb87b39197483832642cb5354f905b680b4363b87
 
 environment:
@@ -34,7 +37,7 @@ environment:
 pipeline:
   - runs: |
       curl -fsSL --retry 5 --retry-all-errors \
-        "https://dl.redpanda.com/${{vars.token}}/redpanda/deb/ubuntu/pool/any-version/main/r/re/redpanda_${{package.version}}-1/redpanda_${{package.version}}-1_amd64.deb" \
+        "https://linux.pkg.redpanda.com/apt/pool/redpanda-apt/${{vars.deb}}" \
         -o redpanda.deb
       echo "${{vars.deb_sha256}}  redpanda.deb" | sha256sum -c -
       ar x redpanda.deb
