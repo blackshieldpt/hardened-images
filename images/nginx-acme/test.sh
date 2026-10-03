@@ -104,7 +104,7 @@ assert_eq "acme: phase 1 does not listen on 8443" "0" \
 assert_rc0 "acme: lego runs" docker exec "$ACME" lego --version
 assert_rc0 "acme: netstat exists for the readiness probe" \
     docker exec "$ACME" sh -c 'netstat -lnt >/dev/null 2>&1'
-assert_contains "acme: lego is on the expected version" "5\.3\.1" \
+assert_contains "acme: lego is on the expected version" "5\.5\.2" \
     "$(docker exec "$ACME" lego --version 2>&1)"
 
 # lego 5.x scopes these flags to the `run` command. The loop used to invoke

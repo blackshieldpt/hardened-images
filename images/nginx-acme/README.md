@@ -20,7 +20,7 @@ drifted apart.
 | Version    | 1.31 |
 | User       | nginx (UID 65532) |
 | Shell      | busybox (env-var entrypoint) |
-| ACME       | lego 5.3.1, built from source — opt in with `TLS_MODE=acme` |
+| ACME       | lego 5.5.2, built from source — opt in with `TLS_MODE=acme` |
 | Scanning   | lego contributes 206 Go modules; grype reads them from the binary and gates on them. trivy's language scanners do not see inside a static Go binary, so grype is the only cover there |
 
 ## Ports

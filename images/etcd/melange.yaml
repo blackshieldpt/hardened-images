@@ -11,7 +11,7 @@
 # code is invisible to both.
 package:
   name: etcd-hardened
-  version: 3.6.14
+  version: 3.6.15
   epoch: 0
   description: "etcd distributed key-value store (built from source)"
   copyright:
@@ -34,14 +34,13 @@ pipeline:
     with:
       repository: https://github.com/etcd-io/etcd
       tag: v${{package.version}}
-      expected-commit: fc04cf702b0a46c2fd85547a2be05705b100a496
+      expected-commit: a3346427fbe6e456e9b6d6e429346481c6be7c71
   # etcd is a multi-module repo where etcdctl and etcdutl require server via
   # replace directives, so bumping a dep in server alone makes their go.mod
   # inconsistent and the build fails with "updates to go.mod needed". That is why
-  # there was no bump step here — but v3.6.14 ships grpc v1.82.1, which now carries
-  # GHSA-2v4p-qf9q-27wj and GHSA-vp52-pcj8-j9qc (both High). v1.84.0 clears the
-  # second; the first has no released fix yet (grype names a 1.85.0-dev commit), so
-  # it survives the scan here and in openbao, nginx-acme and redpanda alike.
+  # there was no bump step here — but v3.6.14 shipped grpc v1.82.1, which carries
+  # GHSA-2v4p-qf9q-27wj and GHSA-vp52-pcj8-j9qc (both High). v3.6.15 ships v1.83.2,
+  # which fixes both; the v1.84.0 pin below is kept as a floor.
   # The bump is therefore applied to all three modules in lockstep, which keeps the
   # replace directives consistent. GO-2026-5158 in otel (Medium, risk 0.1) is left.
   - name: Bump vulnerable Go dependencies

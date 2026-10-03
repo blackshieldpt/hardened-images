@@ -8,7 +8,7 @@ CGO disabled) and assembled with apko.
 | Property   | Value |
 |------------|-------|
 | Build      | melange (etcd source, CGO disabled) + apko |
-| Version    | 3.6.14 |
+| Version    | 3.6.15 |
 | User       | etcd (UID 65532) |
 | Shell      | none (distroless) |
 | Image size | ~77 MB |
@@ -23,7 +23,7 @@ CGO disabled) and assembled with apko.
 ## Usage
 
 ```bash
-docker run -d -p 2379:2379 -v etcddata:/var/lib/etcd hub.blackshield.pt/test_images/etcd:3.6.14
+docker run -d -p 2379:2379 -v etcddata:/var/lib/etcd hub.blackshield.pt/test_images/etcd:3.6.15
 ```
 
 Configuration is driven by `ETCD_*` environment variables (e.g. `ETCD_NAME`, `ETCD_INITIAL_CLUSTER`). The image defaults to a single node listening for clients on `0.0.0.0:2379` with data in `/var/lib/etcd`.

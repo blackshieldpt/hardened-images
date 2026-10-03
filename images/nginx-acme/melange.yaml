@@ -32,7 +32,7 @@ package:
   name: nginx-acme-entrypoint
   version: "1.0.0"
   epoch: 0
-  description: "Hardened nginx entrypoint + conf.d-include config + ACME via lego 5.3.1"
+  description: "Hardened nginx entrypoint + conf.d-include config + ACME via lego 5.5.2"
   copyright:
     - license: BSD-2-Clause
 
@@ -48,9 +48,9 @@ environment:
       - go
       - git
 
-# lego 5.3.1. Held by hand: see the note above on why there is no update: block.
+# lego 5.5.2. Held by hand: see the note above on why there is no update: block.
 vars:
-  lego-version: 5.3.1
+  lego-version: 5.5.2
 
 pipeline:
   - name: Install the entrypoint, config and templates
@@ -72,15 +72,16 @@ pipeline:
     with:
       repository: https://github.com/go-acme/lego
       tag: v${{vars.lego-version}}
-      expected-commit: 589c84af4f26629fbdaa7fbca712f806632ccb7e
+      expected-commit: 452dc82113609488fb680acf8fc72712b1794f8d
       destination: lego-src
 
   # Same treatment versitygw gets: patch what the scan would flag, at the version
-  # we build, rather than waiting for upstream to cut a release. lego 5.3.1 pulls
-  # grpc through its Google Cloud DNS provider, and grype flags GHSA-hrxh-6v49-42gf,
+  # we build, rather than waiting for upstream to cut a release. lego 5.3.1 pulled
+  # grpc through its Google Cloud DNS provider, and grype flagged GHSA-hrxh-6v49-42gf,
   # GHSA-2v4p-qf9q-27wj and GHSA-vp52-pcj8-j9qc (all High, gRPC-Go xDS/HTTP/2), the
   # last fixed only in v1.83.2. The repo's gate gates on CRITICAL, so these would
   # ship a known High into an internet-facing image without failing anything.
+  # lego 5.5.2 itself pins v1.83.2, so today the floor below is a no-op guard.
   #
   # This pin goes stale silently: v1.82.1 was clean when it was written and is not
   # any more. It is a floor, not a ceiling — raise it whenever the scan names the
