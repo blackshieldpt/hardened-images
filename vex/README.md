@@ -23,8 +23,16 @@ Both Grype and Trivy consume these automatically:
    tags, and a `pkg:oci/...` purl does **not** match (the sample used to suggest one,
    which produced waivers that silently did nothing). Prefer `:latest`, which every
    build applies, over the version tag, which stops matching on the next bump; list
-   both plus the `-dev` forms if you want belt and braces. See
-   `images/zookeeper/vex.openvex.json`.
+   both plus the `-dev` forms if you want belt and braces.
+   **Trivy needs a second product entry: the package's own purl, with no
+   subcomponents** (e.g. `pkg:golang/github.com/openbao/openbao`). Trivy matches
+   image products by `pkg:oci` purl, and the freshly built, never-pushed image the
+   gate scans has none, so an image-reference product alone waives nothing in
+   trivy. Leave the version off the purl so it survives rebuilds; the file being
+   per-image is what scopes it. See `images/openbao/vex.openvex.json`.
+   Mind the breadth: trivy walks from the vulnerable component up to the root, so
+   a package product with no subcomponents waives that CVE for the package *and
+   everything bundled under it*. Use it only for a CVE that names that package.
 3. Fill in the CVE, the affected product, a `status`, and (for `not_affected`) a
    `justification` from the OpenVEX vocabulary:
    - `component_not_present`

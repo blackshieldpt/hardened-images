@@ -28,6 +28,12 @@ case "${SCAN_SOURCE:-docker}" in
     registry) GRYPE_REF="registry:${FULL_TAG}"; TRIVY_ARGS=(--image-src remote) ;;
     *) echo "ERROR: SCAN_SOURCE='${SCAN_SOURCE}' is not docker or registry" >&2; exit 2 ;;
 esac
+# Trivy's default ("precise") skips every file an OS package owns, on the theory
+# that the OS advisory covers it. Here that is nearly everything that matters: the
+# jars and Go binaries are our own melange apks, which no OS advisory describes,
+# so trivy reported zero language packages in every image and only grype was
+# actually gating them. "comprehensive" scans inside those packages too.
+TRIVY_ARGS+=(--detection-priority comprehensive)
 REPORT_DIR="${ROOT_DIR}/reports/${IMAGE}"
 
 mkdir -p "$REPORT_DIR"
