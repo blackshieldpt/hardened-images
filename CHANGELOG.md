@@ -6,7 +6,48 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-03
+
+Minor rather than patch: two new images, `openbao27` (OpenBao 2.7 on raft) and
+`node26`. No existing tag moves except `openbao` 2.6.2 -> 2.6.4, a patch release
+within the line it already tracks. Trivy now inspects the jars and Go binaries it
+used to skip, which adds no Critical to any image.
+
+### Added
+- **`openbao27`: OpenBao 2.7.1 with raft storage.** A separate image rather than a
+  bump of `openbao`, because 2.7 removed the `file` storage backend that image's
+  config uses: moving a deployment means migrating its data, which is the
+  operator's decision. Its README has a migration procedure tested end to end
+  (2.6 file -> 2.7 raft with 2.7's own `operator migrate`, unsealing with the
+  original keys). `openbao` stays on the 2.6 line, and its update check now
+  watches `v2.6.` only.
+- **`node26`: Node.js 26** (Wolfi `nodejs-26`), alongside `node` (22) and `node24`.
+
 ### Fixed
+- **Trivy now actually scans the jars and Go binaries.** Its default "precise"
+  mode skips every file an apk owns, and in these images that is everything that
+  matters — our melange packages carry the jars and binaries — so trivy reported
+  zero language packages in every image and only grype was gating them.
+  `scan.sh` now passes `--detection-priority comprehensive`. Across all images
+  this surfaces no Critical, so the gate is unchanged; the new Highs are recorded
+  in `vex/KNOWN-UNFIXED.md` (pip's vendored urllib3/msgpack/setuptools, redpanda's
+  `docker/docker` under its CVE ids) or fixed below.
+- **`openbao` 2.6.2 -> 2.6.4**, two upstream security releases (2.6.3 on 09-23,
+  2.6.4 on 10-01) fixing about 14 GHSAs, among them cross-namespace policy-cache
+  traversal, plugin catalog writes outside the root namespace, and approle
+  secret-ids usable after expiry. No scanner saw them: the advisories are not in
+  the databases yet, and the update check compared against 2.7. The cel-go floor
+  moves v0.29.0 -> v0.31.0, which 2.6.4 ships; left alone it would have downgraded.
+- **`openbao`: x/crypto v0.54.0 -> v0.56.0** (CVE-2026-56854, High), seen only by
+  trivy. Five more trivy Highs against openbao itself are false positives — the 2.6
+  module path cannot carry a v2 version, so the binary records a v0.0.0
+  pseudo-version — and are waived in `images/openbao/vex.openvex.json`.
+  `vex/README.md` now documents that trivy needs the package purl as a product.
+- `kafka`: jar downloads fall back to Google's Maven Central mirror when Maven
+  Central refuses a runner (a 403 failed the 0.8.0 build once); the sha256 pins
+  are unchanged. Its smoke test now also asserts `log4j-api-2.25.5`; it still
+  checks a representative subset of the replaced jars, while the build asserts
+  the full set.
 - **`minio` and `nats` tags can no longer drift from their contents.** Both install
   an unversioned Wolfi package that the relock moves, while their tag was typed by
   hand into `config.env`, so `nats:2.14.1` shipped 2.15.0 until 0.8.0 corrected it.
@@ -782,7 +823,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.0...v0.6.1
