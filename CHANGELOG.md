@@ -6,6 +6,15 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Fixed
+- **`minio` and `nats` tags can no longer drift from their contents.** Both install
+  an unversioned Wolfi package that the relock moves, while their tag was typed by
+  hand into `config.env`, so `nats:2.14.1` shipped 2.15.0 until 0.8.0 corrected it.
+  `VERSION_<name>=pkg:<package>` now tags the image with the version its lockfile
+  resolved: minio's committed lock, or for nats (a melange image that resolves
+  fresh) the lock `build.sh` writes, which is why `build.sh` now computes the tag
+  after resolving the lockfile rather than before.
+
 ## [0.8.0] - 2026-10-03
 
 Security release. Minor rather than patch because consumers pinning a floating

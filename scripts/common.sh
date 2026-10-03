@@ -9,6 +9,11 @@ _melange_scalar() {  # <melange.yaml> <2-space-indented key> -> scalar value
 #   - images/<name>/melange.yaml package.version, when that melange builds the
 #     upstream software (it declares an `update.github` block); otherwise
 #   - VERSION_<name> in config.env (apk-native images and config-only packages).
+#     VERSION_<name>=pkg:<package> means "whatever version of <package> the
+#     lockfile resolved", so a relock that moves the package moves the tag with
+#     it. The lockfile is the committed one, or for images that resolve fresh at
+#     build (melange images, e.g. nats) the one build.sh wrote to reports/ —
+#     so for those, every step after build reads what build actually resolved.
 resolve_version() {
     local image="$1" v=""
     local mel="${ROOT_DIR}/images/${image}/melange.yaml"
@@ -18,6 +23,19 @@ resolve_version() {
     if [ -z "$v" ]; then
         local var="VERSION_${image//-/_}"
         v="${!var:-}"
+    fi
+    if [ "${v#pkg:}" != "$v" ]; then
+        local pkg="${v#pkg:}" lock=""
+        # The variant's own lock (callers set SUF): a dev variant without a
+        # committed lock resolves fresh and may carry a newer package than prod.
+        for lock in "${ROOT_DIR}/images/${image}/apko/${image}${SUF:-}.lock.json" \
+                    "${ROOT_DIR}/reports/${image}/apko${SUF:-}.lock.json"; do
+            [ -f "$lock" ] && break
+        done
+        [ -f "$lock" ] || { echo "ERROR: ${image} takes its version from ${pkg}, but there is no lockfile yet (build it first)" >&2; return 1; }
+        v="$(jq -r --arg p "$pkg" '.contents.packages[] | select(.name == $p) | .version' "$lock" | head -1)"
+        [ -n "$v" ] || { echo "ERROR: ${pkg} is not in ${lock#${ROOT_DIR}/}" >&2; return 1; }
+        v="${v%-r[0-9]*}"
     fi
     if [ -z "$v" ]; then
         echo "ERROR: no version for '${image}' (set package.version in images/${image}/melange.yaml or VERSION_${image//-/_} in config.env)" >&2

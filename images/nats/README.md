@@ -7,7 +7,7 @@ Wolfi-based hardened NATS image, assembled with apko from the Wolfi `nats-server
 | Property   | Value |
 |------------|-------|
 | Build      | apko (Wolfi nats-server) + melange (config) |
-| Version    | 2.15.0 |
+| Version    | Wolfi `nats-server` version (2.15.0 at the time of writing); the tag follows the package |
 | User       | nats (UID 65532) |
 | Shell      | none (distroless) |
 | Image size | ~18 MB |

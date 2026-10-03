@@ -14,8 +14,6 @@ VARIANT="${2:-prod}"
 ARCH="${ARCH:-x86_64}"
 SUF="$(variant_suffix "$VARIANT")"
 
-VERSION="$(resolve_version "$IMAGE")"
-
 # Reproducible builds: pin melange/apko file + layer timestamps to the source
 # commit so rebuilding the same commit yields byte-identical layers.
 export SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-$(git -C "$ROOT_DIR" log -1 --format=%ct 2>/dev/null || echo 0)}"
@@ -24,12 +22,6 @@ APKO_CONFIG="images/${IMAGE}/apko/${IMAGE}.yaml"
 MELANGE_CONFIG="images/${IMAGE}/melange.yaml"
 [ -f "$APKO_CONFIG" ] || { echo "ERROR: missing apko config $APKO_CONFIG"; exit 1; }
 
-FULL_TAG="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:${VERSION}${SUF}"
-LATEST_TAG="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:latest${SUF}"
-# Immutable per-build tag (source commit). Floating :${VERSION} and :latest move
-# on every rebuild/relock; this one always pins to exactly this build.
-SHORT_SHA="$(git -C "$ROOT_DIR" rev-parse --short=12 HEAD 2>/dev/null || echo unknown)"
-SHA_TAG="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:${VERSION}${SUF}-${SHORT_SHA}"
 TARBALL="${IMAGE}${SUF}.tar"
 
 APKO_EXTRA=()
@@ -56,7 +48,7 @@ if [ "$VARIANT" = dev ]; then
     APKO_SRC="$DEV_TMP"
 fi
 
-echo "==> Assembling ${FULL_TAG} with apko"
+echo "==> Assembling ${IMAGE}${SUF} with apko"
 rm -f "$TARBALL"
 
 # Build from the committed lockfile so the same commit reproduces the same image
@@ -83,6 +75,16 @@ else
     fi
     apko lock "$APKO_SRC" --arch "$ARCH" --output "$LOCKFILE" "${APKO_EXTRA[@]}"
 fi
+
+# Resolved only now: a VERSION_<name>=pkg:<package> image takes its tag from the
+# lockfile, and an image that resolves fresh has just written that lockfile above.
+VERSION="$(resolve_version "$IMAGE")"
+FULL_TAG="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:${VERSION}${SUF}"
+LATEST_TAG="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:latest${SUF}"
+# Immutable per-build tag (source commit). Floating :${VERSION} and :latest move
+# on every rebuild/relock; this one always pins to exactly this build.
+SHORT_SHA="$(git -C "$ROOT_DIR" rev-parse --short=12 HEAD 2>/dev/null || echo unknown)"
+SHA_TAG="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:${VERSION}${SUF}-${SHORT_SHA}"
 
 BUILD_STARTED="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 apko build "$APKO_SRC" "$FULL_TAG" "$TARBALL" --arch "$ARCH" --lockfile "$LOCKFILE" "${APKO_EXTRA[@]}"

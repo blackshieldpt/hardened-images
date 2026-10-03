@@ -7,7 +7,7 @@ Wolfi-based hardened MinIO image, assembled with apko from the Wolfi `minio` pac
 | Property   | Value |
 |------------|-------|
 | Build      | apko (Wolfi minio, mc) |
-| Version    | 0.20260922.192518 (Wolfi package version; upstream `RELEASE.2026-09-22T19-25-18Z`) |
+| Version    | Wolfi `minio` package version (0.20260922.192518, upstream `RELEASE.2026-09-22T19-25-18Z`, at the time of writing); the tag follows the committed lockfile |
 | User       | minio (UID 65532) |
 | Shell      | none (distroless) |
 | License    | AGPL-3.0-or-later |

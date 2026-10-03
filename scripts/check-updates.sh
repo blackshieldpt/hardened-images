@@ -175,8 +175,8 @@ else
         fam="$(sed -nE 's/^[[:space:]]+- ([a-z0-9]([a-z0-9._+-]*[a-z0-9])?)$/\1/p' "$apko" \
                | grep -F -- "-${pinned}" | head -1)"
         if [ -z "$fam" ]; then
-            # Exact-version pins (minio) and unversioned packages (nats-server):
-            # the relock already tracks these, there is no separate line to move.
+            # pkg:<package> images (minio, nats) and unversioned packages: the
+            # relock already tracks these, there is no separate line to move.
             row "$image" "$pinned" "-" "no versioned family (relock covers it)"
             continue
         fi
