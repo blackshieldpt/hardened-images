@@ -7,7 +7,7 @@ Wolfi-based hardened NATS image, assembled with apko from the Wolfi `nats-server
 | Property   | Value |
 |------------|-------|
 | Build      | apko (Wolfi nats-server) + melange (config) |
-| Version    | 2.14.1 |
+| Version    | 2.15.0 |
 | User       | nats (UID 65532) |
 | Shell      | none (distroless) |
 | Image size | ~18 MB |
@@ -23,7 +23,7 @@ Wolfi-based hardened NATS image, assembled with apko from the Wolfi `nats-server
 ## Usage
 
 ```bash
-docker run -d -p 4222:4222 -p 8222:8222 hub.blackshield.pt/test_images/nats:2.14.1
+docker run -d -p 4222:4222 -p 8222:8222 hub.blackshield.pt/test_images/nats:2.15.0
 ```
 
 ## Dev variant
