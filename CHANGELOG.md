@@ -6,6 +6,45 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-03
+
+Security release. Minor rather than patch because consumers pinning a floating
+`:<version>` tag must change it. Five images move:
+
+| image | old tag | new tag |
+|-------|---------|---------|
+| `clickhouse` | `26.7.14.3` | `26.7.19.5` |
+| `etcd` | `3.6.14` | `3.6.15` |
+| `mailpit` | `1.31.2` | `1.31.3` |
+| `minio` | `0.20260717.120751` | `0.20260922.192518` |
+| `nats` | `2.14.1` | `2.15.0` |
+
+Immutable `:<version>-<commit>` pins and digests are unaffected.
+
+### Fixed
+- **`redpanda` builds again.** Redpanda shut `dl.redpanda.com` down on 2026-09-28,
+  and every build of `main` since has failed on the deb download (HTTP 400,
+  `TOKEN_NOT_ACTIVE`), so the image has not published since. It now fetches from
+  `linux.pkg.redpanda.com`; the deb is byte-identical (same sha256).
+- **`kafka`: 6 High + 10 Medium -> 0 High.** jackson 2.21.5 -> 2.21.7 (all 9 jars)
+  and jline 3.30.14 -> 3.30.17 clear GHSA-7hhh-6rmp-j9qf, GHSA-p6pp-m3f8-5c89,
+  GHSA-cxp5-3px4-pw24, GHSA-q4xh-88c3-wmh7, GHSA-wv8q-qhhj-9h54 and
+  GHSA-r2xf-8xr9-62gw (High), plus four Mediums.
+- **`zookeeper`: 5 High + 8 Medium -> 0 High.** jackson 2.22.2 -> 2.22.3 and a new
+  jline override 3.30.14 -> 3.30.17 clear the same Highs except GHSA-q4xh-88c3-wmh7
+  (already fixed in 2.22.2), plus two Mediums.
+
+### Changed
+- `clickhouse` 26.7.14.3 -> 26.7.19.5, `etcd` 3.6.14 -> 3.6.15, `mailpit` 1.31.2 ->
+  1.31.3, and lego in `nginx-acme` 5.3.1 -> 5.5.2.
+- `nats` and `minio` tags now match what they ship. The daily relock had moved the
+  packages while `VERSION_*` stayed put: `nats:2.14.1` carried nats-server 2.15.0,
+  and `minio:0.20260717.120751` carried 0.20260922.192518.
+- `vex/KNOWN-UNFIXED.md` refreshed. The glibc High (CVE-2026-19499) that 0.7.0 left
+  in every image is gone from the scanner data, as is the grpc GHSA-2v4p-qf9q-27wj
+  (fixed in 1.83.2). What remains with no published fix is glibc, python-3.14 and
+  alsa-lib Mediums, plus redpanda's `docker/docker` High.
+
 ## [0.7.0] - 2026-09-21
 
 `kafka` leaves Wolfi's frozen package, which clears the last findings in this repo
@@ -734,7 +773,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.5.0...v0.6.0
