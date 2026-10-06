@@ -384,41 +384,41 @@
       },
       {
         "name": "openssl-4.0-libcrypto",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libcrypto-4.0.3-r2.apk",
-        "version": "4.0.3-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libcrypto-4.0.3-r3.apk",
+        "version": "4.0.3-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14067",
-          "checksum": "sha1-jcL2KVxEKYaOu1vyodgvTFxTqU8="
+          "range": "bytes=0-14049",
+          "checksum": "sha1-b4G1sNKXcxy3Vh2mP3kJ/jZjdYE="
         },
         "data": {
-          "range": "bytes=14068-2396769",
-          "checksum": "sha256-F9XxWEroZxEz9cm15Y5GexxHfUah3TCORqrq48dsOfk="
+          "range": "bytes=14050-2396744",
+          "checksum": "sha256-FJPyAyOYV2qNpQtBpT8VP72m0N8lQZLwCE+lE6KO9ys="
         },
-        "checksum": "Q1jcL2KVxEKYaOu1vyodgvTFxTqU8="
+        "checksum": "Q1b4G1sNKXcxy3Vh2mP3kJ/jZjdYE="
       },
       {
         "name": "openssl-4.0-libssl",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.3-r2.apk",
-        "version": "4.0.3-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.3-r3.apk",
+        "version": "4.0.3-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14045",
-          "checksum": "sha1-Sh40oIUgnyg5LXsHO6yA4fsYmEA="
+          "range": "bytes=0-14020",
+          "checksum": "sha1-p4V03cwi4QFSuGvtiF1KIQC07NY="
         },
         "data": {
-          "range": "bytes=14046-570116",
-          "checksum": "sha256-fSDch0dx6E5D1makysl/z8aLUl5cCXVXChzkebjmfx4="
+          "range": "bytes=14021-570087",
+          "checksum": "sha256-31KiDuzP84tHZNz+bR8V+dFdsQCNfpIr/jH3Rh/BiqE="
         },
-        "checksum": "Q1Sh40oIUgnyg5LXsHO6yA4fsYmEA="
+        "checksum": "Q1p4V03cwi4QFSuGvtiF1KIQC07NY="
       },
       {
         "name": "libzstd1",
@@ -517,22 +517,22 @@
       },
       {
         "name": "libexpat1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libexpat1-2.8.5-r0.apk",
-        "version": "2.8.5-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/libexpat1-2.9.0-r0.apk",
+        "version": "2.9.0-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8456",
-          "checksum": "sha1-ENblxdz9v/S21ko27YObba0KxnQ="
+          "range": "bytes=0-9208",
+          "checksum": "sha1-BC65V0Hv+gnJNyw/bhPXBGDFang="
         },
         "data": {
-          "range": "bytes=8457-111147",
-          "checksum": "sha256-WKHY/e09n3q1YbgFEfwA2on5nTMyA5kNNnKVlXl0u2c="
+          "range": "bytes=9209-113448",
+          "checksum": "sha256-VGZd0t4rq2Ss/Qx+4TXT9z1/Gy+lyzrKNnhcG9Psoq4="
         },
-        "checksum": "Q1ENblxdz9v/S21ko27YObba0KxnQ="
+        "checksum": "Q1BC65V0Hv+gnJNyw/bhPXBGDFang="
       },
       {
         "name": "py3-pip-wheel",
@@ -574,41 +574,41 @@
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.8_git20261001-r1.apk",
-        "version": "3.14.8_git20261001-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.8_git20261001-r2.apk",
+        "version": "3.14.8_git20261001-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-16065",
-          "checksum": "sha1-0SP6WiKDvgXMvcmxZ1Vfx4/KZk0="
+          "range": "bytes=0-16132",
+          "checksum": "sha1-vZ5sVV+xnCTz76BnXafHM2CGEpg="
         },
         "data": {
-          "range": "bytes=16066-13018578",
-          "checksum": "sha256-Z3AeIrmjTQWL70EitUUwVLz/4ymjfkgHrfxaIbomCio="
+          "range": "bytes=16133-13021580",
+          "checksum": "sha256-6FsFDy5OjJ0esHAKSw61axGguYUi7QpN2ulukbaiTLo="
         },
-        "checksum": "Q10SP6WiKDvgXMvcmxZ1Vfx4/KZk0="
+        "checksum": "Q1vZ5sVV+xnCTz76BnXafHM2CGEpg="
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.8_git20261001-r1.apk",
-        "version": "3.14.8_git20261001-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.8_git20261001-r2.apk",
+        "version": "3.14.8_git20261001-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-15900",
-          "checksum": "sha1-Bn/ULMvCt1QZ6DBENJlII4H5xg0="
+          "range": "bytes=0-15968",
+          "checksum": "sha1-n2K580/7oeX4r02s2vus6Z+u9Jw="
         },
         "data": {
-          "range": "bytes=15901-17648",
-          "checksum": "sha256-Tiog0oAtul84XQaefgIuBD5z/eeBHpmKYvYeOR/cnUI="
+          "range": "bytes=15969-17716",
+          "checksum": "sha256-+8ry53bSlfKJhdWNRqykpRiiIUvIt+prSfwgTQdq+Fo="
         },
-        "checksum": "Q1Bn/ULMvCt1QZ6DBENJlII4H5xg0="
+        "checksum": "Q1n2K580/7oeX4r02s2vus6Z+u9Jw="
       },
       {
         "name": "ttf-dejavu",
