@@ -346,41 +346,41 @@
       },
       {
         "name": "openssl-4.0-libcrypto",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libcrypto-4.0.3-r4.apk",
-        "version": "4.0.3-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libcrypto-4.0.3-r5.apk",
+        "version": "4.0.3-r5",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-17335",
-          "checksum": "sha1-MgbIVyX5+W5RO6i6CQjB3TtnMTI="
+          "range": "bytes=0-17316",
+          "checksum": "sha1-Ej/clqNrw0PQi9ESw1Nb/GP8xwE="
         },
         "data": {
-          "range": "bytes=17336-2413423",
-          "checksum": "sha256-OkruRbk9Hm2KgLGIAwuYv3Rt0uBL/Ljyn9cERl0bMks="
+          "range": "bytes=17317-2400120",
+          "checksum": "sha256-2vee+8eWLDlTv6Bv/fOPIA/9SsKRyn5vma8msQ41TPU="
         },
-        "checksum": "Q1MgbIVyX5+W5RO6i6CQjB3TtnMTI="
+        "checksum": "Q1Ej/clqNrw0PQi9ESw1Nb/GP8xwE="
       },
       {
         "name": "openssl-4.0-libssl",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.3-r4.apk",
-        "version": "4.0.3-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.3-r5.apk",
+        "version": "4.0.3-r5",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-17311",
-          "checksum": "sha1-okb7puswUNowEzdYK7MdQAN9cqg="
+          "range": "bytes=0-17296",
+          "checksum": "sha1-OqUwSzbMfnFUnqVteIyFalxA0qQ="
         },
         "data": {
-          "range": "bytes=17312-573386",
-          "checksum": "sha256-A/7obXhyAiiRjDiMMxYvnHQmRVRDmVLTBFd+0Cosjn8="
+          "range": "bytes=17297-573375",
+          "checksum": "sha256-B9lKMx9C7huFfl/33mLuiNuNTLM4F6TpqDjeUlxmZwQ="
         },
-        "checksum": "Q1okb7puswUNowEzdYK7MdQAN9cqg="
+        "checksum": "Q1OqUwSzbMfnFUnqVteIyFalxA0qQ="
       },
       {
         "name": "libcrypto3",
