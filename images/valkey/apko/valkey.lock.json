@@ -308,22 +308,22 @@
       },
       {
         "name": "bash",
-        "url": "https://packages.wolfi.dev/os/x86_64/bash-5.3-r13.apk",
-        "version": "5.3-r13",
+        "url": "https://packages.wolfi.dev/os/x86_64/bash-5.3-r14.apk",
+        "version": "5.3-r14",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8712",
-          "checksum": "sha1-XNVunceatLxsucKMhYOziXd7r94="
+          "range": "bytes=0-9587",
+          "checksum": "sha1-CJBEpKoxYcrKWwAz0i/b9Z57GHk="
         },
         "data": {
-          "range": "bytes=8713-784088",
-          "checksum": "sha256-ND8c6ReIuQ8SRngexZ+rY7ex/rq/QNjbOhTwN3fd+FQ="
+          "range": "bytes=9588-784965",
+          "checksum": "sha256-DSoApE1XohhfSXDx27hcJ6Wtmk6lMRT/2p2YpnARpqE="
         },
-        "checksum": "Q1XNVunceatLxsucKMhYOziXd7r94="
+        "checksum": "Q1CJBEpKoxYcrKWwAz0i/b9Z57GHk="
       },
       {
         "name": "posix-libc-utils-2.44",

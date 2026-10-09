@@ -289,22 +289,22 @@
       },
       {
         "name": "libbz2-1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbz2-1-1.0.8-r24.apk",
-        "version": "1.0.8-r24",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbz2-1-1.0.8-r25.apk",
+        "version": "1.0.8-r25",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8842",
-          "checksum": "sha1-pj2513+2ciruUgIsNKm2yPf1mT4="
+          "range": "bytes=0-9650",
+          "checksum": "sha1-QODzmN2RZyehQwsKz3LkRFbLu5U="
         },
         "data": {
-          "range": "bytes=8843-49458",
-          "checksum": "sha256-91zwi9BTcbCubMrWyi4bnsJk6onwNlBHA51IkD6Pcds="
+          "range": "bytes=9651-50262",
+          "checksum": "sha256-AqHTDqsKglZ4NcX3erGqVMx/yIIGwQ6HPa5WCZj7qGA="
         },
-        "checksum": "Q1pj2513+2ciruUgIsNKm2yPf1mT4="
+        "checksum": "Q1QODzmN2RZyehQwsKz3LkRFbLu5U="
       },
       {
         "name": "libzstd1",
@@ -536,22 +536,22 @@
       },
       {
         "name": "py3-pip-wheel",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3-pip-wheel-26.2.1-r2.apk",
-        "version": "26.2.1-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/py3-pip-wheel-26.2.1-r3.apk",
+        "version": "26.2.1-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13088",
-          "checksum": "sha1-sC68D3uZBrwqleABakLTII1584A="
+          "range": "bytes=0-14303",
+          "checksum": "sha1-W+BFRkIRU0Z/60qrbQmjwD9Dpno="
         },
         "data": {
-          "range": "bytes=13089-1822303",
-          "checksum": "sha256-cnisqvhGuTNtWgMUK5WXjV5AfeMwKDp8Ebb35GHXWn4="
+          "range": "bytes=14304-1814189",
+          "checksum": "sha256-RHZPAwp3zwpzAdbrdRFwZthjUB6dzeZz6J7Mu2W3zRc="
         },
-        "checksum": "Q1sC68D3uZBrwqleABakLTII1584A="
+        "checksum": "Q1W+BFRkIRU0Z/60qrbQmjwD9Dpno="
       },
       {
         "name": "libuuid",
