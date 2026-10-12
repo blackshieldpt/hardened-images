@@ -6,6 +6,27 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.10.1] - 2026-10-12
+
+Security release, and the reason six images publish again. `GO-2026-6612`
+(Critical, a double flow-control refund on HTTP/2 server streams in
+`golang.org/x/net/http2`) entered the scanner databases on 10-10, and every main
+build since has failed the scan gate for etcd, nginx-acme, openbao, openbao27,
+redpanda and versitygw — so their tags were frozen at the 10-09 build, 0.10.0
+included. No version tag moves; the six images are rebuilt with the fix.
+
+### Fixed
+- **`golang.org/x/net` -> v0.61.0 in etcd, nginx-acme (lego), openbao, openbao27,
+  redpanda (`rpk`) and versitygw**, clearing `GO-2026-6612` (fixed in 0.60.0).
+  They carried v0.58.0, v0.59.0 or, in `rpk`, v0.55.0. x/net v0.61.0 requires
+  x/crypto v0.58.0 and x/text v0.43.0, so openbao's x/crypto floor moves
+  v0.56.0 -> v0.58.0 and redpanda's x/crypto and x/text floors move with it.
+  versitygw gains its first dependency override. The Go standard library carries
+  the same bug and is already fixed in the toolchain Wolfi ships. mailpit was
+  not affected once 0.10.0 moved it to 1.31.5, which ships x/net v0.61.0.
+- `vex/KNOWN-UNFIXED.md`: `GO-2026-5932` (unrated, no fixed version named) is now
+  recorded against x/crypto v0.58.0, the newest release, in all seven Go images.
+
 ## [0.10.0] - 2026-10-12
 
 Minor rather than patch: two new images, `python315` and `python315-sodium`
@@ -849,7 +870,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.1...HEAD
+[0.10.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.7.0...v0.8.0
