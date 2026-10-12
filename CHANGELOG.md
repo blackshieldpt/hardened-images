@@ -6,6 +6,32 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-10-12
+
+Minor rather than patch: two new images, `python315` and `python315-sodium`
+(Python 3.15). Two floating tags move, both patch releases within the line they
+already track: `clickhouse` 26.7.19.5 -> 26.7.27.3 and `mailpit` 1.31.3 -> 1.31.5.
+`python` and `python-sodium` stay on 3.14 and are now pinned there.
+
+### Added
+- **`python315` and `python315-sodium`: Python 3.15** (Wolfi `python-3.15`), alongside
+  `python` and `python-sodium`, which stay on 3.14. Same contract as their 3.14
+  counterparts: `python315-sodium` keeps pip out of the runtime image and ships it
+  (`py3.15-pip`) in the `-dev` variant. Both pass the scan gate; `python-3.15`
+  carries two Mediums with no fix published in Wolfi (`CVE-2025-15367`,
+  `CVE-2026-12345`), recorded in `vex/KNOWN-UNFIXED.md`.
+
+### Changed
+- `clickhouse` 26.7.19.5 -> 26.7.27.3, a patch release within the 26.7 line. The
+  upstream `config.xml` and `users.xml` are unchanged, so only the tarball sha256
+  moves.
+- `mailpit` 1.31.3 -> 1.31.5. Upstream's `go.mod` moves x/crypto to v0.58.0, x/net
+  to v0.61.0, x/text to v0.43.0 and x/image to v0.47.0; still no overrides needed.
+- **`python` and `python-sodium` are now pinned to the 3.14 line** (`# pinned-line`
+  in `config.env`), as `node` is to 22. The update check reported both as behind
+  once Wolfi published `python-3.15`, and would have opened a PR moving them; 3.15
+  is `python315` instead.
+
 ## [0.9.0] - 2026-10-03
 
 Minor rather than patch: two new images, `openbao27` (OpenBao 2.7 on raft) and
@@ -823,7 +849,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.6.1...v0.7.0
