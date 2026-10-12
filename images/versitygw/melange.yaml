@@ -1,6 +1,7 @@
 # Builds versitygw from source (versitygw isn't in Wolfi). Pure-Go, CGO disabled,
-# so the result is a static binary. v1.8.0 carries current x/crypto (v0.55.0),
-# x/net (v0.58.0) and x/text (v0.41.0), so it needs no dependency overrides.
+# so the result is a static binary. v1.8.0 carries x/net v0.58.0, which has
+# GO-2026-6612 (Critical, HTTP/2 flow control), so x/net is raised below; that
+# brings x/crypto and x/text up with it. Nothing else needs an override.
 #
 # The 1.7.0 -> 1.8.0 bump is also the fix for amqp091-go: 1.7.0 pinned v1.12.0,
 # which carries 3 Critical and 7 High advisories, all fixed in 1.13.0. 1.8.0
@@ -31,6 +32,13 @@ pipeline:
       repository: https://github.com/versity/versitygw
       tag: v${{package.version}}
       expected-commit: fd04bc1df2656298577b82667a4195c77f8c7563
+  - name: Bump vulnerable Go dependencies
+    runs: |
+      # GO-2026-6612 is fixed in x/net 0.60.0. A floor pin, not a ceiling: raise it
+      # whenever the scan names this version, and drop the step once upstream's
+      # go.mod is past it.
+      go get golang.org/x/net@v0.61.0
+      go mod tidy
   - name: Compile static binary
     runs: |
       CGO_ENABLED=0 go build \
