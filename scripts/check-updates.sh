@@ -127,9 +127,9 @@ done
 ## level up.
 ##
 ## A line pin is often deliberate — `node` exists to track 22, `node24` 24 and
-## `node26` 26, so "newer line available" is not drift for them. Mark those in
-## config.env with a trailing `# pinned-line` and they are reported as pinned
-## rather than behind.
+## `node26` 26, and `python` 3.14 next to `python315` 3.15, so "newer line
+## available" is not drift for them. Mark those in config.env with a trailing
+## `# pinned-line` and they are reported as pinned rather than behind.
 
 APKINDEX_CACHE="${TMPDIR:-/tmp}/wolfi-apkindex-$$"
 cleanup() { rm -rf "$APKINDEX_CACHE"; }

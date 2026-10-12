@@ -70,6 +70,8 @@ jobs:
           - go
           - python
           - python-sodium
+          - python315
+          - python315-sodium
           - postgresql
           - valkey
           - minio
@@ -118,8 +120,8 @@ jobs:
           done
 
           # Tools live in a cached directory on PATH rather than /usr/local/bin,
-          # so a warm cache needs no network at all. This matrix runs 46 jobs and
-          # each used to fetch five tools independently — ~230 unpinned downloads
+          # so a warm cache needs no network at all. This matrix runs 50 jobs and
+          # each used to fetch five tools independently — ~250 unpinned downloads
           # per run, any one of which could fail the job it belonged to. That is
           # exactly how a `trivy not found` error failed a build whose code was
           # fine. Downloads now retry, and on a warm cache there are none.

@@ -9,10 +9,10 @@ entirely on GitHub Actions.
 
 ## Images
 
-Published to **`ghcr.io/blackshieldpt/<image>`** — 23 images: nginx, nginx-acme, node, node24,
-node26, go, python, python-sodium, postgresql, valkey, minio, clickhouse, nats,
-openbao, openbao27, manticore, mailpit, redpanda, kafka, zookeeper, etcd,
-versitygw, static.
+Published to **`ghcr.io/blackshieldpt/<image>`** — 25 images: nginx, nginx-acme, node, node24,
+node26, go, python, python-sodium, python315, python315-sodium, postgresql, valkey,
+minio, clickhouse, nats, openbao, openbao27, manticore, mailpit, redpanda, kafka,
+zookeeper, etcd, versitygw, static.
 
 `static` is the odd one out: a 215 kB base holding a filesystem skeleton and a CA
 trust store and nothing else, with no entrypoint. It is not runnable on its own —
@@ -96,9 +96,10 @@ Every image also ships a `-dev` variant — the same hardened build **plus a she
 (`/bin/sh`, bash), `apk`, and a small toolchain** — for debugging. Tags:
 `:<version>-dev`, `:latest-dev`, `:<version>-dev-<commit>`.
 
-A dev variant is also where a build-time package manager lives: `python-sodium` ships
-`pip` there and not in its runtime image, so app dependencies are installed in a
-`-dev` builder stage and the result copied into the hardened image.
+A dev variant is also where a build-time package manager lives: `python-sodium`
+(and `python315-sodium`) ships `pip` there and not in its runtime image, so app
+dependencies are installed in a `-dev` builder stage and the result copied into the
+hardened image.
 
 Dev variants are keyless-signed, SBOM'd, and attested like prod, but their scan
 is **advisory, not gated** (a shell + compiler inevitably carries CVEs) and they
@@ -182,8 +183,9 @@ publishing the matching deb. Half-applying those would ship an image whose tag
 lies about its contents.
 
 A line pin is sometimes deliberate — `node` exists to track Node 22, `node24`
-to track 24 and `node26` to track 26 — so those carry a `# pinned-line` marker in `config.env` and are
-reported as pinned rather than behind.
+to track 24 and `node26` to track 26, and `python`/`python-sodium` track Python 3.14
+while `python315`/`python315-sodium` track 3.15 — so those carry a `# pinned-line`
+marker in `config.env` and are reported as pinned rather than behind.
 
 The same check reports two conditions that are **not** drift and get no PR,
 because there is nothing to bump to:

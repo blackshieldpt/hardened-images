@@ -5,6 +5,11 @@ the `python` image, plus the system libraries a typical web app loads at runtime
 (libsodium, libmagic, DejaVu fonts) and **no default entrypoint** so the
 downstream image sets its own `CMD` (e.g. gunicorn).
 
+**This image stays on 3.14.** Python 3.15 ships separately as
+[`python315-sodium`](../python315-sodium/). Compiled dependencies are built per
+minor version, so moving across means reinstalling them in the 3.15 `-dev` stage,
+not copying the 3.14 `site-packages`.
+
 ## Details
 
 | Property   | Value |

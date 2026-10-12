@@ -2,6 +2,10 @@
 
 Wolfi-based hardened Python image, assembled with apko from the Wolfi `python-3.14` package.
 
+**This image stays on 3.14.** Python 3.15 ships separately as
+[`python315`](../python315/), so moving an app across is a choice of image rather
+than a tag that changes underneath it.
+
 ## Details
 
 | Property   | Value |
