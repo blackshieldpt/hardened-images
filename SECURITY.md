@@ -6,8 +6,6 @@ Please report security issues privately to **security@blackshield.pt**, or via
 GitHub's private vulnerability reporting ("Report a vulnerability" on the
 Security tab). Do not open public issues for vulnerabilities.
 
-We aim to acknowledge within 3 business days.
-
 ## Supply-chain assurances
 
 Every published image carries, bound to this repository's GitHub Actions
