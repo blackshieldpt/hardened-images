@@ -574,41 +574,41 @@
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.8_git20261008-r1.apk",
-        "version": "3.14.8_git20261008-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.8_git20261014-r0.apk",
+        "version": "3.14.8_git20261014-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-16193",
-          "checksum": "sha1-bIf8ha5hMSuk7/1rmPSLfQI0xwA="
+          "range": "bytes=0-16203",
+          "checksum": "sha1-INHn3mMN6sVrw9qXNPyXj6jKQow="
         },
         "data": {
-          "range": "bytes=16194-13015139",
-          "checksum": "sha256-4Poq2D8/Nw2zfxG1Pf2eb/cDvJ07gjvcakclLJktsn0="
+          "range": "bytes=16204-13051258",
+          "checksum": "sha256-rXBSibiVZQr7BY2Nxx7DU/+3+sRfD3R6TWxME4hN0C4="
         },
-        "checksum": "Q1bIf8ha5hMSuk7/1rmPSLfQI0xwA="
+        "checksum": "Q1INHn3mMN6sVrw9qXNPyXj6jKQow="
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.8_git20261008-r1.apk",
-        "version": "3.14.8_git20261008-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.8_git20261014-r0.apk",
+        "version": "3.14.8_git20261014-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-16029",
-          "checksum": "sha1-8qYhaUSwPhoQvaOXK8MpXooFGjM="
+          "range": "bytes=0-16034",
+          "checksum": "sha1-2ROaYd/paKsc1/WMFOvqNgF+RN4="
         },
         "data": {
-          "range": "bytes=16030-17774",
-          "checksum": "sha256-nhgKmDd6a24cENwKtwxED7oKZIOUKylox4C3zNgQdSk="
+          "range": "bytes=16035-17785",
+          "checksum": "sha256-c+bf6A4UapY8LXdt3MW2vNqgU5k3uovSEgOlV7LXKHE="
         },
-        "checksum": "Q18qYhaUSwPhoQvaOXK8MpXooFGjM="
+        "checksum": "Q12ROaYd/paKsc1/WMFOvqNgF+RN4="
       },
       {
         "name": "ttf-dejavu",

@@ -250,25 +250,6 @@
         "checksum": "Q1i9+U3koHHdm144haQW6gnhpAF3E="
       },
       {
-        "name": "c-ares",
-        "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.8-r3.apk",
-        "version": "1.34.8-r3",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-8834",
-          "checksum": "sha1-0jvszG9er/qavLysJe47DiIx6JA="
-        },
-        "data": {
-          "range": "bytes=8835-158716",
-          "checksum": "sha256-AwLaM7ks0WVyPJR6RxNL18NwEVencQR0aFxEkLmQFOU="
-        },
-        "checksum": "Q10jvszG9er/qavLysJe47DiIx6JA="
-      },
-      {
         "name": "libbrotlidec1",
         "url": "https://packages.wolfi.dev/os/x86_64/libbrotlidec1-1.2.0-r6.apk",
         "version": "1.2.0-r6",
@@ -286,6 +267,25 @@
           "checksum": "sha256-nEY7zkpXJLgl5eE3+RWEboc0eshw3P1pxraOgVFmhBk="
         },
         "checksum": "Q13yN4bTma6mLQVL3QB0gpiBtrgE0="
+      },
+      {
+        "name": "c-ares",
+        "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.8-r4.apk",
+        "version": "1.34.8-r4",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-9024",
+          "checksum": "sha1-2SCH/QRLM+TuidVSGrNCoTg8Ffc="
+        },
+        "data": {
+          "range": "bytes=9025-158961",
+          "checksum": "sha256-y5CifeWmrD9UTCHB3meRuSq5syIlhXaVrtsZkg525+A="
+        },
+        "checksum": "Q12SCH/QRLM+TuidVSGrNCoTg8Ffc="
       },
       {
         "name": "openssl-provider-legacy-allowed",
@@ -384,22 +384,22 @@
       },
       {
         "name": "nodejs-26",
-        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-26-26.11.1-r0.apk",
-        "version": "26.11.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-26-26.12.0-r0.apk",
+        "version": "26.12.0-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-10136",
-          "checksum": "sha1-rycVS1ZXbJyO0fQkBbVaTf8M9FM="
+          "range": "bytes=0-10135",
+          "checksum": "sha1-5n+hqsDfplDV/lBy8m7nxlTwXec="
         },
         "data": {
-          "range": "bytes=10137-33428584",
-          "checksum": "sha256-nMRcFX7voKDHqWQzRxfJPJ0kl7hr2Q9oCKlqcdpoTHE="
+          "range": "bytes=10136-33510474",
+          "checksum": "sha256-O10crM+mIiMTn6dCYK+SvndJVHpByAW85ofuiG2OsZY="
         },
-        "checksum": "Q1rycVS1ZXbJyO0fQkBbVaTf8M9FM="
+        "checksum": "Q15n+hqsDfplDV/lBy8m7nxlTwXec="
       },
       {
         "name": "node-gyp",
