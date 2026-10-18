@@ -213,41 +213,41 @@
       },
       {
         "name": "openssl-4.0-libcrypto",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libcrypto-4.0.3-r6.apk",
-        "version": "4.0.3-r6",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libcrypto-4.0.3-r7.apk",
+        "version": "4.0.3-r7",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-17426",
-          "checksum": "sha1-Gd2v1sjT5RedxpCLY/wn72oGNtg="
+          "range": "bytes=0-17454",
+          "checksum": "sha1-lAFM+if79Dzv5UCyLJf7ZrqbzYs="
         },
         "data": {
-          "range": "bytes=17427-2400608",
-          "checksum": "sha256-5iDamJgKaApaiv1DlnoMQjSVAqPUetd8Ri1QKJk+siI="
+          "range": "bytes=17455-2400636",
+          "checksum": "sha256-wj7BAD8yHNHs+nj/fGHFgf2Y8PZzrH0GQn0p0nZ7GZY="
         },
-        "checksum": "Q1Gd2v1sjT5RedxpCLY/wn72oGNtg="
+        "checksum": "Q1lAFM+if79Dzv5UCyLJf7ZrqbzYs="
       },
       {
         "name": "openssl-4.0-libssl",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.3-r6.apk",
-        "version": "4.0.3-r6",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.3-r7.apk",
+        "version": "4.0.3-r7",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-17404",
-          "checksum": "sha1-SdxZYSluzOL+Dl8TUmg6qgJOFlg="
+          "range": "bytes=0-17433",
+          "checksum": "sha1-MNPrDTNHUagmqWgVL+NJT9OsMg0="
         },
         "data": {
-          "range": "bytes=17405-573477",
-          "checksum": "sha256-q77/ezqIDlwNTYzJaiMbGBnAZg7YzUJY5JghwaaxgKQ="
+          "range": "bytes=17434-573511",
+          "checksum": "sha256-Vm2918oVTeXA/XOEW2jEdgYFBZbAdFgjjiE2tPTmRY8="
         },
-        "checksum": "Q1SdxZYSluzOL+Dl8TUmg6qgJOFlg="
+        "checksum": "Q1MNPrDTNHUagmqWgVL+NJT9OsMg0="
       },
       {
         "name": "posix-libc-utils-bin-2.44",
