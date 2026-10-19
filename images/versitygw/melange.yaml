@@ -8,7 +8,7 @@
 # pins v1.14.0.
 package:
   name: versitygw-hardened
-  version: 1.8.0
+  version: 1.9.0
   epoch: 0
   description: "Versity S3 Gateway (built from source)"
   copyright:
@@ -31,7 +31,7 @@ pipeline:
     with:
       repository: https://github.com/versity/versitygw
       tag: v${{package.version}}
-      expected-commit: fd04bc1df2656298577b82667a4195c77f8c7563
+      expected-commit: ca4c8d30f579a5ac3dd8c91bbfa8340c69dac0ac
   - name: Bump vulnerable Go dependencies
     runs: |
       # GO-2026-6612 is fixed in x/net 0.60.0. A floor pin, not a ceiling: raise it
