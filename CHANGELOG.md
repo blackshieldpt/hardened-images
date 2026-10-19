@@ -6,6 +6,28 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.10.2] - 2026-10-19
+
+Patch release. One floating tag moves, a patch release within the line it already
+tracks: `clickhouse` 26.7.27.3 -> 26.7.34.3. The mailpit build no longer depends
+on the GitHub API, and the build-failure issue now closes itself.
+
+### Changed
+- `clickhouse` 26.7.27.3 -> 26.7.34.3, a patch release within the 26.7 line.
+  `users.xml` is unchanged; upstream `config.xml` gains comments and
+  `readonly_restricts_set_role` at its default (`false`), so the tarball and
+  `config.xml` sha256 move.
+- `build.yml`: per-run SBOM artifacts are kept for 7 days instead of the 90-day
+  default, which had filled the organisation's artifact storage quota. Published
+  images still carry their SBOM as a signed attestation in GHCR.
+
+### Fixed
+- mailpit build no longer depends on the GitHub API: the smoke step runs
+  `mailpit version --no-release-check`. Without it the binary asks GitHub for
+  the latest release and exits 1 when refused, which failed a main build on a 403.
+- `build.yml`: the "build: main is failing" issue now closes itself on the next
+  green main build.
+
 ## [0.10.1] - 2026-10-12
 
 Security release, and the reason six images publish again. `GO-2026-6612`
@@ -870,7 +892,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.1...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.2...HEAD
+[0.10.2]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.1...v0.10.2
 [0.10.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.8.0...v0.9.0
