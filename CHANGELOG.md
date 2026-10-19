@@ -6,6 +6,14 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Changed
+- `mailpit` 1.31.5 -> 1.31.6. Upstream's `go.mod` is unchanged (x/crypto v0.58.0,
+  x/net v0.61.0, x/text v0.43.0, x/image v0.47.0); still no overrides needed.
+- `versitygw` 1.8.0 -> 1.9.0. Upstream moves to Go 1.26, amqp091-go v1.15.0 and
+  x/net v0.60.0, which already clears `GO-2026-6612`. The x/net v0.61.0 override
+  stays, keeping x/crypto at v0.58.0 and x/text at v0.43.0 in line with the other
+  Go images.
+
 ## [0.10.2] - 2026-10-19
 
 Patch release. One floating tag moves, a patch release within the line it already

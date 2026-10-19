@@ -1,6 +1,6 @@
 # Builds mailpit from source (instead of repackaging the upstream release binary),
 # so the bundled Go dependencies are whatever upstream's go.mod pins rather than
-# whatever was current when the release binary was cut. v1.31.5 carries x/crypto
+# whatever was current when the release binary was cut. v1.31.6 carries x/crypto
 # v0.58.0, x/net v0.61.0, x/text v0.43.0 and x/image v0.47.0, all past the GO-2026
 # advisories, so no overrides are needed here.
 # Pure-Go (CGO disabled); the Vue UI is built with esbuild via npm

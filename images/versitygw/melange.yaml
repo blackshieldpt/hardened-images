@@ -1,11 +1,12 @@
 # Builds versitygw from source (versitygw isn't in Wolfi). Pure-Go, CGO disabled,
-# so the result is a static binary. v1.8.0 carries x/net v0.58.0, which has
-# GO-2026-6612 (Critical, HTTP/2 flow control), so x/net is raised below; that
-# brings x/crypto and x/text up with it. Nothing else needs an override.
+# so the result is a static binary. v1.9.0 carries x/net v0.60.0, already past
+# GO-2026-6612 (Critical, HTTP/2 flow control, fixed in 0.60.0). x/net is still
+# raised to v0.61.0 below, which brings x/crypto to v0.58.0 and x/text to v0.43.0,
+# matching the other Go images. Nothing else needs an override.
 #
 # The 1.7.0 -> 1.8.0 bump is also the fix for amqp091-go: 1.7.0 pinned v1.12.0,
-# which carries 3 Critical and 7 High advisories, all fixed in 1.13.0. 1.8.0
-# pins v1.14.0.
+# which carries 3 Critical and 7 High advisories, all fixed in 1.13.0. 1.9.0
+# pins v1.15.0.
 package:
   name: versitygw-hardened
   version: 1.9.0
