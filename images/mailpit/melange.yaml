@@ -43,7 +43,7 @@ pipeline:
         -ldflags "-s -w -X github.com/axllent/mailpit/config.Version=v${{package.version}}" \
         -o "${{targets.destdir}}/usr/bin/mailpit" .
   - runs: |
-      "${{targets.destdir}}/usr/bin/mailpit" version
+      "${{targets.destdir}}/usr/bin/mailpit" version --no-release-check
 
 update:
   enabled: true
