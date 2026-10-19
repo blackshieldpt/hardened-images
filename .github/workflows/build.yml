@@ -195,6 +195,9 @@ jobs:
           name: sbom-${{ matrix.image }}-${{ matrix.variant }}
           path: reports/${{ matrix.image }}/sbom-*${{ env.SUF }}.json
           if-no-files-found: error
+          # Nothing downloads these; a published image carries its SBOM as a signed
+          # attestation in GHCR. At the 90-day default they filled the org's artifact quota.
+          retention-days: 7
 
       # ---- Publish: push + sign + attest, only off PRs ----
       - name: Detect optional integrations
