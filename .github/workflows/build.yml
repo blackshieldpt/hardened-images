@@ -333,3 +333,27 @@ jobs:
           else
             gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITLE" --body "$body"
           fi
+
+  # Close the failure issue once a main build is fully green again. The matrix is
+  # static, so a green run means every image that was failing has recovered.
+  resolve-failure:
+    needs: build
+    if: ${{ success() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Close the build-failure issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          TITLE="build: main is failing"
+          existing="$(gh issue list --repo "$GITHUB_REPOSITORY" \
+            --state open --search "\"${TITLE}\" in:title" \
+            --json number,title \
+            --jq "[.[] | select(.title == \"${TITLE}\") | .number] | first // empty")"
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --repo "$GITHUB_REPOSITORY" --comment "Main is green again: ${RUN_URL}"
+          fi
