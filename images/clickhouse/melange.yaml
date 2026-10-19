@@ -4,15 +4,15 @@
 # the hardened overlay (config.d/hardened.xml) is read from images/clickhouse via --source-dir.
 package:
   name: clickhouse-hardened
-  version: 26.7.27.3
+  version: 26.7.34.3
   epoch: 0
   description: "ClickHouse server (upstream static binary repackaged)"
   copyright:
     - license: Apache-2.0
 
 vars:
-  sha256: 9c3a43cc11983c8046d81b8de54a0a73d9a0b9a8acb3f7904fc5b61cf8a9a217
-  config_sha256: 22e2d49b778a729c58cdd70b30121825abcfa8b3c533b75b19ba83ecd0c50a51
+  sha256: b6a74e62bca52b5c66e451e0beb75f6bf683bb22b8c85821f8e0eb818b04e7f0
+  config_sha256: 827a348f639ee754e5a5d0e28b51760521e323585287708dfd2ff9fcc8c0e83f
   users_sha256: 2340372983292aafb1c94cf869958cc707a1c42451f7b93c2507799a57e54ae1
 
 environment:
