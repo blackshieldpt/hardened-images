@@ -346,79 +346,79 @@
       },
       {
         "name": "openssl-4.0-libcrypto",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libcrypto-4.0.3-r7.apk",
-        "version": "4.0.3-r7",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libcrypto-4.0.3-r8.apk",
+        "version": "4.0.3-r8",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-17454",
-          "checksum": "sha1-lAFM+if79Dzv5UCyLJf7ZrqbzYs="
+          "range": "bytes=0-19897",
+          "checksum": "sha1-W9piTcgyubhrducJCMM7+qErDxo="
         },
         "data": {
-          "range": "bytes=17455-2400636",
-          "checksum": "sha256-wj7BAD8yHNHs+nj/fGHFgf2Y8PZzrH0GQn0p0nZ7GZY="
+          "range": "bytes=19898-2403080",
+          "checksum": "sha256-9U8IPcKddu7bltbKxcAufsQiKBM7L3SElUDpj1+Ni5A="
         },
-        "checksum": "Q1lAFM+if79Dzv5UCyLJf7ZrqbzYs="
+        "checksum": "Q1W9piTcgyubhrducJCMM7+qErDxo="
       },
       {
         "name": "openssl-4.0-libssl",
-        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.3-r7.apk",
-        "version": "4.0.3-r7",
+        "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.3-r8.apk",
+        "version": "4.0.3-r8",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-17433",
-          "checksum": "sha1-MNPrDTNHUagmqWgVL+NJT9OsMg0="
+          "range": "bytes=0-19875",
+          "checksum": "sha1-arwi4n4L3VZ3S8YJ6P4WwY/7JjY="
         },
         "data": {
-          "range": "bytes=17434-573511",
-          "checksum": "sha256-Vm2918oVTeXA/XOEW2jEdgYFBZbAdFgjjiE2tPTmRY8="
+          "range": "bytes=19876-575949",
+          "checksum": "sha256-xJ/uRx05OTShtIIyZJ/U8b+86nn4IqNyucKOqzIjAEU="
         },
-        "checksum": "Q1MNPrDTNHUagmqWgVL+NJT9OsMg0="
+        "checksum": "Q1arwi4n4L3VZ3S8YJ6P4WwY/7JjY="
       },
       {
         "name": "libcrypto3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.5-r2.apk",
-        "version": "3.6.5-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.5-r4.apk",
+        "version": "3.6.5-r4",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14620",
-          "checksum": "sha1-QGirPfFiIRUV8XehQIeCaJvZMic="
+          "range": "bytes=0-17108",
+          "checksum": "sha1-GKRbhbfKmuOt5vxAE4LrYojP+XU="
         },
         "data": {
-          "range": "bytes=14621-2440932",
-          "checksum": "sha256-U8egeqNxMpP+9xJsg5XJGSd5wGUoguMF0Ms9A2CSzXs="
+          "range": "bytes=17109-2443421",
+          "checksum": "sha256-1fBSDcLjkcsSmKnBhOO6iYd6lPl+V+Pl1PPQsXGG0rE="
         },
-        "checksum": "Q1QGirPfFiIRUV8XehQIeCaJvZMic="
+        "checksum": "Q1GKRbhbfKmuOt5vxAE4LrYojP+XU="
       },
       {
         "name": "libssl3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.5-r2.apk",
-        "version": "3.6.5-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.5-r4.apk",
+        "version": "3.6.5-r4",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14626",
-          "checksum": "sha1-il14v6kmTST7ngVhku5rLCzlSQU="
+          "range": "bytes=0-17114",
+          "checksum": "sha1-mCNVfMCicy6hWG9aVPAcEc7HBpw="
         },
         "data": {
-          "range": "bytes=14627-533488",
-          "checksum": "sha256-fDJQotAXRzqf52KMjhWjNaxWuX5bwLpU84fpcb4bbZQ="
+          "range": "bytes=17115-535980",
+          "checksum": "sha256-ZmX9b4g142qYc+uvjzJV1wLq3KfPxGSmmMLnu/ZEKVo="
         },
-        "checksum": "Q1il14v6kmTST7ngVhku5rLCzlSQU="
+        "checksum": "Q1mCNVfMCicy6hWG9aVPAcEc7HBpw="
       },
       {
         "name": "nodejs-22",
