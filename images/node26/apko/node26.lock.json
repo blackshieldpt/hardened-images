@@ -42,22 +42,22 @@
       },
       {
         "name": "ca-certificates-bundle",
-        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20260909-r2.apk",
-        "version": "20260909-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20260909-r3.apk",
+        "version": "20260909-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9204",
-          "checksum": "sha1-zbsxuUTyaGsjqjVdn2gTRDfZs68="
+          "range": "bytes=0-11302",
+          "checksum": "sha1-8MLPVxhaLLo4YMbPIN2d/wZuNN4="
         },
         "data": {
-          "range": "bytes=9205-118396",
-          "checksum": "sha256-5sgQiXCdhc+M+zUGXFqJlI0png/UG4V3jQTRRlKIPec="
+          "range": "bytes=11303-119135",
+          "checksum": "sha256-1+IVu1WG99TBRcht9bbGKwOYWDqRH4fvl8TUSBiPCzE="
         },
-        "checksum": "Q1zbsxuUTyaGsjqjVdn2gTRDfZs68="
+        "checksum": "Q18MLPVxhaLLo4YMbPIN2d/wZuNN4="
       },
       {
         "name": "ld-linux-2.44",
@@ -270,22 +270,22 @@
       },
       {
         "name": "c-ares",
-        "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.8-r4.apk",
-        "version": "1.34.8-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.9-r0.apk",
+        "version": "1.34.9-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9024",
-          "checksum": "sha1-2SCH/QRLM+TuidVSGrNCoTg8Ffc="
+          "range": "bytes=0-8847",
+          "checksum": "sha1-q+mrnOSiDkvj5KgcADgvy4Iboao="
         },
         "data": {
-          "range": "bytes=9025-158961",
-          "checksum": "sha256-y5CifeWmrD9UTCHB3meRuSq5syIlhXaVrtsZkg525+A="
+          "range": "bytes=8848-162855",
+          "checksum": "sha256-DtKBXoS9z2uhh3HO3gDKN25SWFUalQg2J49dsJ7AZ68="
         },
-        "checksum": "Q12SCH/QRLM+TuidVSGrNCoTg8Ffc="
+        "checksum": "Q1q+mrnOSiDkvj5KgcADgvy4Iboao="
       },
       {
         "name": "openssl-provider-legacy-allowed",

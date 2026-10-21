@@ -42,22 +42,22 @@
       },
       {
         "name": "ca-certificates-bundle",
-        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20260909-r2.apk",
-        "version": "20260909-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20260909-r3.apk",
+        "version": "20260909-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9204",
-          "checksum": "sha1-zbsxuUTyaGsjqjVdn2gTRDfZs68="
+          "range": "bytes=0-11302",
+          "checksum": "sha1-8MLPVxhaLLo4YMbPIN2d/wZuNN4="
         },
         "data": {
-          "range": "bytes=9205-118396",
-          "checksum": "sha256-5sgQiXCdhc+M+zUGXFqJlI0png/UG4V3jQTRRlKIPec="
+          "range": "bytes=11303-119135",
+          "checksum": "sha256-1+IVu1WG99TBRcht9bbGKwOYWDqRH4fvl8TUSBiPCzE="
         },
-        "checksum": "Q1zbsxuUTyaGsjqjVdn2gTRDfZs68="
+        "checksum": "Q18MLPVxhaLLo4YMbPIN2d/wZuNN4="
       },
       {
         "name": "glibc-2.44-locale-posix",
@@ -536,22 +536,22 @@
       },
       {
         "name": "py3-pip-wheel",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3-pip-wheel-26.2.1-r4.apk",
-        "version": "26.2.1-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/py3-pip-wheel-26.2.2-r0.apk",
+        "version": "26.2.2-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14564",
-          "checksum": "sha1-l4xLb87aScYF5aJnBtuS+ej/YvY="
+          "range": "bytes=0-14555",
+          "checksum": "sha1-MDc1dIGRthl39o3F3XxvmL1+gLo="
         },
         "data": {
-          "range": "bytes=14565-1814450",
-          "checksum": "sha256-sDLNfeZHcva0Wp9N8yLBrsroUYlWXxPOcQ357imKwNA="
+          "range": "bytes=14556-1815650",
+          "checksum": "sha256-PNIq69JzbX0jpUOrHVEz8CQf02vFsOBqQ5IYI0JLK/o="
         },
-        "checksum": "Q1l4xLb87aScYF5aJnBtuS+ej/YvY="
+        "checksum": "Q1MDc1dIGRthl39o3F3XxvmL1+gLo="
       },
       {
         "name": "libuuid",
@@ -574,41 +574,41 @@
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.8_git20261014-r1.apk",
-        "version": "3.14.8_git20261014-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.8_git20261021-r0.apk",
+        "version": "3.14.8_git20261021-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-18832",
-          "checksum": "sha1-jhhPGQT4LcUHs24mkcfUsTo4IJo="
+          "range": "bytes=0-18896",
+          "checksum": "sha1-NrzxVmI0SCkSmqBHD5KATFVST/U="
         },
         "data": {
-          "range": "bytes=18833-13050366",
-          "checksum": "sha256-Awcz1TA42dp0kP7AR5FDq+nj4qqSFdceCGo9pX1sUcM="
+          "range": "bytes=18897-13050950",
+          "checksum": "sha256-84czOBJj/lC0p2T4XgRLa8hZCzN330ksSMOmK0ahKpQ="
         },
-        "checksum": "Q1jhhPGQT4LcUHs24mkcfUsTo4IJo="
+        "checksum": "Q1NrzxVmI0SCkSmqBHD5KATFVST/U="
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.8_git20261014-r1.apk",
-        "version": "3.14.8_git20261014-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.8_git20261021-r0.apk",
+        "version": "3.14.8_git20261021-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-18664",
-          "checksum": "sha1-6jtmn6YBs2VBTFqPIlQRUFdydsg="
+          "range": "bytes=0-18724",
+          "checksum": "sha1-nE9ZMpubkrRRNapx5TOtJiwqhsM="
         },
         "data": {
-          "range": "bytes=18665-20412",
-          "checksum": "sha256-I933kCxmUKnqjgCkrkXqpQfuEaw+VYgNIddXbPW2koY="
+          "range": "bytes=18725-20476",
+          "checksum": "sha256-vMtozjvSJxZAN0CX51+AZ2NhgTpYwC/x0eGeu9hzhpU="
         },
-        "checksum": "Q16jtmn6YBs2VBTFqPIlQRUFdydsg="
+        "checksum": "Q1nE9ZMpubkrRRNapx5TOtJiwqhsM="
       },
       {
         "name": "ttf-dejavu",

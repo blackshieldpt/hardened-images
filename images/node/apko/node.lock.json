@@ -42,22 +42,22 @@
       },
       {
         "name": "ca-certificates-bundle",
-        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20260909-r2.apk",
-        "version": "20260909-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20260909-r3.apk",
+        "version": "20260909-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9204",
-          "checksum": "sha1-zbsxuUTyaGsjqjVdn2gTRDfZs68="
+          "range": "bytes=0-11302",
+          "checksum": "sha1-8MLPVxhaLLo4YMbPIN2d/wZuNN4="
         },
         "data": {
-          "range": "bytes=9205-118396",
-          "checksum": "sha256-5sgQiXCdhc+M+zUGXFqJlI0png/UG4V3jQTRRlKIPec="
+          "range": "bytes=11303-119135",
+          "checksum": "sha256-1+IVu1WG99TBRcht9bbGKwOYWDqRH4fvl8TUSBiPCzE="
         },
-        "checksum": "Q1zbsxuUTyaGsjqjVdn2gTRDfZs68="
+        "checksum": "Q18MLPVxhaLLo4YMbPIN2d/wZuNN4="
       },
       {
         "name": "ld-linux-2.44",
@@ -270,22 +270,22 @@
       },
       {
         "name": "c-ares",
-        "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.8-r4.apk",
-        "version": "1.34.8-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.9-r0.apk",
+        "version": "1.34.9-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9024",
-          "checksum": "sha1-2SCH/QRLM+TuidVSGrNCoTg8Ffc="
+          "range": "bytes=0-8847",
+          "checksum": "sha1-q+mrnOSiDkvj5KgcADgvy4Iboao="
         },
         "data": {
-          "range": "bytes=9025-158961",
-          "checksum": "sha256-y5CifeWmrD9UTCHB3meRuSq5syIlhXaVrtsZkg525+A="
+          "range": "bytes=8848-162855",
+          "checksum": "sha256-DtKBXoS9z2uhh3HO3gDKN25SWFUalQg2J49dsJ7AZ68="
         },
-        "checksum": "Q12SCH/QRLM+TuidVSGrNCoTg8Ffc="
+        "checksum": "Q1q+mrnOSiDkvj5KgcADgvy4Iboao="
       },
       {
         "name": "libnghttp2-14",
@@ -364,6 +364,25 @@
         "checksum": "Q1W9piTcgyubhrducJCMM7+qErDxo="
       },
       {
+        "name": "libcrypto3",
+        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.5-r5.apk",
+        "version": "3.6.5-r5",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-17111",
+          "checksum": "sha1-2JONrpXfu8gu2IlmYlARH09n4hc="
+        },
+        "data": {
+          "range": "bytes=17112-2443428",
+          "checksum": "sha256-9Z1AJiD2hqV7iaOGmW2VpUYa3fUSyOTTJqzPKV6f2dI="
+        },
+        "checksum": "Q12JONrpXfu8gu2IlmYlARH09n4hc="
+      },
+      {
         "name": "openssl-4.0-libssl",
         "url": "https://packages.wolfi.dev/os/x86_64/openssl-4.0-libssl-4.0.3-r8.apk",
         "version": "4.0.3-r8",
@@ -383,42 +402,23 @@
         "checksum": "Q1arwi4n4L3VZ3S8YJ6P4WwY/7JjY="
       },
       {
-        "name": "libcrypto3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.6.5-r4.apk",
-        "version": "3.6.5-r4",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-17108",
-          "checksum": "sha1-GKRbhbfKmuOt5vxAE4LrYojP+XU="
-        },
-        "data": {
-          "range": "bytes=17109-2443421",
-          "checksum": "sha256-1fBSDcLjkcsSmKnBhOO6iYd6lPl+V+Pl1PPQsXGG0rE="
-        },
-        "checksum": "Q1GKRbhbfKmuOt5vxAE4LrYojP+XU="
-      },
-      {
         "name": "libssl3",
-        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.5-r4.apk",
-        "version": "3.6.5-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.6.5-r5.apk",
+        "version": "3.6.5-r5",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-17114",
-          "checksum": "sha1-mCNVfMCicy6hWG9aVPAcEc7HBpw="
+          "range": "bytes=0-17120",
+          "checksum": "sha1-Lfx+Bfr91VnKL7aK8HQ9fL9pG98="
         },
         "data": {
-          "range": "bytes=17115-535980",
-          "checksum": "sha256-ZmX9b4g142qYc+uvjzJV1wLq3KfPxGSmmMLnu/ZEKVo="
+          "range": "bytes=17121-535988",
+          "checksum": "sha256-adRPerbFxxNoAnflUUOmIloSU3L0eijfGvfxTcobUr4="
         },
-        "checksum": "Q1mCNVfMCicy6hWG9aVPAcEc7HBpw="
+        "checksum": "Q1Lfx+Bfr91VnKL7aK8HQ9fL9pG98="
       },
       {
         "name": "nodejs-22",
