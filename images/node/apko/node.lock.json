@@ -61,41 +61,41 @@
       },
       {
         "name": "ld-linux-2.44",
-        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.44-2.44-r8.apk",
-        "version": "2.44-r8",
+        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.44-2.44-r9.apk",
+        "version": "2.44-r9",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-16973",
-          "checksum": "sha1-aH28bsgAgF+jvjKr5gugOyjTbmY="
+          "range": "bytes=0-16905",
+          "checksum": "sha1-5+wLdaXDb9Nj1HxgRiXHO8eDid8="
         },
         "data": {
-          "range": "bytes=16974-157527",
-          "checksum": "sha256-eeUooeM4FEVU4mUeXQyXYZB/x+DKRvB0WT4I99IjWZ4="
+          "range": "bytes=16906-157472",
+          "checksum": "sha256-RiL53AP0bBiG2/8q16orAZNU7gIUOUiFFZsB5jZlYeU="
         },
-        "checksum": "Q1aH28bsgAgF+jvjKr5gugOyjTbmY="
+        "checksum": "Q15+wLdaXDb9Nj1HxgRiXHO8eDid8="
       },
       {
         "name": "glibc-2.44-locale-posix",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-locale-posix-2.44-r8.apk",
-        "version": "2.44-r8",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-locale-posix-2.44-r9.apk",
+        "version": "2.44-r9",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-16934",
-          "checksum": "sha1-HJs/adAnfhoPwDdF77QyY4qGAP4="
+          "range": "bytes=0-16864",
+          "checksum": "sha1-7w1Tc6WPa2u/SdKggOvcOz1icm4="
         },
         "data": {
-          "range": "bytes=16935-93693",
-          "checksum": "sha256-ool2LHFKFZGc0WGd88KosJ2kK88Da/hmt+Szp3QH9AU="
+          "range": "bytes=16865-93627",
+          "checksum": "sha256-rep1aSLyWhFToUNzOnGx7wzUkOOooW4o02trKwvwyUU="
         },
-        "checksum": "Q1HJs/adAnfhoPwDdF77QyY4qGAP4="
+        "checksum": "Q17w1Tc6WPa2u/SdKggOvcOz1icm4="
       },
       {
         "name": "libgcc",
@@ -118,60 +118,60 @@
       },
       {
         "name": "glibc-2.44",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-2.44-r8.apk",
-        "version": "2.44-r8",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-2.44-r9.apk",
+        "version": "2.44-r9",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-17173",
-          "checksum": "sha1-QD7MR3LUBjYC3CjWPYwBPlWUIF8="
+          "range": "bytes=0-17095",
+          "checksum": "sha1-e0zVOAZDLvu3gMZUtDdU1qxdFUY="
         },
         "data": {
-          "range": "bytes=17174-3163219",
-          "checksum": "sha256-QeZJXF+UO8mIijL0if6jOqs8Q8jv/FY9CHMOBsCbpS0="
+          "range": "bytes=17096-3163161",
+          "checksum": "sha256-ZyBLf4kWqxD+J21aLBoKOdUl6cyE7OzuvZDvJ+7VoT4="
         },
-        "checksum": "Q1QD7MR3LUBjYC3CjWPYwBPlWUIF8="
+        "checksum": "Q1e0zVOAZDLvu3gMZUtDdU1qxdFUY="
       },
       {
         "name": "libbrotlicommon1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlicommon1-1.2.0-r6.apk",
-        "version": "1.2.0-r6",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlicommon1-1.2.0-r7.apk",
+        "version": "1.2.0-r7",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8970",
-          "checksum": "sha1-dc3PylzTdc8zdEqIVEZhJSJF82c="
+          "range": "bytes=0-9651",
+          "checksum": "sha1-SwA7zD4dE5obL6+bjR5z2kUCBHc="
         },
         "data": {
-          "range": "bytes=8971-79013",
-          "checksum": "sha256-Gp8ZbCz1iuUsvPmfifgjZvHJWdLZhKTxJdHP7IVG/XU="
+          "range": "bytes=9652-79696",
+          "checksum": "sha256-0YLNL4sEkRwvxaRc3VTMpz3xxIfCCkMZ7KHZ+N5yTfA="
         },
-        "checksum": "Q1dc3PylzTdc8zdEqIVEZhJSJF82c="
+        "checksum": "Q1SwA7zD4dE5obL6+bjR5z2kUCBHc="
       },
       {
         "name": "libbrotlienc1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlienc1-1.2.0-r6.apk",
-        "version": "1.2.0-r6",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlienc1-1.2.0-r7.apk",
+        "version": "1.2.0-r7",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8992",
-          "checksum": "sha1-j2kuwO2hzFSUVqY1zCSjvxDsnk8="
+          "range": "bytes=0-9671",
+          "checksum": "sha1-ZAIiod3pAjV5FdPTjfkrheCpjws="
         },
         "data": {
-          "range": "bytes=8993-441629",
-          "checksum": "sha256-tCVzD6zy6NMq41r4YwcsCCa2SDdk4HGKTJQ+9C6J5ZI="
+          "range": "bytes=9672-442299",
+          "checksum": "sha256-xaBu9npTyge/bCbSDV248n7r93laSzHiaxpmPSpiOUA="
         },
-        "checksum": "Q1j2kuwO2hzFSUVqY1zCSjvxDsnk8="
+        "checksum": "Q1ZAIiod3pAjV5FdPTjfkrheCpjws="
       },
       {
         "name": "icu78-data-full",
@@ -251,22 +251,22 @@
       },
       {
         "name": "libbrotlidec1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlidec1-1.2.0-r6.apk",
-        "version": "1.2.0-r6",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlidec1-1.2.0-r7.apk",
+        "version": "1.2.0-r7",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8990",
-          "checksum": "sha1-3yN4bTma6mLQVL3QB0gpiBtrgE0="
+          "range": "bytes=0-9670",
+          "checksum": "sha1-T5kh9c/JKjTIbUZd5WjvTKuvLh8="
         },
         "data": {
-          "range": "bytes=8991-42308",
-          "checksum": "sha256-nEY7zkpXJLgl5eE3+RWEboc0eshw3P1pxraOgVFmhBk="
+          "range": "bytes=9671-42981",
+          "checksum": "sha256-YnoRCgrvwlFT4koTVv3QjakDN7UPoME4zCdmSUE7eWY="
         },
-        "checksum": "Q13yN4bTma6mLQVL3QB0gpiBtrgE0="
+        "checksum": "Q1T5kh9c/JKjTIbUZd5WjvTKuvLh8="
       },
       {
         "name": "c-ares",
@@ -441,41 +441,41 @@
       },
       {
         "name": "node-gyp",
-        "url": "https://packages.wolfi.dev/os/x86_64/node-gyp-13.1.0-r0.apk",
-        "version": "13.1.0-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/node-gyp-13.1.0-r1.apk",
+        "version": "13.1.0-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-2269",
-          "checksum": "sha1-9iI9LoOhkehvhUIFdXjGWQH3MKc="
+          "range": "bytes=0-2255",
+          "checksum": "sha1-Zvd20vOJ+R1tvNiRo7TMbHSuV84="
         },
         "data": {
-          "range": "bytes=2270-1931139",
-          "checksum": "sha256-kCVHxWMxICSCDfvYI+LUGliUL1k09BzUChWmCqBa+4M="
+          "range": "bytes=2256-2005956",
+          "checksum": "sha256-Ez0s4LHT0e8vXkS/+FbDXKHgWE42c76GufSsAA7nvTg="
         },
-        "checksum": "Q19iI9LoOhkehvhUIFdXjGWQH3MKc="
+        "checksum": "Q1Zvd20vOJ+R1tvNiRo7TMbHSuV84="
       },
       {
         "name": "npm-12",
-        "url": "https://packages.wolfi.dev/os/x86_64/npm-12-12.2.1-r0.apk",
-        "version": "12.2.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/npm-12-12.2.1-r1.apk",
+        "version": "12.2.1-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8320",
-          "checksum": "sha1-YJsIIbweOxn6VLNHdSRC9msa4/4="
+          "range": "bytes=0-8311",
+          "checksum": "sha1-fc8quxdUthBoZCjQQr/XsR6OM0A="
         },
         "data": {
-          "range": "bytes=8321-1914025",
-          "checksum": "sha256-NhKk1xVSTkhaHdyRaVw5TQBpBgHr1iZJZ+PigAH0nz8="
+          "range": "bytes=8312-1914530",
+          "checksum": "sha256-Z6ILxV24VdJh8vSf+11kf3iJnMFUpYCQ4ibFFBuX9y4="
         },
-        "checksum": "Q1YJsIIbweOxn6VLNHdSRC9msa4/4="
+        "checksum": "Q1fc8quxdUthBoZCjQQr/XsR6OM0A="
       }
     ]
   }

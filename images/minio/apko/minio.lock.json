@@ -61,41 +61,41 @@
       },
       {
         "name": "mc",
-        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r26.apk",
-        "version": "0.20250813.083541-r26",
+        "url": "https://packages.wolfi.dev/os/x86_64/mc-0.20250813.083541-r27.apk",
+        "version": "0.20250813.083541-r27",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7140",
-          "checksum": "sha1-IUhH8OMaHDg3acL2dEY3S8rx84U="
+          "range": "bytes=0-7134",
+          "checksum": "sha1-zLW+nXUO/oPYg18UW111e9Qn838="
         },
         "data": {
-          "range": "bytes=7141-12574782",
-          "checksum": "sha256-kD8RvvAbJp+6ZJWUYWz26HCxn078wxTcnwZwmDQTDaM="
+          "range": "bytes=7135-12591442",
+          "checksum": "sha256-G5h4R0lbCQ1ZVpqlAJ7CzBDY9Rxpl/LvHt8ZzgXJX5o="
         },
-        "checksum": "Q1IUhH8OMaHDg3acL2dEY3S8rx84U="
+        "checksum": "Q1zLW+nXUO/oPYg18UW111e9Qn838="
       },
       {
         "name": "minio",
-        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260922.192518-r4.apk",
-        "version": "0.20260922.192518-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20260922.192518-r5.apk",
+        "version": "0.20260922.192518-r5",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7793",
-          "checksum": "sha1-MouBBMrmyGhk14tbyd+EaEcMVLg="
+          "range": "bytes=0-7781",
+          "checksum": "sha1-2k6+mIvXUoYLPOJHf12Emciv6w0="
         },
         "data": {
-          "range": "bytes=7794-41192042",
-          "checksum": "sha256-mNJCGYHC/cFjpUhwcg4rxRq/MqA6iuPB0QBTGAP+uFU="
+          "range": "bytes=7782-41206542",
+          "checksum": "sha256-WvE3LdMhCdTo5v+MOH2P+Qme2+z3jIzCQfVCEo25f6s="
         },
-        "checksum": "Q1MouBBMrmyGhk14tbyd+EaEcMVLg="
+        "checksum": "Q12k6+mIvXUoYLPOJHf12Emciv6w0="
       }
     ]
   }
