@@ -6,10 +6,21 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-10-23
+
+Minor release, and the first to drop an image: `node` (Node.js 22) is gone,
+because Wolfi never shipped the fix for the October 2026 Node.js security
+release (`CVE-2026-111497`, a Brotli decoder out-of-bounds write that can lead
+to RCE, plus nine others). `node24` and `node26` already carry the fixed
+24.22.1 and 26.12.1 through the daily relock. `mailpit` and `versitygw` move up
+a release within the lines they already track.
+
 ### Removed
 - `node` (Node.js 22, Wolfi `nodejs-22`). The package had not been rebuilt in 77
-  days and Node.js published a serious CVE on 2026-10-23. Use `node24` or `node26`;
-  the already-published `ghcr.io/blackshieldpt/node` tags get no further rebuilds.
+  days and is still on 22.23.2, so it cannot pick up the 22.23.4 fixes for the
+  October 2026 Node.js security release (published 2026-10-21). Use `node24` or
+  `node26`; the already-published `ghcr.io/blackshieldpt/node` tags get no
+  further rebuilds.
 
 ### Changed
 - `mailpit` 1.31.5 -> 1.31.6. Upstream's `go.mod` is unchanged (x/crypto v0.58.0,
@@ -905,7 +916,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.2...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.2...v0.11.0
 [0.10.2]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.1...v0.10.2
 [0.10.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.9.0...v0.10.0
