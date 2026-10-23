@@ -327,60 +327,60 @@
       },
       {
         "name": "libbrotlicommon1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlicommon1-1.2.0-r7.apk",
-        "version": "1.2.0-r7",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlicommon1-1.2.1-r0.apk",
+        "version": "1.2.1-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9651",
-          "checksum": "sha1-SwA7zD4dE5obL6+bjR5z2kUCBHc="
+          "range": "bytes=0-9046",
+          "checksum": "sha1-1hYyyA988+/bBMaSmGeXLGzF+0I="
         },
         "data": {
-          "range": "bytes=9652-79696",
-          "checksum": "sha256-0YLNL4sEkRwvxaRc3VTMpz3xxIfCCkMZ7KHZ+N5yTfA="
+          "range": "bytes=9047-79089",
+          "checksum": "sha256-00ObCZq143Tn1pZnuy/bECDM8wAALWbPsm8LZZ0F5/k="
         },
-        "checksum": "Q1SwA7zD4dE5obL6+bjR5z2kUCBHc="
+        "checksum": "Q11hYyyA988+/bBMaSmGeXLGzF+0I="
       },
       {
         "name": "libbrotlienc1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlienc1-1.2.0-r7.apk",
-        "version": "1.2.0-r7",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlienc1-1.2.1-r0.apk",
+        "version": "1.2.1-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9671",
-          "checksum": "sha1-ZAIiod3pAjV5FdPTjfkrheCpjws="
+          "range": "bytes=0-9073",
+          "checksum": "sha1-9jvhXIKtJxuGeu3kE2wkfX6McnU="
         },
         "data": {
-          "range": "bytes=9672-442299",
-          "checksum": "sha256-xaBu9npTyge/bCbSDV248n7r93laSzHiaxpmPSpiOUA="
+          "range": "bytes=9074-441706",
+          "checksum": "sha256-vdkGYkHMn89dIf8mdqaIG79S9TIlr7ZAAi5oxNL6RuA="
         },
-        "checksum": "Q1ZAIiod3pAjV5FdPTjfkrheCpjws="
+        "checksum": "Q19jvhXIKtJxuGeu3kE2wkfX6McnU="
       },
       {
         "name": "libbrotlidec1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlidec1-1.2.0-r7.apk",
-        "version": "1.2.0-r7",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlidec1-1.2.1-r0.apk",
+        "version": "1.2.1-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9670",
-          "checksum": "sha1-T5kh9c/JKjTIbUZd5WjvTKuvLh8="
+          "range": "bytes=0-9071",
+          "checksum": "sha1-uL41oW+lAyFdQgedMwnv+1Wu3Vs="
         },
         "data": {
-          "range": "bytes=9671-42981",
-          "checksum": "sha256-YnoRCgrvwlFT4koTVv3QjakDN7UPoME4zCdmSUE7eWY="
+          "range": "bytes=9072-42384",
+          "checksum": "sha256-vhtW5IP0a/SBFxqxFVjHH9RCOQkAkPaJOKEuauemYAE="
         },
-        "checksum": "Q1T5kh9c/JKjTIbUZd5WjvTKuvLh8="
+        "checksum": "Q1uL41oW+lAyFdQgedMwnv+1Wu3Vs="
       },
       {
         "name": "openssl-4.0-libcrypto",
@@ -536,22 +536,22 @@
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.8_git20261021-r1.apk",
-        "version": "3.14.8_git20261021-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.8_git20261021-r2.apk",
+        "version": "3.14.8_git20261021-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-19411",
-          "checksum": "sha1-rHEzWpiaYjVNthLPmHyh/Fpkr0M="
+          "range": "bytes=0-19823",
+          "checksum": "sha1-2P50wzpv3FhprzI+4gA4rHsotM8="
         },
         "data": {
-          "range": "bytes=19412-13045364",
-          "checksum": "sha256-VSgbQkH+avwi3bcyRhacLjhhuz9A51n+V7DH/fe48EI="
+          "range": "bytes=19824-13043204",
+          "checksum": "sha256-eNxPw81q/gFmqFFVnN36u1yknwM7H8UyJVs/4tfV87A="
         },
-        "checksum": "Q1rHEzWpiaYjVNthLPmHyh/Fpkr0M="
+        "checksum": "Q12P50wzpv3FhprzI+4gA4rHsotM8="
       },
       {
         "name": "py3.14-setuptools",
@@ -612,41 +612,41 @@
       },
       {
         "name": "python-3.14-runtime",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-runtime-3.14.8_git20261021-r1.apk",
-        "version": "3.14.8_git20261021-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-runtime-3.14.8_git20261021-r2.apk",
+        "version": "3.14.8_git20261021-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-19229",
-          "checksum": "sha1-fQuHg7F0+Pdwcwwh0FJynv/B44U="
+          "range": "bytes=0-19652",
+          "checksum": "sha1-Z+dcukw1CvFDjyC5sU+mmaUL+jg="
         },
         "data": {
-          "range": "bytes=19230-20989",
-          "checksum": "sha256-TmYFvzssJCHOygYf8Ty/JMGSxd/6IS1ATknRWz9nhvc="
+          "range": "bytes=19653-21412",
+          "checksum": "sha256-ZzAk8PyL+x0TkgZdsnOldSyMAbQDZ3SEZ6hfW86R5ts="
         },
-        "checksum": "Q1fQuHg7F0+Pdwcwwh0FJynv/B44U="
+        "checksum": "Q1Z+dcukw1CvFDjyC5sU+mmaUL+jg="
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.8_git20261021-r1.apk",
-        "version": "3.14.8_git20261021-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.8_git20261021-r2.apk",
+        "version": "3.14.8_git20261021-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-19238",
-          "checksum": "sha1-zzyrol4Ld5Rt6+u6WcG+d+1a74k="
+          "range": "bytes=0-19660",
+          "checksum": "sha1-Mze3J/6uWrXfX53mBIGjGpcvAds="
         },
         "data": {
-          "range": "bytes=19239-20695",
-          "checksum": "sha256-tLu1p4K60cOmQ4m1nZ21OUlhERPhdYM64OVCdxefeh0="
+          "range": "bytes=19661-21118",
+          "checksum": "sha256-7ULPdoRyarfJQtaF0+Q2iLO+bpBA5177OSspYioZ3Z0="
         },
-        "checksum": "Q1zzyrol4Ld5Rt6+u6WcG+d+1a74k="
+        "checksum": "Q1Mze3J/6uWrXfX53mBIGjGpcvAds="
       }
     ]
   }
