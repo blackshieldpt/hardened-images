@@ -6,6 +6,34 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Added
+- **`kafka44`: Apache Kafka 4.4** (4.4.0), alongside `kafka` (4.3). A separate
+  image rather than a bump because 4.4 storage directories are not
+  forward-compatible: a directory formatted by 4.4 cannot be opened by a 4.3
+  broker, and the entrypoint formats storage on first boot, so moving a volume
+  to `kafka44` is one-way. 4.4.0 already ships the jackson, log4j2 and jline
+  versions `kafka` patched in up to 4.3.1; the one remaining swap is lz4-java 1.11.2 ->
+  1.11.4 (GHSA-mcr4-qmvw-px4g High, plus a Medium and a Low). Connect is removed
+  as in `kafka`.
+
+### Changed
+- `kafka` 4.3.1 -> 4.3.2, now pinned to the 4.3 line (`tag-filter: "4.3."`). The
+  old `"4."` filter reported 4.4.0 as the latest, which hid 4.3.2. 4.3.2 ships
+  every jar this image used to replace at the fixed version or newer (jackson
+  2.21.7, log4j2 2.25.5, lz4-java 1.11.4, jline 3.30.15 split into modules
+  without builtins/telnet), so the jar-swap step and its build and smoke-test
+  assertions are removed. Connect is still dropped.
+- `etcd` 3.6.15 -> 3.6.16. Upstream still ships grpc v1.83.2 and now gorilla/websocket
+  v1.5.3 and x/net v0.61.0 itself; the lockstep floor pins are unchanged.
+- `mailpit` 1.31.6 -> 1.32.0. Upstream's `go.mod` is unchanged (x/crypto v0.58.0,
+  x/net v0.61.0, x/text v0.43.0, x/image v0.47.0); still no overrides needed.
+- `versitygw` 1.9.0 -> 1.10.0. Upstream now carries x/net v0.61.0, x/crypto
+  v0.58.0 and x/text v0.43.0 itself, so the x/net v0.61.0 override no longer moves
+  anything; it stays for now.
+- `clickhouse` 26.7.34.3 -> 26.7.37.6, a patch release within the 26.7 line.
+  `config.xml` and `users.xml` are byte-identical to 26.7.34.3; only the tarball
+  sha256 moves.
+
 ## [0.11.0] - 2026-10-23
 
 Minor release, and the first to drop an image: `node` (Node.js 22) is gone,

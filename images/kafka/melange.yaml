@@ -14,21 +14,26 @@
 # Because nothing was wrong with Kafka itself, this repackages the upstream
 # tarball rather than building from source -- a Gradle/Scala build would produce
 # the same vulnerable jars, since upstream's own dependencies.gradle pins
-# jackson 2.21.2, jetty 12.0.34 and jline 3.30.4 at both 4.3.0 and 4.3.1. The
-# two pipeline steps below are the actual fix.
+# jackson 2.21.2, jetty 12.0.34 and jline 3.30.4 at both 4.3.0 and 4.3.1.
+#
+# 4.3.2 ships every jar this recipe used to replace at the fixed version or
+# newer (jackson 2.21.7, log4j2 2.25.5, lz4-java 1.11.4, and jline 3.30.15 split
+# into jline-reader/-terminal/-native without the builtins/telnet modules the
+# jline findings are in), so the jar swaps are gone. Dropping Connect is what
+# remains of the fix.
 package:
   name: kafka-hardened
-  version: 4.3.1
+  version: 4.3.2
   epoch: 0
-  description: "Apache Kafka (KRaft, upstream distribution repackaged with patched jars) + hardened config"
+  description: "Apache Kafka (KRaft, upstream distribution repackaged without Connect) + hardened config"
   copyright:
     - license: Apache-2.0
 
 vars:
   scala: "2.13"
-  # sha256 of kafka_2.13-4.3.1.tgz, cross-checked against the SHA-512 Apache
-  # publishes next to it (downloads.apache.org/kafka/4.3.1/...tgz.sha512).
-  sha256: f118328b2d053497350d5befd82c08db7ffd710327ff52943dd5caaa1b25db21
+  # sha256 of kafka_2.13-4.3.2.tgz, cross-checked against the SHA-512 Apache
+  # publishes next to it (downloads.apache.org/kafka/4.3.2/...tgz.sha512).
+  sha256: 023a48609152d9ca621709448e2db71ca080b96258447a7d39d2798c262a8526
 
 environment:
   contents:
@@ -83,50 +88,6 @@ pipeline:
       # instead of not being there.
       rm -f "${{targets.destdir}}"/usr/lib/kafka/bin/connect-*.sh
 
-  - name: Replace the jars upstream pins at a vulnerable version
-    runs: |
-      # Each line is <group> <artifact> <old> <new> <sha256-of-new>. The old
-      # version is named so the build fails when upstream moves on and the swap
-      # would silently be a DOWNGRADE -- the one failure mode a patched-jar image
-      # cannot detect by scanning, since the scan would simply look clean.
-      #
-      # jackson-annotations is deliberately absent: it tracks the minor line only
-      # (2.21, no patch releases exist) and carries no findings.
-      # lz4-java is at.yawk.lz4, not org.lz4 -- Kafka bundles the maintained fork,
-      # and org.lz4 stops at 1.8.1, so the obvious coordinate is the wrong one.
-      lib="${{targets.destdir}}/usr/lib/kafka/libs"
-      while read -r group artifact old new sum; do
-          [ -n "$group" ] || continue
-          test -f "${lib}/${artifact}-${old}.jar" || {
-              echo "expected ${artifact}-${old}.jar in the distribution; upstream has moved — recheck the advisory before bumping" >&2
-              exit 1
-          }
-          # Maven Central has answered CI runners with a 403 that outlasts the
-          # retries, so fall back to Google's mirror of it. The sha256 check below
-          # is what we trust, not the host, so a second source costs nothing.
-          path="$(echo "$group" | tr . /)/${artifact}/${new}/${artifact}-${new}.jar"
-          curl -fsSL --retry 5 --retry-all-errors "https://repo1.maven.org/maven2/${path}" -o "${lib}/${artifact}-${new}.jar" ||
-            curl -fsSL --retry 5 --retry-all-errors "https://maven-central.storage-download.googleapis.com/maven2/${path}" -o "${lib}/${artifact}-${new}.jar"
-          echo "${sum}  ${lib}/${artifact}-${new}.jar" | sha256sum -c -
-          rm -f "${lib}/${artifact}-${old}.jar"
-      done <<'EOF'
-      com.fasterxml.jackson.core jackson-core 2.21.2 2.21.7 8c5623b98f32d5f7e1287ff61ed50e08ab7b11381e991fff89327faabba42261
-      com.fasterxml.jackson.core jackson-databind 2.21.2 2.21.7 1290c2795e93e8a6861a6c4d9ff0d844d32f5ea178362cb2721edf5561e828b1
-      com.fasterxml.jackson.dataformat jackson-dataformat-csv 2.21.2 2.21.7 588050148497158cabdc05c0ae3a7e123194a486b8c62745778fc6239f9b085e
-      com.fasterxml.jackson.dataformat jackson-dataformat-yaml 2.21.2 2.21.7 df2b3e6a194181dc067b7211d750926b4ae9e4f3c892a0005b8219a9b59be681
-      com.fasterxml.jackson.datatype jackson-datatype-jdk8 2.21.2 2.21.7 b8f62f98363ed9aa259b3a479a64fcbe7e081158a8bec6733972e900d12f4e47
-      com.fasterxml.jackson.jakarta.rs jackson-jakarta-rs-base 2.21.2 2.21.7 202b61a95e735d01ae03e411b8f6ae1245bbf19c87d4746c0204579f5c2e456b
-      com.fasterxml.jackson.jakarta.rs jackson-jakarta-rs-json-provider 2.21.2 2.21.7 32473ee172e0c181ba63688ee4a94349de77de05bd4279d0846a9515a56bb0fe
-      com.fasterxml.jackson.module jackson-module-blackbird 2.21.2 2.21.7 b41fb816cbaa5f2393136cf1c525e0d9a9f9bcea14207a09e8e703df53351596
-      com.fasterxml.jackson.module jackson-module-jakarta-xmlbind-annotations 2.21.2 2.21.7 76054ca6e252e7142fec9c0e9a146bd8c43cde13dddf2d1cdaecd9db981c2ddc
-      org.jline jline 3.30.4 3.30.17 32ca18a3b5c742bc8a7b42af61ad9b3320dab525361b793ea9e3cb361e292c1d
-      org.apache.logging.log4j log4j-1.2-api 2.25.4 2.25.5 4dd812dc5a6343f542a9e0046b1ec78ecf10bdd5a8c15745101cdd8b9aa24974
-      org.apache.logging.log4j log4j-api 2.25.4 2.25.5 64777f73ea0b3104c04eb82befbdccc30a425a19e83ad06cb2f93aa303511863
-      org.apache.logging.log4j log4j-core 2.25.4 2.25.5 050c4f85deb48b055e9c041ac39043fbb79ce477841a11a1eb2969c86c6a0072
-      org.apache.logging.log4j log4j-slf4j-impl 2.25.4 2.25.5 3d25b926bc6025c47ec010459749c12aa66b9d5537ba1922d67d89a098a66607
-      at.yawk.lz4 lz4-java 1.10.2 1.11.1 e5e31b195fcc7e9c5da4b191af3b0082ee616c13f61cbd79409ffa65e4dd5c47
-      EOF
-
   - name: Install the hardened config and entrypoint
     runs: |
       install -Dm0644 server.properties "${{targets.destdir}}/etc/kafka/server.properties"
@@ -138,25 +99,13 @@ pipeline:
       test -f "$lib/kafka_${{vars.scala}}-${{package.version}}.jar"
       test -x "${{targets.destdir}}/usr/lib/kafka/bin/kafka-server-start.sh"
       test -x "${{targets.destdir}}/usr/lib/kafka/bin/kafka-storage.sh"
-      # Every replaced jar, by exact name. test.sh asserts the same set against
-      # the running image, so neither a bump nor a refactor can quietly restore a
-      # vulnerable jar.
-      for jar in jackson-core-2.21.7 jackson-databind-2.21.7 jline-3.30.17 \
-                 log4j-core-2.25.5 log4j-api-2.25.5 lz4-java-1.11.1; do
-          test -f "$lib/${jar}.jar" || { echo "MISSING: ${jar}.jar" >&2; exit 1; }
-      done
-      # Nothing from the replaced set may survive at its old version.
-      stray="$(ls "$lib" | grep -E '^(jackson-(core|databind|dataformat|datatype|jakarta|module)[a-z-]*-2\.21\.2|jline-3\.30\.4|log4j-[a-z0-9.-]*-2\.25\.4|lz4-java-1\.10\.2)\.jar$' || true)"
-      if [ -n "$stray" ]; then
-          echo "ERROR: vulnerable jars survived replacement:" >&2
-          echo "$stray" >&2
-          exit 1
-      fi
 
 update:
   enabled: true
   github:
     identifier: apache/kafka
     use-tag: true
-    # Kafka tags releases bare (4.3.1), with no prefix to strip.
-    tag-filter: "4."
+    # Kafka tags releases bare (4.3.2), with no prefix to strip. 4.3 only: 4.4
+    # storage directories are not readable by a 4.3 broker, so 4.4 lives in
+    # images/kafka44 instead of arriving here as a bump.
+    tag-filter: "4.3."

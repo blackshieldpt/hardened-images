@@ -1,13 +1,13 @@
 # Hardened Kafka
 
-Wolfi-based hardened Apache Kafka image (KRaft mode), assembled with apko from the upstream Apache distribution — repackaged by melange with Connect removed and its vulnerable bundled jars replaced — plus the KRaft config and entrypoint.
+Wolfi-based hardened Apache Kafka image (KRaft mode), assembled with apko from the upstream Apache distribution — repackaged by melange with Connect removed — plus the KRaft config and entrypoint.
 
 ## Details
 
 | Property   | Value |
 |------------|-------|
-| Build      | apko + melange (upstream tarball repackaged, patched jars) |
-| Version    | 4.3.1 |
+| Build      | apko + melange (upstream tarball repackaged, Connect removed) |
+| Version    | 4.3.2 |
 | User       | kafka (UID 65532) |
 | Shell      | bash + busybox |
 | Image size | ~361 MB |
@@ -22,7 +22,7 @@ Wolfi-based hardened Apache Kafka image (KRaft mode), assembled with apko from t
 ## Usage
 
 ```bash
-docker run -d -p 9092:9092 -v kafkadata:/var/kafka/data hub.blackshield.pt/test_images/kafka:4.3.1
+docker run -d -p 9092:9092 -v kafkadata:/var/kafka/data hub.blackshield.pt/test_images/kafka:4.3.2
 ```
 
 | Variable | Default | Description |
@@ -58,9 +58,10 @@ The image carried 7 High and 14 Medium findings as a result.
 Every one of them was a **bundled jar**, not Kafka's own code — so a build from
 source would have reproduced them exactly: upstream's `dependencies.gradle` pins
 jackson 2.21.2, jetty 12.0.34 and jline 3.30.4 at both 4.3.0 and 4.3.1. The fix is
-therefore to repackage the upstream distribution and change the jars:
+therefore to repackage the upstream distribution and change the jars. Up to 4.3.1
+this image swapped them:
 
-| Jar | Upstream 4.3.1 | Shipped here | Why |
+| Jar | Upstream 4.3.1 | Shipped up to 4.3.1 | Why |
 |---|---|---|---|
 | jetty (10 jars), jersey (6), swagger | 12.0.34 / 3.1.10 | **removed** | Connect-only; see below. Clears GHSA-2fvj-hgj9-j2gr (High) and two Mediums |
 | jackson (9 jars) | 2.21.2 | **2.21.7** | GHSA-j3rv-43j4-c7qm, GHSA-rmj7-2vxq-3g9f, GHSA-r7wm-3cxj-wff9, GHSA-7hhh-6rmp-j9qf, GHSA-p6pp-m3f8-5c89, GHSA-cxp5-3px4-pw24, GHSA-q4xh-88c3-wmh7, GHSA-wv8q-qhhj-9h54 (High) + 9 Mediums |
@@ -71,10 +72,10 @@ therefore to repackage the upstream distribution and change the jars:
 `jackson-annotations` stays at 2.21: it tracks the minor line only, publishes no
 patch releases, and carries no findings.
 
-Each replacement names the version it replaces and fails the build if that version
-is not what upstream shipped, so a Kafka bump cannot silently turn a swap into a
-downgrade. The melange build asserts the patched jars by exact filename and the
-smoke test asserts the same set against the running image.
+4.3.2 ships all of these at the fixed version or newer (jackson 2.21.7, log4j2
+2.25.5, lz4-java 1.11.4, and jline 3.30.15 split into `jline-reader`/`-terminal`/
+`-native` without the builtins/telnet modules the jline findings are in), so the
+swaps are gone. Removing Connect is the part of the fix that remains.
 
 ## Kafka Connect is not included
 
@@ -91,3 +92,6 @@ started rather than being absent.
 - Single-node **KRaft** mode (broker + controller) — no ZooKeeper required. The entrypoint formats KRaft storage on first boot.
 - Config at `/etc/kafka/server.properties`; CLI tools under `/usr/lib/kafka/bin/`.
 - A standalone `zookeeper` image is also published for ZooKeeper-mode deployments.
+- This image stays on the 4.3 line. Kafka 4.4 is the separate `kafka44` image:
+  storage formatted by 4.4 cannot be opened by a 4.3 broker, so the move is one-way
+  and made by switching image, not by a tag bump.

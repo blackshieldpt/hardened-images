@@ -1,0 +1,148 @@
+# Repackages the upstream Apache Kafka 4.4 binary distribution (KRaft) and ships
+# the hardened server.properties + entrypoint. server.properties/entrypoint.sh are
+# read from images/kafka44 via --source-dir.
+#
+# A separate image from `kafka` (4.3) because 4.4 storage directories are not
+# forward-compatible: a directory formatted by 4.4's kafka-storage cannot be
+# opened by a 4.3 broker. The entrypoint formats storage on first boot, so a
+# 4.3 -> 4.4 bump arriving under the same tag would make the volume impossible
+# to roll back. Moving to 4.4 is a choice made by switching image.
+#
+# Same approach as images/kafka (see its melange.yaml for why this repackages the
+# upstream tarball rather than building from source or using Wolfi's frozen
+# kafka-4.3). 4.4.0 already ships every jar images/kafka replaced up to 4.3.1 --
+# jackson 2.21.7, log4j2 2.25.5, and jline 3.30.16 (past the 3.30.14/3.30.15
+# fixes, and now split into jline-reader/-terminal/-native, without the
+# builtins/telnet modules those findings are in) -- so the only swap left is
+# lz4-java, which 4.4.0 ships at 1.11.2.
+#
+# The package name differs from kafka's on purpose: both land in the shared
+# ./packages repo, and the same name would let apko pick either one.
+package:
+  name: kafka44-hardened
+  version: 4.4.0
+  epoch: 0
+  description: "Apache Kafka (KRaft, upstream distribution repackaged with patched jars) + hardened config"
+  copyright:
+    - license: Apache-2.0
+
+vars:
+  scala: "2.13"
+  # sha256 of kafka_2.13-4.4.0.tgz, cross-checked against the SHA-512 Apache
+  # publishes next to it (downloads.apache.org/kafka/4.4.0/...tgz.sha512).
+  sha256: 5d46df16e8dbd228fed83c3e6fc4306916cf3d9156184a7fc2462e9ad9711a7d
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+      - ca-certificates-bundle
+      - curl
+
+pipeline:
+  - name: Unpack the upstream distribution
+    runs: |
+      curl -fsSL --retry 5 --retry-all-errors \
+        "https://archive.apache.org/dist/kafka/${{package.version}}/kafka_${{vars.scala}}-${{package.version}}.tgz" \
+        -o kafka.tgz
+      echo "${{vars.sha256}}  kafka.tgz" | sha256sum -c -
+      tar xzf kafka.tgz
+      src="kafka_${{vars.scala}}-${{package.version}}"
+      dest="${{targets.destdir}}/usr/lib/kafka"
+      install -d "$dest"
+      cp -a "$src/bin" "$src/libs" "$src/config" "$dest/"
+      # The distribution carries Windows launchers; the Wolfi package pruned them
+      # and so do we, rather than ship 30-odd .bat files that cannot run here.
+      rm -rf "$dest/bin/windows"
+
+  - name: Drop Connect — this image is a broker, and Connect is what pulls Jetty
+    runs: |
+      # jetty-*, jersey-*, swagger-annotations and connect-* exist for the Kafka
+      # Connect REST runtime. The entrypoint starts kafka-server-start.sh and
+      # nothing else; a broker never loads them. Removing them clears all three
+      # jetty findings outright (GHSA-2fvj-hgj9-j2gr High, plus two Mediums)
+      # instead of chasing patch versions of a stack this image does not run.
+      #
+      # Consequence for consumers, documented in the image README: this image
+      # cannot run connect-distributed.sh or connect-standalone.sh. It could not
+      # usefully do so before either -- Connect wants its own config, its own
+      # ports and its own lifecycle -- but it would previously have started.
+      lib="${{targets.destdir}}/usr/lib/kafka/libs"
+      # Checked before and after: `rm -f <glob>` followed by a check for the same
+      # glob can only pass, so the failure worth catching is upstream renaming the
+      # artifacts, which would make the rm a silent no-match.
+      before="$(ls "$lib" | grep -cE '^(connect-|jetty-|jersey-|swagger-)' || true)"
+      [ "$before" -ge 20 ] || { echo "expected >=20 Connect/Jetty/Jersey jars, found ${before} — did upstream restructure libs/?" >&2; exit 1; }
+      rm -f "$lib"/connect-*.jar "$lib"/jetty-*.jar "$lib"/jersey-*.jar "$lib"/swagger-annotations-*.jar
+      after="$(ls "$lib" | grep -cE '^(connect-|jetty-|jersey-|swagger-)' || true)"
+      [ "$after" -eq 0 ] || { echo "Connect/Jetty/Jersey jars survived removal:" >&2; ls "$lib" | grep -E '^(connect-|jetty-|jersey-|swagger-)' >&2; exit 1; }
+      # The Connect launchers are dead without their jars. Leaving them would let
+      # someone start a process that fails on NoClassDefFoundError at runtime
+      # instead of not being there.
+      rm -f "${{targets.destdir}}"/usr/lib/kafka/bin/connect-*.sh
+
+  - name: Replace the jars upstream pins at a vulnerable version
+    runs: |
+      # Each line is <group> <artifact> <old> <new> <sha256-of-new>. The old
+      # version is named so the build fails when upstream moves on and the swap
+      # would silently be a DOWNGRADE -- the one failure mode a patched-jar image
+      # cannot detect by scanning, since the scan would simply look clean.
+      #
+      # lz4-java is at.yawk.lz4, not org.lz4 -- Kafka bundles the maintained fork,
+      # and org.lz4 stops at 1.8.1, so the obvious coordinate is the wrong one.
+      lib="${{targets.destdir}}/usr/lib/kafka/libs"
+      while read -r group artifact old new sum; do
+          [ -n "$group" ] || continue
+          test -f "${lib}/${artifact}-${old}.jar" || {
+              echo "expected ${artifact}-${old}.jar in the distribution; upstream has moved — recheck the advisory before bumping" >&2
+              exit 1
+          }
+          # Maven Central has answered CI runners with a 403 that outlasts the
+          # retries, so fall back to Google's mirror of it. The sha256 check below
+          # is what we trust, not the host, so a second source costs nothing.
+          path="$(echo "$group" | tr . /)/${artifact}/${new}/${artifact}-${new}.jar"
+          curl -fsSL --retry 5 --retry-all-errors "https://repo1.maven.org/maven2/${path}" -o "${lib}/${artifact}-${new}.jar" ||
+            curl -fsSL --retry 5 --retry-all-errors "https://maven-central.storage-download.googleapis.com/maven2/${path}" -o "${lib}/${artifact}-${new}.jar"
+          echo "${sum}  ${lib}/${artifact}-${new}.jar" | sha256sum -c -
+          rm -f "${lib}/${artifact}-${old}.jar"
+      done <<'EOF'
+      at.yawk.lz4 lz4-java 1.11.2 1.11.4 58c8e0b813960d2a248e050c353baea73139b48a2ffc55382d42c69707e17325
+      EOF
+
+  - name: Install the hardened config and entrypoint
+    runs: |
+      install -Dm0644 server.properties "${{targets.destdir}}/etc/kafka/server.properties"
+      install -Dm0755 entrypoint.sh "${{targets.destdir}}/usr/bin/kafka-entrypoint.sh"
+
+  - name: Verify what was built
+    runs: |
+      lib="${{targets.destdir}}/usr/lib/kafka/libs"
+      test -f "$lib/kafka_${{vars.scala}}-${{package.version}}.jar"
+      test -x "${{targets.destdir}}/usr/lib/kafka/bin/kafka-server-start.sh"
+      test -x "${{targets.destdir}}/usr/lib/kafka/bin/kafka-storage.sh"
+      # Every replaced jar, by exact name. test.sh asserts the same set against
+      # the running image, so neither a bump nor a refactor can quietly restore a
+      # vulnerable jar.
+      for jar in lz4-java-1.11.4; do
+          test -f "$lib/${jar}.jar" || { echo "MISSING: ${jar}.jar" >&2; exit 1; }
+      done
+      # Nothing from the replaced set may survive at its old version.
+      stray="$(ls "$lib" | grep -E '^lz4-java-1\.11\.2\.jar$' || true)"
+      if [ -n "$stray" ]; then
+          echo "ERROR: vulnerable jars survived replacement:" >&2
+          echo "$stray" >&2
+          exit 1
+      fi
+
+update:
+  enabled: true
+  github:
+    identifier: apache/kafka
+    use-tag: true
+    # Kafka tags releases bare (4.4.0), with no prefix to strip. 4.4 only: a new
+    # minor line gets its own image, for the reason in the header.
+    tag-filter: "4.4."

@@ -39,7 +39,7 @@ pipeline:
   # replace directives, so bumping a dep in server alone makes their go.mod
   # inconsistent and the build fails with "updates to go.mod needed". That is why
   # there was no bump step here — but v3.6.14 shipped grpc v1.82.1, which carries
-  # GHSA-2v4p-qf9q-27wj and GHSA-vp52-pcj8-j9qc (both High). v3.6.15 ships v1.83.2,
+  # GHSA-2v4p-qf9q-27wj and GHSA-vp52-pcj8-j9qc (both High). v3.6.16 ships v1.83.2,
   # which fixes both; the v1.84.0 pin below is kept as a floor.
   # The bump is therefore applied to all three modules in lockstep, which keeps the
   # replace directives consistent. GO-2026-5158 in otel (Medium, risk 0.1) is left.
