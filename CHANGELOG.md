@@ -23,6 +23,13 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
   2.21.7, log4j2 2.25.5, lz4-java 1.11.4, jline 3.30.15 split into modules
   without builtins/telnet), so the jar-swap step and its build and smoke-test
   assertions are removed. Connect is still dropped.
+- `etcd` 3.6.15 -> 3.6.16. Upstream still ships grpc v1.83.2 and now gorilla/websocket
+  v1.5.3 and x/net v0.61.0 itself; the lockstep floor pins are unchanged.
+- `mailpit` 1.31.6 -> 1.32.0. Upstream's `go.mod` is unchanged (x/crypto v0.58.0,
+  x/net v0.61.0, x/text v0.43.0, x/image v0.47.0); still no overrides needed.
+- `versitygw` 1.9.0 -> 1.10.0. Upstream now carries x/net v0.61.0, x/crypto
+  v0.58.0 and x/text v0.43.0 itself, so the x/net v0.61.0 override no longer moves
+  anything; it stays for now.
 - `clickhouse` 26.7.34.3 -> 26.7.37.6, a patch release within the 26.7 line.
   `config.xml` and `users.xml` are byte-identical to 26.7.34.3; only the tarball
   sha256 moves.
