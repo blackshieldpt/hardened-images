@@ -64,7 +64,6 @@ jobs:
         image:
           - nginx
           - nginx-acme
-          - node
           - node24
           - node26
           - go

@@ -57,7 +57,7 @@ dev_packages_for() {
         # where it lives — that is the stage apps install their dependencies in.
         python-sodium) echo "$base build-base git pkgconf glibc-dev py3.14-pip" ;;
         python315-sodium) echo "$base build-base git pkgconf glibc-dev py3.15-pip" ;;
-        node|node24|node26|python|python315|go) echo "$base build-base git pkgconf glibc-dev" ;;
+        node24|node26|python|python315|go) echo "$base build-base git pkgconf glibc-dev" ;;
         nginx|nginx-acme|mailpit) echo "$base curl openssl" ;;
         *)             echo "$base curl jq" ;;
     esac
@@ -66,7 +66,7 @@ dev_packages_for() {
 # Image-specific tools a dev variant must expose on PATH (asserted by tests).
 dev_tools_for() {
     case "$1" in
-        node|node24|node26|python|python-sodium|python315|python315-sodium|go) echo "gcc git" ;;
+        node24|node26|python|python-sodium|python315|python315-sodium|go) echo "gcc git" ;;
         nginx|mailpit) echo "curl openssl" ;;
         *)             echo "curl jq" ;;
     esac

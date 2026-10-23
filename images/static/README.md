@@ -44,7 +44,7 @@ write to it.
 
 - **The binary links libc dynamically.** There is no `glibc-dynamic` here on
   purpose — carrying one would make this a worse copy of a real runtime instead
-  of a floor. Use the matching language image (`go`, `python`, `node`) or add
+  of a floor. Use the matching language image (`go`, `python`, `node24`) or add
   the runtime package to a dedicated image.
 - **You need to `docker exec` in.** There is no shell. Use
   `ghcr.io/blackshieldpt/static:1-dev` for that, which is this image plus

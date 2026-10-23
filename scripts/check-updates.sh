@@ -126,7 +126,7 @@ done
 ## valkey-9.1 was a week old. That is the same rot as the from-source pins, one
 ## level up.
 ##
-## A line pin is often deliberate — `node` exists to track 22, `node24` 24 and
+## A line pin is often deliberate — `node24` exists to track 24 and
 ## `node26` 26, and `python` 3.14 next to `python315` 3.15, so "newer line
 ## available" is not drift for them. Mark those in config.env with a trailing
 ## `# pinned-line` and they are reported as pinned rather than behind.
@@ -237,7 +237,7 @@ if [ -d "$APKINDEX_CACHE" ] && [ -f "${APKINDEX_CACHE}/APKINDEX" ]; then
         img="$(basename "$(dirname "$(dirname "$apko")")")"
         stem="${img%%-*}"                       # python-sodium -> python
         base="${img%%[0-9]*}"                   # node24        -> node
-        # [a-z]* so an image name can be a prefix of its package: node -> nodejs-22.
+        # [a-z]* so an image name can be a prefix of its package: node24 -> nodejs-24.
         sed -nE 's/^[[:space:]]+- ([a-z0-9]([a-z0-9._+-]*[a-z0-9])?)$/\1/p' "$apko" \
             | grep -E "^(${img}|${stem}|${base:-$img})[a-z]*([-.]|$)" >> "${APKINDEX_CACHE}/primary" || true
     done

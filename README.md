@@ -9,7 +9,7 @@ entirely on GitHub Actions.
 
 ## Images
 
-Published to **`ghcr.io/blackshieldpt/<image>`** — 25 images: nginx, nginx-acme, node, node24,
+Published to **`ghcr.io/blackshieldpt/<image>`** — 24 images: nginx, nginx-acme, node24,
 node26, go, python, python-sodium, python315, python315-sodium, postgresql, valkey,
 minio, clickhouse, nats, openbao, openbao27, manticore, mailpit, redpanda, kafka,
 zookeeper, etcd, versitygw, static.
@@ -182,8 +182,8 @@ and a tag can exist before its artifact does — Manticore tags releases before
 publishing the matching deb. Half-applying those would ship an image whose tag
 lies about its contents.
 
-A line pin is sometimes deliberate — `node` exists to track Node 22, `node24`
-to track 24 and `node26` to track 26, and `python`/`python-sodium` track Python 3.14
+A line pin is sometimes deliberate — `node24` exists to track Node 24
+and `node26` to track 26, and `python`/`python-sodium` track Python 3.14
 while `python315`/`python315-sodium` track 3.15 — so those carry a `# pinned-line`
 marker in `config.env` and are reported as pinned rather than behind.
 

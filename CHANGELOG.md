@@ -6,6 +6,11 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Removed
+- `node` (Node.js 22, Wolfi `nodejs-22`). The package had not been rebuilt in 77
+  days and Node.js published a serious CVE on 2026-10-23. Use `node24` or `node26`;
+  the already-published `ghcr.io/blackshieldpt/node` tags get no further rebuilds.
+
 ### Changed
 - `mailpit` 1.31.5 -> 1.31.6. Upstream's `go.mod` is unchanged (x/crypto v0.58.0,
   x/net v0.61.0, x/text v0.43.0, x/image v0.47.0); still no overrides needed.
