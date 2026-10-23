@@ -6,15 +6,24 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-10-23
+
+Minor release: one new image, `kafka44` (Apache Kafka 4.4), next to `kafka`, which
+is now pinned to the 4.3 line and moves to 4.3.2. Pinning it exposed that the old
+tag filter had been hiding 4.3.2 behind 4.4.0. Moving a volume from `kafka` to
+`kafka44` is one-way; read the `kafka44` entry before switching. Patch or minor
+releases within their tracked lines for `clickhouse`, `etcd`, `mailpit` and
+`versitygw`.
+
 ### Added
 - **`kafka44`: Apache Kafka 4.4** (4.4.0), alongside `kafka` (4.3). A separate
   image rather than a bump because 4.4 storage directories are not
   forward-compatible: a directory formatted by 4.4 cannot be opened by a 4.3
   broker, and the entrypoint formats storage on first boot, so moving a volume
   to `kafka44` is one-way. 4.4.0 already ships the jackson, log4j2 and jline
-  versions `kafka` patched in up to 4.3.1; the one remaining swap is lz4-java 1.11.2 ->
-  1.11.4 (GHSA-mcr4-qmvw-px4g High, plus a Medium and a Low). Connect is removed
-  as in `kafka`.
+  versions `kafka` patched in up to 4.3.1; the one remaining swap is lz4-java
+  1.11.2 -> 1.11.4 (GHSA-mcr4-qmvw-px4g High, plus a Medium and a Low). Connect
+  is removed as in `kafka`.
 
 ### Changed
 - `kafka` 4.3.1 -> 4.3.2, now pinned to the 4.3 line (`tag-filter: "4.3."`). The
@@ -944,7 +953,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.12.0...HEAD
+[0.12.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.2...v0.11.0
 [0.10.2]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.1...v0.10.2
 [0.10.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.0...v0.10.1
