@@ -2,7 +2,7 @@ include config.env
 -include .env
 export
 
-IMAGES := nginx nginx-acme node24 node26 go python python-sodium python315 python315-sodium postgresql valkey minio clickhouse nats openbao openbao27 manticore mailpit redpanda kafka zookeeper etcd versitygw static
+IMAGES := nginx nginx-acme node24 node26 go python python-sodium python315 python315-sodium postgresql valkey minio clickhouse nats openbao openbao27 manticore mailpit redpanda kafka kafka44 zookeeper etcd versitygw static
 
 # Variant: empty/prod = hardened distroless image; dev = same image + shell and
 # toolchain. Pass VARIANT=dev to any per-image target.

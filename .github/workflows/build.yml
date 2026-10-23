@@ -82,6 +82,7 @@ jobs:
           - mailpit
           - redpanda
           - kafka
+          - kafka44
           - zookeeper
           - etcd
           - versitygw

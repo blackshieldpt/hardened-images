@@ -9,10 +9,10 @@ entirely on GitHub Actions.
 
 ## Images
 
-Published to **`ghcr.io/blackshieldpt/<image>`** — 24 images: nginx, nginx-acme, node24,
+Published to **`ghcr.io/blackshieldpt/<image>`** — 25 images: nginx, nginx-acme, node24,
 node26, go, python, python-sodium, python315, python315-sodium, postgresql, valkey,
 minio, clickhouse, nats, openbao, openbao27, manticore, mailpit, redpanda, kafka,
-zookeeper, etcd, versitygw, static.
+kafka44, zookeeper, etcd, versitygw, static.
 
 `static` is the odd one out: a 215 kB base holding a filesystem skeleton and a CA
 trust store and nothing else, with no entrypoint. It is not runnable on its own —
@@ -35,14 +35,14 @@ every rebuild and daily relock patch.
 - **Distroless & non-root** — no apk, runs as UID 65532. Most images ship no shell
   at all; the exceptions are forced by upstream and documented in the image's own
   README: `clickhouse`, `nginx` and `postgresql` ship busybox (their
-  entrypoints are shell scripts), `kafka`, `redpanda` and `zookeeper` ship bash +
+  entrypoints are shell scripts), `kafka`, `kafka44`, `redpanda` and `zookeeper` ship bash +
   busybox (`zkServer.sh` and `zkEnv.sh` are bash scripts), and `valkey` gets
   `/bin/bash` as an unavoidable transitive dependency (`posix-libc-utils`
   hard-depends on it). Most of these claims are
   asserted in the image's own smoke test — `check_no_shell` for the shell-less ones,
   and the weaker property that is actually true for `valkey` and `zookeeper` — so they
-  cannot silently rot. Five do not yet assert it and can: `clickhouse`, `kafka`,
-  `nginx`, `postgresql` and `redpanda` only document their shell.
+  cannot silently rot. Six do not yet assert it and can: `clickhouse`, `kafka`,
+  `kafka44`, `nginx`, `postgresql` and `redpanda` only document their shell.
 - **SBOM** — CycloneDX + SPDX, attached as a cosign attestation, uploaded as a
   downloadable workflow artifact, and (optionally) pushed to Dependency-Track.
 - **Scanned** — Grype + Trivy gate the build at `SEVERITY_THRESHOLD`; exceptions
@@ -232,7 +232,8 @@ Until `RELOCK_DEPLOY_KEY` is set, the relock job no-ops.
    melange images that pin there); or `package.version` in
    `images/<name>/melange.yaml` for images built from source or repackaged from an
    upstream artifact, which declare an `update.github` block (clickhouse, etcd,
-   mailpit, manticore, openbao, openbao27, redpanda, versitygw, zookeeper).
+   kafka, kafka44, mailpit, manticore, openbao, openbao27, redpanda, versitygw,
+   zookeeper).
 3. For an apk-native image, run `make lock IMAGE=<name>` and commit
    `images/<name>/apko/<name>.lock.json` (melange images skip this — they resolve
    fresh at build).
