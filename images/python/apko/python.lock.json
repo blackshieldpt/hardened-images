@@ -251,41 +251,41 @@
       },
       {
         "name": "libbz2-1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbz2-1-1.0.8-r25.apk",
-        "version": "1.0.8-r25",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbz2-1-1.0.8-r26.apk",
+        "version": "1.0.8-r26",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9650",
-          "checksum": "sha1-QODzmN2RZyehQwsKz3LkRFbLu5U="
+          "range": "bytes=0-11074",
+          "checksum": "sha1-MAFOaqLSvepuQ2YZuIcGrg6Y9MY="
         },
         "data": {
-          "range": "bytes=9651-50262",
-          "checksum": "sha256-AqHTDqsKglZ4NcX3erGqVMx/yIIGwQ6HPa5WCZj7qGA="
+          "range": "bytes=11075-51688",
+          "checksum": "sha256-yjOkbkg7EShOAKtQ+yC4KX73Hxz1eMHGBH3wDjT0AS8="
         },
-        "checksum": "Q1QODzmN2RZyehQwsKz3LkRFbLu5U="
+        "checksum": "Q1MAFOaqLSvepuQ2YZuIcGrg6Y9MY="
       },
       {
         "name": "libzstd1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libzstd1-1.5.7-r10.apk",
-        "version": "1.5.7-r10",
+        "url": "https://packages.wolfi.dev/os/x86_64/libzstd1-1.5.7-r11.apk",
+        "version": "1.5.7-r11",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-7612",
-          "checksum": "sha1-9gFljHREFrRAG5xjzxB9UzRCS2o="
+          "range": "bytes=0-9582",
+          "checksum": "sha1-vGI491/mFVev73MqMZ1nP1yPZec="
         },
         "data": {
-          "range": "bytes=7613-639524",
-          "checksum": "sha256-2SPzV0LwhnriAKLjlxdY1SvKvI4TTMqAl0W9d8I0B48="
+          "range": "bytes=9583-641490",
+          "checksum": "sha256-f40X+Wh5VyresEFHIjv83yRvd5qS/9x4fO4x+rq5cCU="
         },
-        "checksum": "Q19gFljHREFrRAG5xjzxB9UzRCS2o="
+        "checksum": "Q1vGI491/mFVev73MqMZ1nP1yPZec="
       },
       {
         "name": "xz",
@@ -327,60 +327,60 @@
       },
       {
         "name": "libbrotlicommon1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlicommon1-1.2.1-r0.apk",
-        "version": "1.2.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlicommon1-1.2.1-r1.apk",
+        "version": "1.2.1-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9046",
-          "checksum": "sha1-1hYyyA988+/bBMaSmGeXLGzF+0I="
+          "range": "bytes=0-10064",
+          "checksum": "sha1-BnOASAJctNICIV3RYBxRlqcTIhs="
         },
         "data": {
-          "range": "bytes=9047-79089",
-          "checksum": "sha256-00ObCZq143Tn1pZnuy/bECDM8wAALWbPsm8LZZ0F5/k="
+          "range": "bytes=10065-80110",
+          "checksum": "sha256-cWlb8uPQze/XIl4yYjqh4zMCodAcyuiVX31uUNQZzPA="
         },
-        "checksum": "Q11hYyyA988+/bBMaSmGeXLGzF+0I="
+        "checksum": "Q1BnOASAJctNICIV3RYBxRlqcTIhs="
       },
       {
         "name": "libbrotlienc1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlienc1-1.2.1-r0.apk",
-        "version": "1.2.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlienc1-1.2.1-r1.apk",
+        "version": "1.2.1-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9073",
-          "checksum": "sha1-9jvhXIKtJxuGeu3kE2wkfX6McnU="
+          "range": "bytes=0-10086",
+          "checksum": "sha1-mmfdrEXpK/DsS57Iu4I61mELlUE="
         },
         "data": {
-          "range": "bytes=9074-441706",
-          "checksum": "sha256-vdkGYkHMn89dIf8mdqaIG79S9TIlr7ZAAi5oxNL6RuA="
+          "range": "bytes=10087-442722",
+          "checksum": "sha256-Txd1kPL4/LIeXF7BG/TWDCe1paPL2NPAJGP10xrk/5Y="
         },
-        "checksum": "Q19jvhXIKtJxuGeu3kE2wkfX6McnU="
+        "checksum": "Q1mmfdrEXpK/DsS57Iu4I61mELlUE="
       },
       {
         "name": "libbrotlidec1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlidec1-1.2.1-r0.apk",
-        "version": "1.2.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbrotlidec1-1.2.1-r1.apk",
+        "version": "1.2.1-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9071",
-          "checksum": "sha1-uL41oW+lAyFdQgedMwnv+1Wu3Vs="
+          "range": "bytes=0-10082",
+          "checksum": "sha1-8McycIizTY7w2et1oDNJ2OAnBtQ="
         },
         "data": {
-          "range": "bytes=9072-42384",
-          "checksum": "sha256-vhtW5IP0a/SBFxqxFVjHH9RCOQkAkPaJOKEuauemYAE="
+          "range": "bytes=10083-43399",
+          "checksum": "sha256-W1AWL+N/942h8xxXoQzQnK7m+2Zd2bdPpCckZxabkjI="
         },
-        "checksum": "Q1uL41oW+lAyFdQgedMwnv+1Wu3Vs="
+        "checksum": "Q18McycIizTY7w2et1oDNJ2OAnBtQ="
       },
       {
         "name": "openssl-4.0-libcrypto",
