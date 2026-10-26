@@ -194,41 +194,41 @@
       },
       {
         "name": "mpdecimal",
-        "url": "https://packages.wolfi.dev/os/x86_64/mpdecimal-4.0.1-r4.apk",
-        "version": "4.0.1-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/mpdecimal-4.0.1-r5.apk",
+        "version": "4.0.1-r5",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-4306",
-          "checksum": "sha1-rdaAdpsvD9gID1uSqjotINagTIQ="
+          "range": "bytes=0-8652",
+          "checksum": "sha1-davBgYOCxQGwJHnpnDHMWrvgrok="
         },
         "data": {
-          "range": "bytes=4307-131248",
-          "checksum": "sha256-PIDZuhWA0IKluYt9GyC4vaOwVTqaga8I8dlVMB+43O4="
+          "range": "bytes=8653-135585",
+          "checksum": "sha256-ZDXD9a0s1Byw4kJqb+5wuGQNZ/7Nqkzd+JnJu1/JWYA="
         },
-        "checksum": "Q1rdaAdpsvD9gID1uSqjotINagTIQ="
+        "checksum": "Q1davBgYOCxQGwJHnpnDHMWrvgrok="
       },
       {
         "name": "gdbm",
-        "url": "https://packages.wolfi.dev/os/x86_64/gdbm-1.26-r7.apk",
-        "version": "1.26-r7",
+        "url": "https://packages.wolfi.dev/os/x86_64/gdbm-1.26-r8.apk",
+        "version": "1.26-r8",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8886",
-          "checksum": "sha1-30XEa78ss5wFp3M/3qjGLEUjq/4="
+          "range": "bytes=0-12411",
+          "checksum": "sha1-0dK27jlg+nilHA+JMRlCnSxw3Bg="
         },
         "data": {
-          "range": "bytes=8887-280621",
-          "checksum": "sha256-p43hkVDlTIhSMLsULOvhClSj7crhEkwB8RwdOMcLPOQ="
+          "range": "bytes=12412-284148",
+          "checksum": "sha256-Ei3u/XiHIda6kn4NF+gYC2zv8KPFbErgn3GzpS38dsI="
         },
-        "checksum": "Q130XEa78ss5wFp3M/3qjGLEUjq/4="
+        "checksum": "Q10dK27jlg+nilHA+JMRlCnSxw3Bg="
       },
       {
         "name": "ncurses-terminfo-base",
