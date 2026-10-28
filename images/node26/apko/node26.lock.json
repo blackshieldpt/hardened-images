@@ -212,6 +212,25 @@
         "checksum": "Q1i9+U3koHHdm144haQW6gnhpAF3E="
       },
       {
+        "name": "c-ares",
+        "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.9-r0.apk",
+        "version": "1.34.9-r0",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-8847",
+          "checksum": "sha1-q+mrnOSiDkvj5KgcADgvy4Iboao="
+        },
+        "data": {
+          "range": "bytes=8848-162855",
+          "checksum": "sha256-DtKBXoS9z2uhh3HO3gDKN25SWFUalQg2J49dsJ7AZ68="
+        },
+        "checksum": "Q1q+mrnOSiDkvj5KgcADgvy4Iboao="
+      },
+      {
         "name": "libbrotlicommon1",
         "url": "https://packages.wolfi.dev/os/x86_64/libbrotlicommon1-1.2.1-r2.apk",
         "version": "1.2.1-r2",
@@ -248,25 +267,6 @@
           "checksum": "sha256-BSn1avAg1zL3zBuOxhgzdHi4AR1crn63OTR+65riM/o="
         },
         "checksum": "Q1sd/3jnUNRLQE1b2odCcgTMx/ORs="
-      },
-      {
-        "name": "c-ares",
-        "url": "https://packages.wolfi.dev/os/x86_64/c-ares-1.34.9-r0.apk",
-        "version": "1.34.9-r0",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-8847",
-          "checksum": "sha1-q+mrnOSiDkvj5KgcADgvy4Iboao="
-        },
-        "data": {
-          "range": "bytes=8848-162855",
-          "checksum": "sha256-DtKBXoS9z2uhh3HO3gDKN25SWFUalQg2J49dsJ7AZ68="
-        },
-        "checksum": "Q1q+mrnOSiDkvj5KgcADgvy4Iboao="
       },
       {
         "name": "openssl-provider-legacy-allowed",
