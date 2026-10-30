@@ -80,22 +80,22 @@
       },
       {
         "name": "minio",
-        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20261023.200651-r1.apk",
-        "version": "0.20261023.200651-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/minio-0.20261023.200651-r2.apk",
+        "version": "0.20261023.200651-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13478",
-          "checksum": "sha1-87fXrh2y2EeEFQUxORSYT3esEUg="
+          "range": "bytes=0-13490",
+          "checksum": "sha1-LPd0mhpGb7mAABMORBCE4ACosFU="
         },
         "data": {
-          "range": "bytes=13479-41233124",
-          "checksum": "sha256-37k1tqm2Acr7jhykI1qIb48wWteo3vRNhSfJHxMZfNw="
+          "range": "bytes=13491-41236049",
+          "checksum": "sha256-rl/2XTnQQ7sx2t1fDumfXYnP9OYORwnPcqU4tfFz8fU="
         },
-        "checksum": "Q187fXrh2y2EeEFQUxORSYT3esEUg="
+        "checksum": "Q1LPd0mhpGb7mAABMORBCE4ACosFU="
       }
     ]
   }

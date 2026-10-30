@@ -517,22 +517,22 @@
       },
       {
         "name": "py3-pip-wheel",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3-pip-wheel-26.2.2-r1.apk",
-        "version": "26.2.2-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/py3-pip-wheel-26.2.2-r2.apk",
+        "version": "26.2.2-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-35740",
-          "checksum": "sha1-QjTpKbOXAhcW0hUNUZEOer1uIEQ="
+          "range": "bytes=0-44166",
+          "checksum": "sha1-BWb5vwrbg4NJu9UjvsQh38ETTAc="
         },
         "data": {
-          "range": "bytes=35741-1838029",
-          "checksum": "sha256-zHEQDjGcUUiBgk8nGDFT6w8vwTwsTisYpmmSik/ZzJ8="
+          "range": "bytes=44167-1845333",
+          "checksum": "sha256-5LSfrB89D8i4jrSFRgQTgjIeEzMr4yr2MRzYPqEME1Y="
         },
-        "checksum": "Q1QjTpKbOXAhcW0hUNUZEOer1uIEQ="
+        "checksum": "Q1BWb5vwrbg4NJu9UjvsQh38ETTAc="
       },
       {
         "name": "python-3.14-base",
@@ -574,41 +574,41 @@
       },
       {
         "name": "py3.14-pip-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-pip-base-26.2.2-r1.apk",
-        "version": "26.2.2-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-pip-base-26.2.2-r2.apk",
+        "version": "26.2.2-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-35773",
-          "checksum": "sha1-m1ERrxQCyPsB1jJ62nOWvYMwiyw="
+          "range": "bytes=0-44199",
+          "checksum": "sha1-HI/sZotI23n/mJ1QcrrviowxsS4="
         },
         "data": {
-          "range": "bytes=35774-4218909",
-          "checksum": "sha256-QOpms1rtUCwAbnPTllsG4i4lGuvUhYxzUnOafwwv2FI="
+          "range": "bytes=44200-4225112",
+          "checksum": "sha256-y2FBmr5aZ+S/459S8xpil6fgGuyXvcWLbRS5uBXztsQ="
         },
-        "checksum": "Q1m1ERrxQCyPsB1jJ62nOWvYMwiyw="
+        "checksum": "Q1HI/sZotI23n/mJ1QcrrviowxsS4="
       },
       {
         "name": "py3.14-pip",
-        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-pip-26.2.2-r1.apk",
-        "version": "26.2.2-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/py3.14-pip-26.2.2-r2.apk",
+        "version": "26.2.2-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-35794",
-          "checksum": "sha1-G6Wo6D8tO09MrhQycfBSINzd4tI="
+          "range": "bytes=0-44206",
+          "checksum": "sha1-hjOivzC/SBcjBNzFPryt4/EEk0c="
         },
         "data": {
-          "range": "bytes=35795-37727",
-          "checksum": "sha256-VqxYLDtLO5BmAzQ7wJFPZJijXpHY6UXvvMeSYdJxShc="
+          "range": "bytes=44207-46251",
+          "checksum": "sha256-eeZL/h03Pp/N6k+WxnX/4fmol10MWn1bBj5AVWIiPpQ="
         },
-        "checksum": "Q1G6Wo6D8tO09MrhQycfBSINzd4tI="
+        "checksum": "Q1hjOivzC/SBcjBNzFPryt4/EEk0c="
       },
       {
         "name": "python-3.14-runtime",
