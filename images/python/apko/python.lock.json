@@ -498,22 +498,22 @@
       },
       {
         "name": "libuuid",
-        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.4-r1.apk",
-        "version": "2.42.4-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.4-r2.apk",
+        "version": "2.42.4-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-12923",
-          "checksum": "sha1-Iw0G6iqM4Kw9TSzZtsXNj8sabmI="
+          "range": "bytes=0-18726",
+          "checksum": "sha1-RMgxwtEheWi8izRUHv/oGNNwqKA="
         },
         "data": {
-          "range": "bytes=12924-34163",
-          "checksum": "sha256-rgkEkFaGu7+m16HkWyZ4cl9r7uR+fQW6uuQvlfkIJcc="
+          "range": "bytes=18727-39967",
+          "checksum": "sha256-uGJbNiTtZNSh+oG//yOA+GNGTpfRQkVR8RV2ptFYEds="
         },
-        "checksum": "Q1Iw0G6iqM4Kw9TSzZtsXNj8sabmI="
+        "checksum": "Q1RMgxwtEheWi8izRUHv/oGNNwqKA="
       },
       {
         "name": "py3-pip-wheel",
@@ -536,22 +536,22 @@
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.8_git20261021-r3.apk",
-        "version": "3.14.8_git20261021-r3",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.10_git20261028-r0.apk",
+        "version": "3.14.10_git20261028-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-25967",
-          "checksum": "sha1-pZ18ldUWLKdgGDpBOu1YXadVcPY="
+          "range": "bytes=0-26075",
+          "checksum": "sha1-eSqNAF+XOW6wnq9KGnB5jl2+Bt8="
         },
         "data": {
-          "range": "bytes=25968-13051914",
-          "checksum": "sha256-ztXO+UoAbVGHmBxxX3ZT1yX+2qid7tHK2hhRvBpHCmk="
+          "range": "bytes=26076-13086429",
+          "checksum": "sha256-qvKf/E8ZX+8EZ2KDA6UJmm1BSM0q9CbykbykjyuYw+c="
         },
-        "checksum": "Q1pZ18ldUWLKdgGDpBOu1YXadVcPY="
+        "checksum": "Q1eSqNAF+XOW6wnq9KGnB5jl2+Bt8="
       },
       {
         "name": "py3.14-setuptools",
@@ -612,41 +612,41 @@
       },
       {
         "name": "python-3.14-runtime",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-runtime-3.14.8_git20261021-r3.apk",
-        "version": "3.14.8_git20261021-r3",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-runtime-3.14.10_git20261028-r0.apk",
+        "version": "3.14.10_git20261028-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-25812",
-          "checksum": "sha1-jdGF8ufTatG5LpGhl2qX0gbFaGo="
+          "range": "bytes=0-25929",
+          "checksum": "sha1-YyrspGbnkMWoBOZ1/T1gdgdUCCs="
         },
         "data": {
-          "range": "bytes=25813-27573",
-          "checksum": "sha256-R6KRjeUU+16fB/5QJ11M3KdQm6ss42Z4O1bOeyUdK50="
+          "range": "bytes=25930-27698",
+          "checksum": "sha256-4oK3ohhWBnGFUTtJ2PO/K5WndK1f6Gx6nhDxYvnzjAg="
         },
-        "checksum": "Q1jdGF8ufTatG5LpGhl2qX0gbFaGo="
+        "checksum": "Q1YyrspGbnkMWoBOZ1/T1gdgdUCCs="
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.8_git20261021-r3.apk",
-        "version": "3.14.8_git20261021-r3",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.10_git20261028-r0.apk",
+        "version": "3.14.10_git20261028-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-25798",
-          "checksum": "sha1-qOuPttxM2uZDfBaygLjiOn09T14="
+          "range": "bytes=0-25908",
+          "checksum": "sha1-lDGAVtsiqc1AMuztRgWhuXHi6wI="
         },
         "data": {
-          "range": "bytes=25799-27258",
-          "checksum": "sha256-LZPsxuY/ZGGZXbeyLIz8LVLjZSGxVvwcZWx9u7SHWRQ="
+          "range": "bytes=25909-27371",
+          "checksum": "sha256-Oe/tq5xAhNybBrzIxTjlI8j7FFFL9c9ONrW3UdZDRPQ="
         },
-        "checksum": "Q1qOuPttxM2uZDfBaygLjiOn09T14="
+        "checksum": "Q1lDGAVtsiqc1AMuztRgWhuXHi6wI="
       }
     ]
   }

@@ -498,22 +498,22 @@
       },
       {
         "name": "libuuid",
-        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.4-r1.apk",
-        "version": "2.42.4-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/libuuid-2.42.4-r2.apk",
+        "version": "2.42.4-r2",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-12923",
-          "checksum": "sha1-Iw0G6iqM4Kw9TSzZtsXNj8sabmI="
+          "range": "bytes=0-18726",
+          "checksum": "sha1-RMgxwtEheWi8izRUHv/oGNNwqKA="
         },
         "data": {
-          "range": "bytes=12924-34163",
-          "checksum": "sha256-rgkEkFaGu7+m16HkWyZ4cl9r7uR+fQW6uuQvlfkIJcc="
+          "range": "bytes=18727-39967",
+          "checksum": "sha256-uGJbNiTtZNSh+oG//yOA+GNGTpfRQkVR8RV2ptFYEds="
         },
-        "checksum": "Q1Iw0G6iqM4Kw9TSzZtsXNj8sabmI="
+        "checksum": "Q1RMgxwtEheWi8izRUHv/oGNNwqKA="
       },
       {
         "name": "py3-pip-wheel",
