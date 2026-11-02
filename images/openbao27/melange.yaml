@@ -12,7 +12,7 @@
 # into either image.
 package:
   name: openbao27-hardened
-  version: 2.7.1
+  version: 2.7.2
   epoch: 0
   description: "OpenBao secrets manager (built from source) + hardened config"
   copyright:
@@ -35,7 +35,7 @@ pipeline:
     with:
       repository: https://github.com/openbao/openbao
       tag: v${{package.version}}
-      expected-commit: a5db72cef75c24b920ade02065b18dd8eb666bac
+      expected-commit: 9e0a0d3c3504a0a00b45e61355afac5e35c78379
   - name: Bump vulnerable Go dependencies
     runs: |
       # Carried over from the 2.6 image as floors. 2.7.1 already ships grpc
