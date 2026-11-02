@@ -251,22 +251,22 @@
       },
       {
         "name": "libbz2-1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libbz2-1-1.0.8-r28.apk",
-        "version": "1.0.8-r28",
+        "url": "https://packages.wolfi.dev/os/x86_64/libbz2-1-1.0.8-r29.apk",
+        "version": "1.0.8-r29",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-18819",
-          "checksum": "sha1-4/JWXvu60s4vcLVQRseIOkgDgjc="
+          "range": "bytes=0-18881",
+          "checksum": "sha1-nWh1ix5qr9A1LfiOtlP2wtUBfpw="
         },
         "data": {
-          "range": "bytes=18820-59436",
-          "checksum": "sha256-iJQX56DPzI3D/6v4Gst7XeFdADySyIgAtsBSrNBoDm4="
+          "range": "bytes=18882-59496",
+          "checksum": "sha256-Bq2CuhUDwPg26F9V5HhQEQ1dzDXkybxww9EK+pF/I5o="
         },
-        "checksum": "Q14/JWXvu60s4vcLVQRseIOkgDgjc="
+        "checksum": "Q1nWh1ix5qr9A1LfiOtlP2wtUBfpw="
       },
       {
         "name": "libzstd1",
@@ -479,22 +479,22 @@
       },
       {
         "name": "libexpat1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libexpat1-2.9.0-r0.apk",
-        "version": "2.9.0-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/libexpat1-2.9.0-r1.apk",
+        "version": "2.9.0-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-9208",
-          "checksum": "sha1-BC65V0Hv+gnJNyw/bhPXBGDFang="
+          "range": "bytes=0-14879",
+          "checksum": "sha1-KBBqFRmwhoFNZXLNNvbIY2EFEPM="
         },
         "data": {
-          "range": "bytes=9209-113448",
-          "checksum": "sha256-VGZd0t4rq2Ss/Qx+4TXT9z1/Gy+lyzrKNnhcG9Psoq4="
+          "range": "bytes=14880-119115",
+          "checksum": "sha256-PkB4pGYtGN5YQz6fTl7AGojFReHIu9bYmXzHrPLnIKE="
         },
-        "checksum": "Q1BC65V0Hv+gnJNyw/bhPXBGDFang="
+        "checksum": "Q1KBBqFRmwhoFNZXLNNvbIY2EFEPM="
       },
       {
         "name": "libuuid",
