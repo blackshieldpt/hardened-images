@@ -574,60 +574,60 @@
       },
       {
         "name": "python-3.14-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.10_git20261028-r0.apk",
-        "version": "3.14.10_git20261028-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-base-3.14.10_git20261104-r0.apk",
+        "version": "3.14.10_git20261104-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-26075",
-          "checksum": "sha1-eSqNAF+XOW6wnq9KGnB5jl2+Bt8="
+          "range": "bytes=0-33917",
+          "checksum": "sha1-pi4o0MbuYa2uxVyJGACkc0DCX1k="
         },
         "data": {
-          "range": "bytes=26076-13086429",
-          "checksum": "sha256-qvKf/E8ZX+8EZ2KDA6UJmm1BSM0q9CbykbykjyuYw+c="
+          "range": "bytes=33918-13100977",
+          "checksum": "sha256-YgdL3g+gq64ms8gaj0/aMvWtbwe6myVvtsxquNJZifQ="
         },
-        "checksum": "Q1eSqNAF+XOW6wnq9KGnB5jl2+Bt8="
+        "checksum": "Q1pi4o0MbuYa2uxVyJGACkc0DCX1k="
       },
       {
         "name": "python-3.14-runtime",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-runtime-3.14.10_git20261028-r0.apk",
-        "version": "3.14.10_git20261028-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-runtime-3.14.10_git20261104-r0.apk",
+        "version": "3.14.10_git20261104-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-25929",
-          "checksum": "sha1-YyrspGbnkMWoBOZ1/T1gdgdUCCs="
+          "range": "bytes=0-33727",
+          "checksum": "sha1-oUqIN4csyDg/G6Bp/46mHGlm7SQ="
         },
         "data": {
-          "range": "bytes=25930-27698",
-          "checksum": "sha256-4oK3ohhWBnGFUTtJ2PO/K5WndK1f6Gx6nhDxYvnzjAg="
+          "range": "bytes=33728-35491",
+          "checksum": "sha256-QzDBxNOsBt/GuoAauKZ/iYIDrPw8RKdHSIx+IrRX4QA="
         },
-        "checksum": "Q1YyrspGbnkMWoBOZ1/T1gdgdUCCs="
+        "checksum": "Q1oUqIN4csyDg/G6Bp/46mHGlm7SQ="
       },
       {
         "name": "python-3.14",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.10_git20261028-r0.apk",
-        "version": "3.14.10_git20261028-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.14-3.14.10_git20261104-r0.apk",
+        "version": "3.14.10_git20261104-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-25908",
-          "checksum": "sha1-lDGAVtsiqc1AMuztRgWhuXHi6wI="
+          "range": "bytes=0-33703",
+          "checksum": "sha1-CBkHvPQrVGt1xLX6iUeEaLaqBTI="
         },
         "data": {
-          "range": "bytes=25909-27371",
-          "checksum": "sha256-Oe/tq5xAhNybBrzIxTjlI8j7FFFL9c9ONrW3UdZDRPQ="
+          "range": "bytes=33704-35167",
+          "checksum": "sha256-GR40YU7ouWWGNY0AF+sywt20SBmjpojaZVE3WeWCEVw="
         },
-        "checksum": "Q1lDGAVtsiqc1AMuztRgWhuXHi6wI="
+        "checksum": "Q1CBkHvPQrVGt1xLX6iUeEaLaqBTI="
       },
       {
         "name": "ttf-dejavu",
