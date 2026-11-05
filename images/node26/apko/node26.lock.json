@@ -345,25 +345,6 @@
         "checksum": "Q1arwi4n4L3VZ3S8YJ6P4WwY/7JjY="
       },
       {
-        "name": "zlib",
-        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3.2.1_rc20260921-r1.apk",
-        "version": "1.3.2.1_rc20260921-r1",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-10078",
-          "checksum": "sha1-Ub6dKp3Ta9ickOJCrZu6zbJa70s="
-        },
-        "data": {
-          "range": "bytes=10079-74707",
-          "checksum": "sha256-mKQb7/+R5vWHqO3/MpKNovnb74Ndg3+Exiq6RXRa6+8="
-        },
-        "checksum": "Q1Ub6dKp3Ta9ickOJCrZu6zbJa70s="
-      },
-      {
         "name": "libnghttp2-14",
         "url": "https://packages.wolfi.dev/os/x86_64/libnghttp2-14-1.71.0-r0.apk",
         "version": "1.71.0-r0",
@@ -381,6 +362,25 @@
           "checksum": "sha256-iZ1bz7Zqa7aGcVCcLc4sHr2GpHEs5JWkTr6RRyqPJ3Q="
         },
         "checksum": "Q137VBP01YHjrDo8ppQ2RrWTlfXxY="
+      },
+      {
+        "name": "zlib",
+        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3.2.1_rc20260921-r2.apk",
+        "version": "1.3.2.1_rc20260921-r2",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-19279",
+          "checksum": "sha1-VhYXgIFnt54EjOK+EDlVL9ypZVI="
+        },
+        "data": {
+          "range": "bytes=19280-83910",
+          "checksum": "sha256-qaqqx93gdpORpRuO4PFYetJg6Of4naduob8Qjk+5lEw="
+        },
+        "checksum": "Q1VhYXgIFnt54EjOK+EDlVL9ypZVI="
       },
       {
         "name": "nodejs-26",
@@ -422,22 +422,22 @@
       },
       {
         "name": "npm-12",
-        "url": "https://packages.wolfi.dev/os/x86_64/npm-12-12.2.1-r1.apk",
-        "version": "12.2.1-r1",
+        "url": "https://packages.wolfi.dev/os/x86_64/npm-12-12.2.2-r0.apk",
+        "version": "12.2.2-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-8311",
-          "checksum": "sha1-fc8quxdUthBoZCjQQr/XsR6OM0A="
+          "range": "bytes=0-14532",
+          "checksum": "sha1-/iZ1AtSWe4WbdJW0dY7PpgjmMJA="
         },
         "data": {
-          "range": "bytes=8312-1914530",
-          "checksum": "sha256-Z6ILxV24VdJh8vSf+11kf3iJnMFUpYCQ4ibFFBuX9y4="
+          "range": "bytes=14533-1926688",
+          "checksum": "sha256-Lr3FJCG8ecAM4KczaWpzRVoH/A4eyj6KH+NRqHRinB4="
         },
-        "checksum": "Q1fc8quxdUthBoZCjQQr/XsR6OM0A="
+        "checksum": "Q1/iZ1AtSWe4WbdJW0dY7PpgjmMJA="
       }
     ]
   }
