@@ -12,7 +12,7 @@
 # to grype/trivy. openbao.hcl is read from images/openbao via --source-dir.
 package:
   name: openbao-hardened
-  version: 2.6.4
+  version: 2.6.5
   epoch: 0
   description: "OpenBao secrets manager (built from source) + hardened config"
   copyright:
@@ -35,7 +35,7 @@ pipeline:
     with:
       repository: https://github.com/openbao/openbao
       tag: v${{package.version}}
-      expected-commit: 8206bc114009a0e468bbdae143f292922e1dbe27
+      expected-commit: b814361ea23440b881b43882e9d1bd950342471c
   - name: Bump vulnerable Go dependencies
     runs: |
       # grpc carried GHSA-hrxh-6v49-42gf, GHSA-vp52-pcj8-j9qc and GHSA-2v4p-qf9q-27wj
