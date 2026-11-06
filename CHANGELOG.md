@@ -6,6 +6,29 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+## [0.12.1] - 2026-11-06
+
+Patch release. `nats` publishes again: Wolfi moved `nats-server` to a versioned
+package on 11-05 and every nats build since failed, so its tags were frozen at the
+11-04 build. Four floating tags move within the lines they already track:
+`mailpit`, `openbao`, `openbao27` and `zookeeper`.
+
+### Changed
+- `mailpit` 1.32.0 -> 1.33.0.
+- `openbao` 2.6.4 -> 2.6.5.
+- `openbao27` 2.7.1 -> 2.7.2.
+- `zookeeper` 3.9.6 -> 3.9.7. Upstream now pins netty 4.1.138.Final, so the netty
+  override, the jar assertions and the smoke test move to 4.1.138.Final with it.
+- `vex/KNOWN-UNFIXED.md`: python rows refreshed. CVE-2026-87910 (python 3.14) and
+  CVE-2025-15367, CVE-2026-12345 (python 3.15) no longer appear; CVE-2026-103995
+  (Low, fixed upstream only in 3.16) is added to both.
+
+### Fixed
+- `nats` installs Wolfi's `nats-server-2.15` package. Wolfi moved the server to
+  that versioned stream, so the resolved lock no longer listed `nats-server` and
+  the build stopped before tagging. The image tag still follows the package
+  version (2.15.2).
+
 ## [0.12.0] - 2026-10-23
 
 Minor release: one new image, `kafka44` (Apache Kafka 4.4), next to `kafka`, which
@@ -953,7 +976,8 @@ Two things worth reading before upgrading:
 - `make check-tools` now checks `melange` and `bwrap`; README/Makefile
   inconsistencies corrected.
 
-[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/blackshieldpt/hardened-images/compare/v0.12.1...HEAD
+[0.12.1]: https://github.com/blackshieldpt/hardened-images/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.2...v0.11.0
 [0.10.2]: https://github.com/blackshieldpt/hardened-images/compare/v0.10.1...v0.10.2
