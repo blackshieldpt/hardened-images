@@ -536,22 +536,22 @@
       },
       {
         "name": "python-3.15-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-base-3.15.2_git20261030-r0.apk",
-        "version": "3.15.2_git20261030-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-base-3.15.2_git20261106-r0.apk",
+        "version": "3.15.2_git20261106-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-25931",
-          "checksum": "sha1-pEBIdd8fF2BZar2Uqo3ZVUiSHNE="
+          "range": "bytes=0-35612",
+          "checksum": "sha1-Nb0E8OY8BvkGI+YWhFvX0IskooE="
         },
         "data": {
-          "range": "bytes=25932-14118793",
-          "checksum": "sha256-jNJKZV6rZDFNduZ7Sa4DnwNSxbk7+Q4TusYjcENan5w="
+          "range": "bytes=35613-14151973",
+          "checksum": "sha256-k7ej1Mkgdetdbdt4n8esn38PfW9PfucekZ1a7AKAFBs="
         },
-        "checksum": "Q1pEBIdd8fF2BZar2Uqo3ZVUiSHNE="
+        "checksum": "Q1Nb0E8OY8BvkGI+YWhFvX0IskooE="
       },
       {
         "name": "py3.15-setuptools",
@@ -612,41 +612,41 @@
       },
       {
         "name": "python-3.15-runtime",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-runtime-3.15.2_git20261030-r0.apk",
-        "version": "3.15.2_git20261030-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-runtime-3.15.2_git20261106-r0.apk",
+        "version": "3.15.2_git20261106-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-25778",
-          "checksum": "sha1-+IEKUDQMD+sINs2OcEI+AdkF3VE="
+          "range": "bytes=0-35442",
+          "checksum": "sha1-SjzRq9Rv0LhxxIvjsRBKoDE5lW8="
         },
         "data": {
-          "range": "bytes=25779-27537",
-          "checksum": "sha256-H6Y8RLiA60yt99l8+s6GSb4QMDP5nWs4U0eceVs4oXQ="
+          "range": "bytes=35443-37205",
+          "checksum": "sha256-Q2j8Rn+hH9jlZFW4cXUvhPSXn2WQ7F9742LOIZnXpa0="
         },
-        "checksum": "Q1+IEKUDQMD+sINs2OcEI+AdkF3VE="
+        "checksum": "Q1SjzRq9Rv0LhxxIvjsRBKoDE5lW8="
       },
       {
         "name": "python-3.15",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-3.15.2_git20261030-r0.apk",
-        "version": "3.15.2_git20261030-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-3.15.2_git20261106-r0.apk",
+        "version": "3.15.2_git20261106-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-25758",
-          "checksum": "sha1-xCOJm7Wdn2EUHo2T/oFn2/L0ol0="
+          "range": "bytes=0-35419",
+          "checksum": "sha1-uojynZAddwXtrRoJmZV2uf08b54="
         },
         "data": {
-          "range": "bytes=25759-27222",
-          "checksum": "sha256-H3xf8EQH1qr0/hGXfJoQYELrN/Qd4DlOOfi3kgEZmM4="
+          "range": "bytes=35420-36883",
+          "checksum": "sha256-p7Kr/rQ6Uue3p5fYSi5pV0lds3RXmOFiBUBSDa/QjKo="
         },
-        "checksum": "Q1xCOJm7Wdn2EUHo2T/oFn2/L0ol0="
+        "checksum": "Q1uojynZAddwXtrRoJmZV2uf08b54="
       }
     ]
   }
