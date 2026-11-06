@@ -19,7 +19,7 @@
 # zoo.cfg is read from images/zookeeper via --source-dir.
 package:
   name: zookeeper-hardened
-  version: 3.9.6
+  version: 3.9.7
   epoch: 0
   description: "Apache ZooKeeper (built from source, patched bundled dependencies) + hardened config"
   copyright:
@@ -43,13 +43,13 @@ pipeline:
     with:
       repository: https://github.com/apache/zookeeper
       tag: release-${{package.version}}
-      expected-commit: a355171b081b5b60749db8f19cca1528b0df936f
+      expected-commit: 0cc8919035e246f6a6e3ebb4ef1df15c4243bce7
 
   - name: Build the binary assembly with patched dependencies
     runs: |
       export JAVA_HOME=/usr/lib/jvm/default-jvm
-      # netty:   4.1.137.Final fixes CVE-2026-59901 (netty-codec) and the Critical
-      #          GHSA-c4c3-7fpv-j4q5 (netty-handler). 3.9.6 pins exactly this, so
+      # netty:   4.1.138.Final fixes CVE-2026-59901 (netty-codec) and the Critical
+      #          GHSA-c4c3-7fpv-j4q5 (netty-handler). 3.9.7 pins exactly this, so
       #          the override no longer moves anything — it is kept so the
       #          assertion below still names a version we have checked.
       # jackson: 2.22.3 fixes GHSA-7hhh-6rmp-j9qf, GHSA-p6pp-m3f8-5c89 (core),
@@ -66,7 +66,7 @@ pipeline:
       # assertions at the end of this file only check that the version named here
       # is what shipped, so a 3.9.6 pinning netty above ours would pass them while
       # losing patches. Refuse to build in that case instead.
-      for spec in netty.version:4.1.137.Final jackson.version:2.22.3 \
+      for spec in netty.version:4.1.138.Final jackson.version:2.22.3 \
                   jline.version:3.30.17 logback-version:1.5.37; do
           prop="${spec%%:*}"; want="${spec##*:}"
           have="$(sed -nE "s|^[[:space:]]*<${prop}>([^<]+)</${prop}>.*|\1|p" pom.xml | head -1)"
@@ -79,7 +79,7 @@ pipeline:
       # -C fails on a checksum mismatch instead of warning. Maven has no go.sum
       # equivalent, so this is the only integrity check on the dependency graph.
       mvn -B -ntp -C -DskipTests \
-        -Dnetty.version=4.1.137.Final \
+        -Dnetty.version=4.1.138.Final \
         -Djackson.version=2.22.3 \
         -Djline.version=3.30.17 \
         -Dlogback-version=1.5.37 \
@@ -133,7 +133,7 @@ pipeline:
       lib="${{targets.destdir}}/usr/share/java/zookeeper/lib"
       test -f "$lib/zookeeper-${{package.version}}.jar"
       test -f "$lib/zookeeper-jute-${{package.version}}.jar"
-      for jar in netty-codec-4.1.137.Final netty-handler-4.1.137.Final \
+      for jar in netty-codec-4.1.138.Final netty-handler-4.1.138.Final \
                  jackson-databind-2.22.3 jackson-core-2.22.3 jline-3.30.17-jdk8 \
                  logback-core-1.5.37 logback-classic-1.5.37; do
           test -f "$lib/${jar}.jar" || { echo "MISSING: ${jar}.jar" >&2; exit 1; }

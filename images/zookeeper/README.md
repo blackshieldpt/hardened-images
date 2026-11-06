@@ -59,7 +59,7 @@ have since needed patch releases. The build pins:
 
 | Dependency | Upstream 3.9.6 | Shipped here | Why |
 |---|---|---|---|
-| netty | 4.1.137.Final | **4.1.137.Final** | upstream now matches; pinned so the assertion still names a checked version. Fixes CVE-2026-59901 and GHSA-c4c3-7fpv-j4q5 (netty-handler, Critical) |
+| netty | 4.1.138.Final | **4.1.138.Final** | upstream now matches; pinned so the assertion still names a checked version. Fixes CVE-2026-59901 and GHSA-c4c3-7fpv-j4q5 (netty-handler, Critical) |
 | jackson | 2.22.2 | **2.22.3** | GHSA-7hhh-6rmp-j9qf, GHSA-p6pp-m3f8-5c89, GHSA-cxp5-3px4-pw24, GHSA-wv8q-qhhj-9h54 (High) |
 | jline | 3.30.14 | **3.30.17** | GHSA-r2xf-8xr9-62gw (High), GHSA-5q95-hrpc-m3w3, GHSA-ph9c-7hw9-vhhw (Medium) |
 | logback | 1.3.15 | **1.5.37** | CVE-2026-10532; the same bump upstream made in ZOOKEEPER-5057 |
