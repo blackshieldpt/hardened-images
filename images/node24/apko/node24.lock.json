@@ -384,22 +384,22 @@
       },
       {
         "name": "nodejs-24",
-        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-24-24.22.2-r2.apk",
-        "version": "24.22.2-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/nodejs-24-24.22.3-r0.apk",
+        "version": "24.22.3-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-17927",
-          "checksum": "sha1-34/kD7I8kCUP0xp6JV6nFq0I6jo="
+          "range": "bytes=0-17944",
+          "checksum": "sha1-SFY3HxJWkbkcFkujs8uEetvBZuc="
         },
         "data": {
-          "range": "bytes=17928-29818564",
-          "checksum": "sha256-i3cdRBr6TP33WvSrtJhOSdZieyXSKOZ2mItwI8lOwMw="
+          "range": "bytes=17945-29814374",
+          "checksum": "sha256-GuQDIcEMGSAsJWJNcmoLc8MQqhvfTETM0b8fEAgUE/k="
         },
-        "checksum": "Q134/kD7I8kCUP0xp6JV6nFq0I6jo="
+        "checksum": "Q1SFY3HxJWkbkcFkujs8uEetvBZuc="
       },
       {
         "name": "node-gyp",
@@ -422,22 +422,22 @@
       },
       {
         "name": "npm-12",
-        "url": "https://packages.wolfi.dev/os/x86_64/npm-12-12.2.2-r0.apk",
-        "version": "12.2.2-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/npm-12-12.2.2-r1.apk",
+        "version": "12.2.2-r1",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-14532",
-          "checksum": "sha1-/iZ1AtSWe4WbdJW0dY7PpgjmMJA="
+          "range": "bytes=0-18744",
+          "checksum": "sha1-Ju8g3uuihW575FNs3p0HTAzrftA="
         },
         "data": {
-          "range": "bytes=14533-1926688",
-          "checksum": "sha256-Lr3FJCG8ecAM4KczaWpzRVoH/A4eyj6KH+NRqHRinB4="
+          "range": "bytes=18745-2026216",
+          "checksum": "sha256-hoGvlFoMjT/eIEFOizpKbi8x41VrDq3jA1lm3FLvXVQ="
         },
-        "checksum": "Q1/iZ1AtSWe4WbdJW0dY7PpgjmMJA="
+        "checksum": "Q1Ju8g3uuihW575FNs3p0HTAzrftA="
       }
     ]
   }
