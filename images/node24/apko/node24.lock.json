@@ -80,60 +80,60 @@
       },
       {
         "name": "glibc-2.44-locale-posix",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-locale-posix-2.44-r19.apk",
-        "version": "2.44-r19",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-locale-posix-2.44-r20.apk",
+        "version": "2.44-r20",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-28859",
-          "checksum": "sha1-3jCwZQC7BgUsyYGG4LJEU4ygIZM="
+          "range": "bytes=0-28972",
+          "checksum": "sha1-Qry6de0IOyiYBfx5IHJfN4xaqvw="
         },
         "data": {
-          "range": "bytes=28860-105623",
-          "checksum": "sha256-0X/zmLdZiokX2IqxtRzxOU7wfdy8oFcRqPc+jRlsAbs="
+          "range": "bytes=28973-105728",
+          "checksum": "sha256-UHg+h21s3QTiSwMVT8ty8I9VNLVcB2oy/I7fSYtBA3o="
         },
-        "checksum": "Q13jCwZQC7BgUsyYGG4LJEU4ygIZM="
+        "checksum": "Q1Qry6de0IOyiYBfx5IHJfN4xaqvw="
       },
       {
         "name": "glibc-2.44",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-2.44-r19.apk",
-        "version": "2.44-r19",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-2.44-r20.apk",
+        "version": "2.44-r20",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-29266",
-          "checksum": "sha1-UxmZb7GoegzRQArms2/KhuIl7xo="
+          "range": "bytes=0-29388",
+          "checksum": "sha1-L/oIeGpd71cDi0z9ayT6u1sfTGs="
         },
         "data": {
-          "range": "bytes=29267-3175349",
-          "checksum": "sha256-l9fs9p7Ov8HVoFycVE4oOuvWAmLL2mLuqsusmtd+2us="
+          "range": "bytes=29389-3175735",
+          "checksum": "sha256-gr50Z4Am2my8mJ1WByHVddzZtfNNtSHa6vvx3L7ONr0="
         },
-        "checksum": "Q1UxmZb7GoegzRQArms2/KhuIl7xo="
+        "checksum": "Q1L/oIeGpd71cDi0z9ayT6u1sfTGs="
       },
       {
         "name": "ld-linux-2.44",
-        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.44-2.44-r19.apk",
-        "version": "2.44-r19",
+        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.44-2.44-r20.apk",
+        "version": "2.44-r20",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-28959",
-          "checksum": "sha1-9pAKHHmUUXW7GOEpb/Af/uJWbw8="
+          "range": "bytes=0-29070",
+          "checksum": "sha1-2qJgR5XymaD0M3bx+GKWpxl393k="
         },
         "data": {
-          "range": "bytes=28960-169590",
-          "checksum": "sha256-OMTAf25HDwBJwwb1zOiyouTXsCHQE46guQVcYBeW70E="
+          "range": "bytes=29071-169690",
+          "checksum": "sha256-ySDT/d7PNQ8JTKkI1MUU9FpE+i0SvPUi+4++HUlbHBo="
         },
-        "checksum": "Q19pAKHHmUUXW7GOEpb/Af/uJWbw8="
+        "checksum": "Q12qJgR5XymaD0M3bx+GKWpxl393k="
       },
       {
         "name": "libgcc",
@@ -365,22 +365,22 @@
       },
       {
         "name": "zlib",
-        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3.2.1_rc20260921-r2.apk",
-        "version": "1.3.2.1_rc20260921-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.4-r0.apk",
+        "version": "1.4-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-19279",
-          "checksum": "sha1-VhYXgIFnt54EjOK+EDlVL9ypZVI="
+          "range": "bytes=0-19892",
+          "checksum": "sha1-qVwTiCkkizmeQd8KP04a2CqR+38="
         },
         "data": {
-          "range": "bytes=19280-83910",
-          "checksum": "sha256-qaqqx93gdpORpRuO4PFYetJg6Of4naduob8Qjk+5lEw="
+          "range": "bytes=19893-85156",
+          "checksum": "sha256-DsGwtKxJQ24yEPEQ5Y3MCevNNS7y1HfLimwD1a8vN+o="
         },
-        "checksum": "Q1VhYXgIFnt54EjOK+EDlVL9ypZVI="
+        "checksum": "Q1qVwTiCkkizmeQd8KP04a2CqR+38="
       },
       {
         "name": "nodejs-24",
