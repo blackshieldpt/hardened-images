@@ -25,7 +25,7 @@ source lives in `images/<image>/`, with its own README.
 | [python315-sodium](images/python315-sodium/) | `ghcr.io/blackshieldpt/python315-sodium:3.15` | `python315` plus the same web-app runtime libraries |
 | [postgresql](images/postgresql/) | `ghcr.io/blackshieldpt/postgresql:18` | PostgreSQL 18 |
 | [valkey](images/valkey/) | `ghcr.io/blackshieldpt/valkey:9.1` | Valkey 9.1 |
-| [minio](images/minio/) | `ghcr.io/blackshieldpt/minio:<pkg version>` | MinIO object storage plus the `mc` client; the tag follows the Wolfi `minio` package |
+| [minio](images/minio/) | `ghcr.io/blackshieldpt/minio:0.20261116.001140` | MinIO object storage plus the `mc` client; the tag follows the Wolfi `minio` package |
 | [nats](images/nats/) | `ghcr.io/blackshieldpt/nats:2.15.2` | NATS server 2.15; the tag follows the Wolfi `nats-server-2.15` package |
 | [clickhouse](images/clickhouse/) | `ghcr.io/blackshieldpt/clickhouse:26.7.37.6` | ClickHouse, repackaged from the upstream static binary |
 | [openbao](images/openbao/) | `ghcr.io/blackshieldpt/openbao:2.6.5` | OpenBao 2.6, built from source |
