@@ -9,10 +9,41 @@ entirely on GitHub Actions.
 
 ## Images
 
-Published to **`ghcr.io/blackshieldpt/<image>`** — 25 images: nginx, nginx-acme, node24,
-node26, go, python, python-sodium, python315, python315-sodium, postgresql, valkey,
-minio, clickhouse, nats, openbao, openbao27, manticore, mailpit, redpanda, kafka,
-kafka44, zookeeper, etcd, versitygw, static.
+All 25 images are published to **`ghcr.io/blackshieldpt/<image>`**. Each image's
+source lives in `images/<image>/`, with its own README.
+
+| Image | Pull | What it is |
+|-------|------|------------|
+| [nginx](images/nginx/) | `ghcr.io/blackshieldpt/nginx:1.31` | nginx (Wolfi `nginx-mainline`) with runtime config templating |
+| [nginx-acme](images/nginx-acme/) | `ghcr.io/blackshieldpt/nginx-acme:1.31` | `nginx` plus lego, which obtains and renews its own ACME certificate |
+| [node24](images/node24/) | `ghcr.io/blackshieldpt/node24:24` | Node.js 24 |
+| [node26](images/node26/) | `ghcr.io/blackshieldpt/node26:26` | Node.js 26 |
+| [go](images/go/) | `ghcr.io/blackshieldpt/go:1.27` | Go 1.27 toolchain |
+| [python](images/python/) | `ghcr.io/blackshieldpt/python:3.14` | CPython 3.14 |
+| [python-sodium](images/python-sodium/) | `ghcr.io/blackshieldpt/python-sodium:3.14` | `python` plus the runtime libraries a typical web app needs (libsodium, libmagic, fonts) |
+| [python315](images/python315/) | `ghcr.io/blackshieldpt/python315:3.15` | CPython 3.15 |
+| [python315-sodium](images/python315-sodium/) | `ghcr.io/blackshieldpt/python315-sodium:3.15` | `python315` plus the same web-app runtime libraries |
+| [postgresql](images/postgresql/) | `ghcr.io/blackshieldpt/postgresql:18` | PostgreSQL 18 |
+| [valkey](images/valkey/) | `ghcr.io/blackshieldpt/valkey:9.1` | Valkey 9.1 |
+| [minio](images/minio/) | `ghcr.io/blackshieldpt/minio:<pkg version>` | MinIO object storage plus the `mc` client; the tag follows the Wolfi `minio` package |
+| [nats](images/nats/) | `ghcr.io/blackshieldpt/nats:2.15.2` | NATS server 2.15; the tag follows the Wolfi `nats-server-2.15` package |
+| [clickhouse](images/clickhouse/) | `ghcr.io/blackshieldpt/clickhouse:26.7.37.6` | ClickHouse, repackaged from the upstream static binary |
+| [openbao](images/openbao/) | `ghcr.io/blackshieldpt/openbao:2.6.5` | OpenBao 2.6, built from source |
+| [openbao27](images/openbao27/) | `ghcr.io/blackshieldpt/openbao27:2.7.2` | OpenBao 2.7, built from source |
+| [manticore](images/manticore/) | `ghcr.io/blackshieldpt/manticore:29.9.0` | Manticore Search, repackaged from the upstream `.deb` |
+| [mailpit](images/mailpit/) | `ghcr.io/blackshieldpt/mailpit:1.33.0` | Mailpit, repackaged from the upstream release binary |
+| [redpanda](images/redpanda/) | `ghcr.io/blackshieldpt/redpanda:26.2.2` | Redpanda broker plus `rpk` |
+| [kafka](images/kafka/) | `ghcr.io/blackshieldpt/kafka:4.3.2` | Apache Kafka 4.3 (KRaft) |
+| [kafka44](images/kafka44/) | `ghcr.io/blackshieldpt/kafka44:4.4.0` | Apache Kafka 4.4 (KRaft) |
+| [zookeeper](images/zookeeper/) | `ghcr.io/blackshieldpt/zookeeper:3.9.7` | Apache ZooKeeper, built from source |
+| [etcd](images/etcd/) | `ghcr.io/blackshieldpt/etcd:3.6.16` | etcd, built from source |
+| [versitygw](images/versitygw/) | `ghcr.io/blackshieldpt/versitygw:1.10.0` | Versity S3 Gateway, built from source |
+| [static](images/static/) | `ghcr.io/blackshieldpt/static:1` | Base image for statically linked binaries (see below) |
+
+The version tags shown are the current ones. Images installed straight from Wolfi
+take their tag from `VERSION_<image>` in [`config.env`](config.env). Images built
+from source or repackaged from upstream take it from `package.version` in
+`images/<image>/melange.yaml`.
 
 `static` is the odd one out: a 215 kB base holding a filesystem skeleton and a CA
 trust store and nothing else, with no entrypoint. It is not runnable on its own —
