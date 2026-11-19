@@ -9,9 +9,9 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 ### Security
 - `kafka`, `kafka44`, `zookeeper`: rebuilt on Wolfi `openjdk-17` 17.0.21.1-r1,
   which fixes CVE-2026-114938 (Java4Shell, CVSS 4.0 9.2, x86-64 AVX-512 VBMI hosts).
-- `nginx`, `nginx-acme`: still on Wolfi `nginx-mainline` 1.31.8, which is affected
-  by CVE-2026-123633 and CVE-2026-123007 (HTTP/2), CVE-2026-121810 (HTTP/3) and
-  CVE-2026-125283 (try_files + alias). Fixed upstream in 1.31.9; waiting for Wolfi.
+- `nginx`, `nginx-acme`: rebuilt on Wolfi `nginx-mainline` 1.31.9-r0, which fixes
+  CVE-2026-123633 and CVE-2026-123007 (HTTP/2), CVE-2026-121810 (HTTP/3) and
+  CVE-2026-125283 (try_files + alias).
 
 ## [0.12.1] - 2026-11-06
 
