@@ -459,25 +459,6 @@
         "checksum": "Q1ZXhs/q6hCO4kvF/4EYuXG7sF/1k="
       },
       {
-        "name": "zlib",
-        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.4-r0.apk",
-        "version": "1.4-r0",
-        "architecture": "x86_64",
-        "signature": {
-          "range": "",
-          "checksum": ""
-        },
-        "control": {
-          "range": "bytes=0-19892",
-          "checksum": "sha1-qVwTiCkkizmeQd8KP04a2CqR+38="
-        },
-        "data": {
-          "range": "bytes=19893-85156",
-          "checksum": "sha256-DsGwtKxJQ24yEPEQ5Y3MCevNNS7y1HfLimwD1a8vN+o="
-        },
-        "checksum": "Q1qVwTiCkkizmeQd8KP04a2CqR+38="
-      },
-      {
         "name": "libexpat1",
         "url": "https://packages.wolfi.dev/os/x86_64/libexpat1-2.10.0-r1.apk",
         "version": "2.10.0-r1",
@@ -495,6 +476,25 @@
           "checksum": "sha256-VZvcEBkEZMUuV/kLCuLEJ2Caq992hwi6AQsksjrBPdQ="
         },
         "checksum": "Q1/qFHF88NrKvQQcegKi7sppEYI5M="
+      },
+      {
+        "name": "zlib",
+        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.4-r0.apk",
+        "version": "1.4-r0",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "",
+          "checksum": ""
+        },
+        "control": {
+          "range": "bytes=0-19892",
+          "checksum": "sha1-qVwTiCkkizmeQd8KP04a2CqR+38="
+        },
+        "data": {
+          "range": "bytes=19893-85156",
+          "checksum": "sha256-DsGwtKxJQ24yEPEQ5Y3MCevNNS7y1HfLimwD1a8vN+o="
+        },
+        "checksum": "Q1qVwTiCkkizmeQd8KP04a2CqR+38="
       },
       {
         "name": "libuuid",
