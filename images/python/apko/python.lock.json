@@ -175,27 +175,27 @@
       },
       {
         "name": "ncurses-terminfo-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20261114-r0.apk",
-        "version": "6.6.20261114-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-terminfo-base-6.6.20261121-r0.apk",
+        "version": "6.6.20261121-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-17994",
-          "checksum": "sha1-lpILkxGR5VCheZsL69pw3svY6dI="
+          "range": "bytes=0-17993",
+          "checksum": "sha1-n4CUKOyTTVgzQO4CuMczUaEuqr0="
         },
         "data": {
-          "range": "bytes=17995-123608",
-          "checksum": "sha256-NJPsY6cIPx9FK5AvjzyMyB8O78tLmhypRl8d0zKtXcY="
+          "range": "bytes=17994-123607",
+          "checksum": "sha256-qx0NuWvCyKWClK5WJrC4sOciCiUoI+Ofr+aVTkzkoH8="
         },
-        "checksum": "Q1lpILkxGR5VCheZsL69pw3svY6dI="
+        "checksum": "Q1n4CUKOyTTVgzQO4CuMczUaEuqr0="
       },
       {
         "name": "ncurses",
-        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20261114-r0.apk",
-        "version": "6.6.20261114-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ncurses-6.6.20261121-r0.apk",
+        "version": "6.6.20261121-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
@@ -203,13 +203,13 @@
         },
         "control": {
           "range": "bytes=0-18147",
-          "checksum": "sha1-neOpnXh+ydt4NgVC/2/7ZrpbCRU="
+          "checksum": "sha1-963Cb/b3X4PH3bc60znNvXMtyCU="
         },
         "data": {
-          "range": "bytes=18148-633323",
-          "checksum": "sha256-0J41KIRrp9du7gXPJCMpMrsi1YMwu14SlTZRwHu2uzk="
+          "range": "bytes=18148-634228",
+          "checksum": "sha256-v5A/upO6iBbgCJ84LT0ilxwTTG0icMwYzSBDS79iN1M="
         },
-        "checksum": "Q1neOpnXh+ydt4NgVC/2/7ZrpbCRU="
+        "checksum": "Q1963Cb/b3X4PH3bc60znNvXMtyCU="
       },
       {
         "name": "readline",
