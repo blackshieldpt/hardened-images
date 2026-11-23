@@ -7,7 +7,7 @@
 # and embedded (server/embed.go: //go:embed ui -> server/ui/dist).
 package:
   name: mailpit-hardened
-  version: 1.33.0
+  version: 1.34.0
   epoch: 0
   description: "Mailpit SMTP testing server (built from source, patched deps)"
   copyright:
@@ -32,7 +32,7 @@ pipeline:
     with:
       repository: https://github.com/axllent/mailpit
       tag: v${{package.version}}
-      expected-commit: 364916b15e80a8bac1e7b0ab66a4f2b3d7d745c2
+      expected-commit: 55a301791fed4c757850bf7afb9672a1dace30bb
   - name: Build the embedded web UI
     runs: |
       npm ci
