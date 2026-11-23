@@ -1,4 +1,4 @@
-# Hardened Valkey (apko) — Wolfi valkey-9.1, shell-less, non-root.
+# Hardened Valkey (apko) — Wolfi valkey-9.2, shell-less, non-root.
 contents:
   repositories:
     - https://packages.wolfi.dev/os
@@ -6,8 +6,8 @@ contents:
     - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
   packages:
     - wolfi-baselayout
-    - valkey-9.1
-    - valkey-9.1-cli
+    - valkey-9.2
+    - valkey-9.2-cli
     - ca-certificates-bundle
 
 accounts:
