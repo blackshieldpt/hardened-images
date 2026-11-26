@@ -2,7 +2,7 @@
   "version": "v1",
   "config": {
     "name": "images/valkey/apko/valkey.yaml",
-    "checksum": "sha256-KU95B1Umb/Ngy4E5zMpFisi9j/3bP4Y+bwNRlDJagkY="
+    "checksum": "sha256-BwFVT2I3BX0Dk2DB7U8mNa97/ZelmJ+oOAw/LWJcbnw="
   },
   "contents": {
     "keyring": [
@@ -345,42 +345,42 @@
         "checksum": "Q19cKnBexPUkyrqqUZjDrvvVAb0kA="
       },
       {
-        "name": "valkey-9.1",
-        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.1-9.1.4-r0.apk",
-        "version": "9.1.4-r0",
+        "name": "valkey-9.2",
+        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.2-9.2.0-r0.apk",
+        "version": "9.2.0-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13147",
-          "checksum": "sha1-WyHKktlkwAvk9ehTW0n5S1Z4J9M="
+          "range": "bytes=0-13140",
+          "checksum": "sha1-TYZbM2E0mzdiGhsmZnzGqaPKYeE="
         },
         "data": {
-          "range": "bytes=13148-2324881",
-          "checksum": "sha256-CT6lvduEE7R0w1GHhbNELxBnLZ/h6HpvNpmCepo72SQ="
+          "range": "bytes=13141-2612235",
+          "checksum": "sha256-qs3UJLyqrw9qyFuC9ghSQY0Vh5XXn2apwPJ+ZuSKbXo="
         },
-        "checksum": "Q1WyHKktlkwAvk9ehTW0n5S1Z4J9M="
+        "checksum": "Q1TYZbM2E0mzdiGhsmZnzGqaPKYeE="
       },
       {
-        "name": "valkey-9.1-cli",
-        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.1-cli-9.1.4-r0.apk",
-        "version": "9.1.4-r0",
+        "name": "valkey-9.2-cli",
+        "url": "https://packages.wolfi.dev/os/x86_64/valkey-9.2-cli-9.2.0-r0.apk",
+        "version": "9.2.0-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-13182",
-          "checksum": "sha1-Ag/7aS+qb6niwmEB2IkL+Pc7UDU="
+          "range": "bytes=0-13178",
+          "checksum": "sha1-GDXnXzGyMM62ICHcJc8TQcJcdY0="
         },
         "data": {
-          "range": "bytes=13183-695297",
-          "checksum": "sha256-bpaCYo62GRLtk6ioFJ6dlOiugktKEsU40uU/559a+xI="
+          "range": "bytes=13179-718398",
+          "checksum": "sha256-LuS13rpYiJ/Q3w4JHsjW4QIYu+3WKQlZDK5iuW7zNoE="
         },
-        "checksum": "Q1Ag/7aS+qb6niwmEB2IkL+Pc7UDU="
+        "checksum": "Q1GDXnXzGyMM62ICHcJc8TQcJcdY0="
       }
     ]
   }
