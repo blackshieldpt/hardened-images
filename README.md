@@ -9,7 +9,7 @@ entirely on GitHub Actions.
 
 ## Images
 
-All 25 images are published to **`ghcr.io/blackshieldpt/<image>`**. Each image's
+All 26 images are published to **`ghcr.io/blackshieldpt/<image>`**. Each image's
 source lives in `images/<image>/`, with its own README.
 
 | Image | Pull | What it is |
@@ -24,6 +24,7 @@ source lives in `images/<image>/`, with its own README.
 | [python315](images/python315/) | `ghcr.io/blackshieldpt/python315:3.15` | CPython 3.15 |
 | [python315-sodium](images/python315-sodium/) | `ghcr.io/blackshieldpt/python315-sodium:3.15` | `python315` plus the same web-app runtime libraries |
 | [postgresql](images/postgresql/) | `ghcr.io/blackshieldpt/postgresql:18` | PostgreSQL 18 |
+| [postgresql19](images/postgresql19/) | `ghcr.io/blackshieldpt/postgresql19:19` | PostgreSQL 19 |
 | [valkey](images/valkey/) | `ghcr.io/blackshieldpt/valkey:9.1` | Valkey 9.1 |
 | [minio](images/minio/) | `ghcr.io/blackshieldpt/minio:0.20261116.001140` | MinIO object storage plus the `mc` client; the tag follows the Wolfi `minio` package |
 | [nats](images/nats/) | `ghcr.io/blackshieldpt/nats:2.15.2` | NATS server 2.15; the tag follows the Wolfi `nats-server-2.15` package |
@@ -65,15 +66,15 @@ every rebuild and daily relock patch.
 
 - **Distroless & non-root** — no apk, runs as UID 65532. Most images ship no shell
   at all; the exceptions are forced by upstream and documented in the image's own
-  README: `clickhouse`, `nginx` and `postgresql` ship busybox (their
+  README: `clickhouse`, `nginx`, `postgresql` and `postgresql19` ship busybox (their
   entrypoints are shell scripts), `kafka`, `kafka44`, `redpanda` and `zookeeper` ship bash +
   busybox (`zkServer.sh` and `zkEnv.sh` are bash scripts), and `valkey` gets
   `/bin/bash` as an unavoidable transitive dependency (`posix-libc-utils`
   hard-depends on it). Most of these claims are
   asserted in the image's own smoke test — `check_no_shell` for the shell-less ones,
   and the weaker property that is actually true for `valkey` and `zookeeper` — so they
-  cannot silently rot. Six do not yet assert it and can: `clickhouse`, `kafka`,
-  `kafka44`, `nginx`, `postgresql` and `redpanda` only document their shell.
+  cannot silently rot. Seven do not yet assert it and can: `clickhouse`, `kafka`,
+  `kafka44`, `nginx`, `postgresql`, `postgresql19` and `redpanda` only document their shell.
 - **SBOM** — CycloneDX + SPDX, attached as a cosign attestation, uploaded as a
   downloadable workflow artifact, and (optionally) pushed to Dependency-Track.
 - **Scanned** — Grype + Trivy gate the build at `SEVERITY_THRESHOLD`; exceptions
@@ -215,7 +216,8 @@ lies about its contents.
 
 A line pin is sometimes deliberate — `node24` exists to track Node 24
 and `node26` to track 26, and `python`/`python-sodium` track Python 3.14
-while `python315`/`python315-sodium` track 3.15 — so those carry a `# pinned-line`
+while `python315`/`python315-sodium` track 3.15, and `postgresql` tracks
+PostgreSQL 18 while `postgresql19` tracks 19 — so those carry a `# pinned-line`
 marker in `config.env` and are reported as pinned rather than behind.
 
 The same check reports two conditions that are **not** drift and get no PR,

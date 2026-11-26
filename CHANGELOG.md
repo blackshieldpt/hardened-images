@@ -6,6 +6,15 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once tagged.
 
 ## [Unreleased]
 
+### Added
+- **`postgresql19`: PostgreSQL 19** (Wolfi `postgresql-19`), alongside
+  `postgresql` (18). A separate image rather than a bump because a data
+  directory initialised by one major version cannot be started by another:
+  moving a volume from 18 needs `pg_upgrade` or a dump and restore. Its
+  entrypoint package is `postgresql19-entrypoint` so the two cannot collide in
+  `./packages`. `postgresql` is now marked `# pinned-line` in `config.env`, so
+  the update check reports it as pinned to 18 rather than behind 19.
+
 ### Security
 - `kafka`, `kafka44`, `zookeeper`: rebuilt on Wolfi `openjdk-17` 17.0.21.1-r1,
   which fixes CVE-2026-114938 (Java4Shell, CVSS 4.0 9.2, x86-64 AVX-512 VBMI hosts).
