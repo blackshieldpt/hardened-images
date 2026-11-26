@@ -80,60 +80,60 @@
       },
       {
         "name": "glibc-2.44-locale-posix",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-locale-posix-2.44-r26.apk",
-        "version": "2.44-r26",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-locale-posix-2.44-r28.apk",
+        "version": "2.44-r28",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-31729",
-          "checksum": "sha1-D7dyF347S3/QhseQDkPVY3IkKHY="
+          "range": "bytes=0-31976",
+          "checksum": "sha1-EumgdkBYq28GVMBFntLuYUlrOmk="
         },
         "data": {
-          "range": "bytes=31730-108499",
-          "checksum": "sha256-pwxgWaI1Ns+ab7btB/nR+FHfOXsIX0eqFMHi3D2T3Vo="
+          "range": "bytes=31977-108750",
+          "checksum": "sha256-V9NB4P5EMQt7I6gi2jjnX3kEkbmasN829D8yRjr2gWc="
         },
-        "checksum": "Q1D7dyF347S3/QhseQDkPVY3IkKHY="
+        "checksum": "Q1EumgdkBYq28GVMBFntLuYUlrOmk="
       },
       {
         "name": "glibc-2.44",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-2.44-r26.apk",
-        "version": "2.44-r26",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-2.44-r28.apk",
+        "version": "2.44-r28",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-32004",
-          "checksum": "sha1-eo1jbjsD14w8vAGwNx5+oyQy6bQ="
+          "range": "bytes=0-32253",
+          "checksum": "sha1-10EQWlzMe4+/j5Sq8cq2IwQycSg="
         },
         "data": {
-          "range": "bytes=32005-3178193",
-          "checksum": "sha256-CjiEaPPFbFW/6QCO/uQWxhOLdWxrZDiIehpapLWe1oA="
+          "range": "bytes=32254-3178516",
+          "checksum": "sha256-vpqb25dnn0uxpgaXVid4aj2tXsUSongzggyyVeWtfSw="
         },
-        "checksum": "Q1eo1jbjsD14w8vAGwNx5+oyQy6bQ="
+        "checksum": "Q110EQWlzMe4+/j5Sq8cq2IwQycSg="
       },
       {
         "name": "ld-linux-2.44",
-        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.44-2.44-r26.apk",
-        "version": "2.44-r26",
+        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.44-2.44-r28.apk",
+        "version": "2.44-r28",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-31782",
-          "checksum": "sha1-H+pgb58BX5FCISA+Cw2iM8HzENE="
+          "range": "bytes=0-32031",
+          "checksum": "sha1-X9P/kmgBa+tI3r4P5UjwHOzpxN0="
         },
         "data": {
-          "range": "bytes=31783-172336",
-          "checksum": "sha256-hBUr6p8tXs7+5iC7rGDtU+CxgrL7O2TceXdG/4lCeGw="
+          "range": "bytes=32032-172591",
+          "checksum": "sha256-je5VMhowC8n1zlmICZXKIssfrb0WR6JRPPIiBcefMrA="
         },
-        "checksum": "Q1H+pgb58BX5FCISA+Cw2iM8HzENE="
+        "checksum": "Q1X9P/kmgBa+tI3r4P5UjwHOzpxN0="
       },
       {
         "name": "libgcc",
