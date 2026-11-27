@@ -80,60 +80,60 @@
       },
       {
         "name": "glibc-2.44-locale-posix",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-locale-posix-2.44-r28.apk",
-        "version": "2.44-r28",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-locale-posix-2.44-r29.apk",
+        "version": "2.44-r29",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-31976",
-          "checksum": "sha1-EumgdkBYq28GVMBFntLuYUlrOmk="
+          "range": "bytes=0-32039",
+          "checksum": "sha1-f46ko4qecQuxoRibrzRgQWiTaVU="
         },
         "data": {
-          "range": "bytes=31977-108750",
-          "checksum": "sha256-V9NB4P5EMQt7I6gi2jjnX3kEkbmasN829D8yRjr2gWc="
+          "range": "bytes=32040-108791",
+          "checksum": "sha256-z6LSeooyv5ZYFSwGG8lngQt1Ztw8WavRbFhZpejlra8="
         },
-        "checksum": "Q1EumgdkBYq28GVMBFntLuYUlrOmk="
+        "checksum": "Q1f46ko4qecQuxoRibrzRgQWiTaVU="
       },
       {
         "name": "glibc-2.44",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-2.44-r28.apk",
-        "version": "2.44-r28",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.44-2.44-r29.apk",
+        "version": "2.44-r29",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-32253",
-          "checksum": "sha1-10EQWlzMe4+/j5Sq8cq2IwQycSg="
+          "range": "bytes=0-32315",
+          "checksum": "sha1-+MLew9rGtK+HndnSi50C81F38wA="
         },
         "data": {
-          "range": "bytes=32254-3178516",
-          "checksum": "sha256-vpqb25dnn0uxpgaXVid4aj2tXsUSongzggyyVeWtfSw="
+          "range": "bytes=32316-3179742",
+          "checksum": "sha256-2ZjaU5U0P9EqEmYFzgKRQO0M0kHbTjjLO173mH+8QpE="
         },
-        "checksum": "Q110EQWlzMe4+/j5Sq8cq2IwQycSg="
+        "checksum": "Q1+MLew9rGtK+HndnSi50C81F38wA="
       },
       {
         "name": "ld-linux-2.44",
-        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.44-2.44-r28.apk",
-        "version": "2.44-r28",
+        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.44-2.44-r29.apk",
+        "version": "2.44-r29",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-32031",
-          "checksum": "sha1-X9P/kmgBa+tI3r4P5UjwHOzpxN0="
+          "range": "bytes=0-32096",
+          "checksum": "sha1-scPt+QFIu/IFmABiRSDkQlwoUTM="
         },
         "data": {
-          "range": "bytes=32032-172591",
-          "checksum": "sha256-je5VMhowC8n1zlmICZXKIssfrb0WR6JRPPIiBcefMrA="
+          "range": "bytes=32097-172680",
+          "checksum": "sha256-XtiQMIqj/9E3oBOfqVtOqkProG/P62fT30WphY34frM="
         },
-        "checksum": "Q1X9P/kmgBa+tI3r4P5UjwHOzpxN0="
+        "checksum": "Q1scPt+QFIu/IFmABiRSDkQlwoUTM="
       },
       {
         "name": "libmagic",
@@ -574,60 +574,60 @@
       },
       {
         "name": "python-3.15-base",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-base-3.15.2_git20261120-r0.apk",
-        "version": "3.15.2_git20261120-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-base-3.15.2_git20261127-r0.apk",
+        "version": "3.15.2_git20261127-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-44288",
-          "checksum": "sha1-qWzkkWqmDro90shGksLqTb2mHqg="
+          "range": "bytes=0-48451",
+          "checksum": "sha1-9RqpXZjfH+kranjuCDjcyk+PQTo="
         },
         "data": {
-          "range": "bytes=44289-14168407",
-          "checksum": "sha256-EhrHLlXtDsxgAArLJGC2geUGADzfM7DBi9e8LYp99fA="
+          "range": "bytes=48452-14182048",
+          "checksum": "sha256-ngKHAd44Rc4ZhGjaUleUop5UjUoAkJ2v5ZaSINXDyqI="
         },
-        "checksum": "Q1qWzkkWqmDro90shGksLqTb2mHqg="
+        "checksum": "Q19RqpXZjfH+kranjuCDjcyk+PQTo="
       },
       {
         "name": "python-3.15-runtime",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-runtime-3.15.2_git20261120-r0.apk",
-        "version": "3.15.2_git20261120-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-runtime-3.15.2_git20261127-r0.apk",
+        "version": "3.15.2_git20261127-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-44132",
-          "checksum": "sha1-Adx/5lf8O04M596/Hj9uJtnUCsM="
+          "range": "bytes=0-48284",
+          "checksum": "sha1-+khS4sV4R0rx+L49ayGGU4rKbnM="
         },
         "data": {
-          "range": "bytes=44133-45891",
-          "checksum": "sha256-TlTWrXFU/azrEdprVGrEpWKs6ZpARBbj8HoJ7nICXmQ="
+          "range": "bytes=48285-50043",
+          "checksum": "sha256-itv7tf8UFfqN9be3Y7UdZY+hR5Z3xmv+JglefmpD+lw="
         },
-        "checksum": "Q1Adx/5lf8O04M596/Hj9uJtnUCsM="
+        "checksum": "Q1+khS4sV4R0rx+L49ayGGU4rKbnM="
       },
       {
         "name": "python-3.15",
-        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-3.15.2_git20261120-r0.apk",
-        "version": "3.15.2_git20261120-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/python-3.15-3.15.2_git20261127-r0.apk",
+        "version": "3.15.2_git20261127-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-44114",
-          "checksum": "sha1-++zuvuhCDyWx+kAVEztFHDFgQPA="
+          "range": "bytes=0-48264",
+          "checksum": "sha1-nDhQxxdO/E7JgqVtYDpJWc3R8x8="
         },
         "data": {
-          "range": "bytes=44115-45578",
-          "checksum": "sha256-gAN8+6TfbEO6IuJUbnR2VmTAbRf0864qX37KdvyN6hQ="
+          "range": "bytes=48265-49723",
+          "checksum": "sha256-k8wnLUAYp/LCMwla5eZCSl8f6yg9dWtMrJeMqkj4b9M="
         },
-        "checksum": "Q1++zuvuhCDyWx+kAVEztFHDFgQPA="
+        "checksum": "Q1nDhQxxdO/E7JgqVtYDpJWc3R8x8="
       },
       {
         "name": "ttf-dejavu",
